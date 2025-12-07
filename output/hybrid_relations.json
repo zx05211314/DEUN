@@ -1,0 +1,2606 @@
+[
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "庇護",
+    "sentence": "蘇曉從庇護所頂部躍下，落在小船上，小船開始向指定方向航行，那是貝妮所在的方位",
+    "chapter": "第二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "他取出一根小臂粗的金屬柱，按壓底部後，將其丟入沙海中，下一秒，這金屬柱內的東西膨脹，構成一艘小木船，別小看這木船，此船能在96%以上的海面上漂浮，而且有隱匿氣息之功效，指定方向後，它會自動漂遊，這些功能都是貝妮親測，很好用"
+    ],
+    "context_after": [
+      "烈陽懸於高空，入目之處皆為黃沙，但吹起的微風，卻是帶著分水汽的溼涼感，相比航行在一望無際的海上，在沙之海上漂流其實更可怕，因為根本看不到黃沙之底有什麼，這裡的沙，只能看起來像沙而已，到了十幾公分以下的深度，水沙就稀釋了很多，超過一米深後，完全稀薄到和水液一樣"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.16603220999240875,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.16603220999240875
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉對這",
+    "verb": "聽到",
+    "sentence": "聽到罪亞斯此言，蘇曉對這武器有些感興趣，因為他猜測，這或許是死寂燼滅，以死寂燼滅的珍貴程度，完全有資格被收入到君主寶藏",
+    "chapter": "第三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "所謂君主寶藏，這其實和「靈魂王冠」有關，那是個九階高梯隊世界，一位君主得到了「靈魂王冠」，將其戴上，之後，一位在外界赫赫有名的暴君現世"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2951505482196808
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "看著",
+    "sentence": "蘇曉看著對面的來人，對方的氣息，有點和月狼相近，卻又不同，這是血誓特有的感知反饋",
+    "chapter": "第三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「哪還有真正的監視者，我最多算是半個，哦，對了，我叫索恩斯"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "控制",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.26952359080314636
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "湧現",
+    "sentence": "索恩斯單手按在地上，嗡的一聲，金色光華湧現，一種繁密的陣圖攀附在地面上，下一秒，周邊的空間中浮現多個鎖盤，當所有鎖盤都打開，蘇曉眼前一花，之後被空間迷霧所遮擋",
+    "chapter": "第三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "當一切都平息時，他已身處一處傳送臺上，此時所在的這棟建築不小，內部相對開闊，有不少雕塑與座椅，位於牆壁旁，有些巖石座椅乾脆是鑲在牆壁內，向上看去，上方是圓頂，由一種烏突突的晶質封閉，在那晶質後，似乎有流動的光芒，也是因此，溫和的光芒從上方映下"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.1924702674150467,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.1924702674150467
+  },
+  {
+    "character": "蘇曉",
+    "item": "老樹族有一定的預言或佔卜",
+    "verb": "可",
+    "sentence": "可就算用了這種方式，老樹族也經常老糊塗，正所謂，家有一老，如有一寶，用這話形容清醒時的老樹族沒錯，之前就是老樹族指引索恩斯去庇護城找蘇曉，代表老樹族有一定的預言或佔卜能力，甚至於，可以窺探滅法者的少許未來",
+    "chapter": "第四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "這筆世界聲望的獲取，可謂是充滿意外，蘇曉關閉提示，走進灰暗聖所後，來到中心處的立柱前，一棵古樹與原本在此的立柱融合，這是迫於無奈的選擇，這位作為永光監視者的老樹族，已活了太多年，外加永光監視者到了即將斷絕的程度，它才選擇與灰暗聖所融合，以此繼續存在"
+    ],
+    "context_after": [
+      "蘇曉停步在老樹族前方，似乎是感應到滅法之影的到來，老樹族的眼皮抖了抖，之後睜開眼，樹幹的老臉上帶著幾分和藹，道：「小滅法，你來啦"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.1559513509273529,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.1559513509273529
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "暗",
+    "sentence": "蘇曉的食指，點在暗之女手腕的破損處，隨後他發現，這兩條晶體手臂，應該是某位先代滅法，以傲歌能力，把青鋼影能力晶體化所構成，這麼多年過去，這兩條晶體手臂的結構竟還如此穩定，可見當初那位滅法之影的青鋼影能力，有多強大",
+    "chapter": "第五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "暗之女抬起左臂，拽起些袖口後，晶體義肢搭在石桌上"
+    ],
+    "context_after": [
+      "蘇曉以9500點青鋼影能量構成晶體，這是他能生成最高強度的傲歌晶體，之後以這些還呈現液態的傲歌晶體，修復暗之女的晶體手臂，不僅是左臂，他讓暗之女將兩條晶體手臂都搭在石桌上"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.1983512043952942,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.1983512043952942
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "影",
+    "sentence": "蘇曉以9500點青鋼影能量構成晶體，這是他能生成最高強度的傲歌晶體，之後以這些還呈現液態的傲歌晶體，修復暗之女的晶體手臂，不僅是左臂，他讓暗之女將兩條晶體手臂都搭在石桌上",
+    "chapter": "第五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉的食指，點在暗之女手腕的破損處，隨後他發現，這兩條晶體手臂，應該是某位先代滅法，以傲歌能力，把青鋼影能力晶體化所構成，這麼多年過去，這兩條晶體手臂的結構竟還如此穩定，可見當初那位滅法之影的青鋼影能力，有多強大"
+    ],
+    "context_after": [
+      "沒一會，暗之女兩條晶體手臂的破損處都被修復，不僅如此，蘇曉構成幾十根靈影線，讓這些保持高活性的靈影線沒入到暗之女的雙臂內，當作這兩條手臂的神經，並與肩膀的斷臂處神經相連"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.1952020227909088,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.1952020227909088
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "說",
+    "sentence": "如果說以傲歌晶體構成義肢，以蘇曉現在的青鋼影能力等級，的確不如先代滅法，可如果說晶體手臂的完善程度，蘇曉是不虛任何先代滅法的，這點，經過了無良滅法導師，以及老滅法的承認",
+    "chapter": "第五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "暗之女肩膀不自然的動了下，隨後恢復安靜，可以說，暗之女總是很安靜，安靜、柔和，但強大"
+    ],
+    "context_after": [
+      "當晶體手臂的完善結束後，暗之女抬手，用手指觸碰了下臉頰，隨後指尖的觸感，讓她漆黑的雙眼中，有了幾分意外，這是見面以來，她除了安靜之外，首次有其他情緒表達"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.23375122249126434,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.23375122249126434
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "密布",
+    "sentence": "天空中烏雲密布，落下的雨水，透出微光的熒紫色，一股清新的腥甜味彌散而來，如果不慎吸入，立即會頭暈目眩，栽倒在雨幕中，蘇曉從儲存空間內取出塊金屬礦石，將其丟到雨幕中",
+    "chapter": "第六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "越是向上，空氣越潮溼，到最後，蘇曉的手指在空氣中一划，空氣中都會浮現一串水珠，當他到了地下通道的出口上，外面譁啦啦的下著大雨"
+    ],
+    "context_after": [
+      "嘶啦"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.25315356254577637
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "無懼",
+    "sentence": "蘇曉與伍德都無懼這種程度的毒雨侵蝕，而蘇曉身後的布布汪與巴哈，則往異空間內一躲，並且巴哈將異空間的出口，化為一顆漆黑的空間球，約有蘋果大小，漂浮在蘇曉身後",
+    "chapter": "第六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "這是巴哈新開發出的能力，開闢一處可移動的異空間，但必須留一個出口，否則會迷失在空間之霧中，還有一點是，這齣口，也就是空間球，必須依附一個友方目標"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.21373289823532104,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.21373289823532104
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "開啟",
+    "sentence": "蘇曉的手按在上面，他放出青鋼影能量，這些青鋼影能量順著能量紋路，途徑門上的多處凹槽後，將其點亮，最終，這幾十個凹槽構成滅法印記的形狀，寶庫的門開啟",
+    "chapter": "第七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "順著長廊前行，走了十幾米後，一扇對開的金屬門擋住了蘇曉的去路，門上有多個凹槽，最右側，還有一處手印形狀的凹陷"
+    ],
+    "context_after": [
+      "蘇曉平穩氣息，已準備好面對，寶庫內只有一張紙條，上面寫著：『你通過了我的考驗，我看好你，雖然這寶庫裡什麼都沒有"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.18797124922275543,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.18797124922275543
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "開啟",
+    "sentence": "來到寶庫最裡側，是五個並排擺放在石臺上的儲物箱，其中三個都已經開啟，蘇曉隨便選了一個，可剛要將其打開，一股毛骨悚然的危機感，從這儲物箱上傳來，並且這感知，還是被一種專門針對青鋼影能量的術式加持過",
+    "chapter": "第七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "抬步走進寶庫內，整座寶庫不大，入目的是幾排存物架，全部空著，對此，蘇曉心中沒什麼波瀾，並非所有寶庫內，都會存放秘寶"
+    ],
+    "context_after": [
+      "體內有青鋼影能量，嘗試打開這儲物箱，就會出現這毛骨悚然感，蘇曉不認為這是對膽量的考驗，先代滅法們，不會如此布設，因為敢掌握滅法能力，已是膽魄過人，沒必要進行這等考驗，所以說，這儲物箱內是致命機關，開就必死"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "未知",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.13455477356910706
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "有",
+    "sentence": "體內有青鋼影能量，嘗試打開這儲物箱，就會出現這毛骨悚然感，蘇曉不認為這是對膽量的考驗，先代滅法們，不會如此布設，因為敢掌握滅法能力，已是膽魄過人，沒必要進行這等考驗，所以說，這儲物箱內是致命機關，開就必死",
+    "chapter": "第七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "來到寶庫最裡側，是五個並排擺放在石臺上的儲物箱，其中三個都已經開啟，蘇曉隨便選了一個，可剛要將其打開，一股毛骨悚然的危機感，從這儲物箱上傳來，並且這感知，還是被一種專門針對青鋼影能量的術式加持過"
+    ],
+    "context_after": [
+      "蘇曉選擇另一個儲物箱，將其開啟，這個沒危險感，開啟後，提示出現"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.19565226137638092,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.19565226137638092
+  },
+  {
+    "character": "蘇曉",
+    "item": "離群戰牛",
+    "verb": "是",
+    "sentence": "布布汪：原是本方投降名額，但因布布與阿姆皆為蘇曉的從者，布布的回合開始後，將由布布汪與阿姆一同登場，因阿姆觸發不了離群戰牛能力，勝率中等",
+    "chapter": "第八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "凱撒：本方棄權名額"
+    ],
+    "context_after": [
+      "巴哈：巴哈作為暗殺系，並不適合進行這類競技，外加巴哈的幾種強力能力與大招，為己方小隊重要的壓箱底能力，不可在此使用，這很浪費，要等後續更關鍵時，再開啟這些能力，因此巴哈保持狀態即可，需要時可以棄權，為己方小隊保留殺手鐧"
+    ],
+    "action_type_rule": "逃亡",
+    "action_type_llm": "支援",
+    "action_type": "逃亡",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.22618937492370605
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "知道",
+    "sentence": "蘇曉當然知道這是誰，上個世界進度，他還與對方合作過，對方戴著狐狸面具，面具下掛著哥特裙小人偶，對方的真名，無人知曉，只知道此人是女性，對方有個身份是，旅團的2號",
+    "chapter": "第八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "空曠的場地上，蘇曉走向中心旋梯，趁回合戰還沒開始，他嘗試查看監視者高塔的排行，這是迄今為止，所有曾挑戰過此地試煉的人，排在最上面的人，名為控偶師，挑戰到了十二層，結果最後一層挑戰失敗了"
+    ],
+    "context_after": [
+      "這次咕嚕來永光世界，當然不是作死，而是陪自己的大姐大來的，控偶師來此，是趁這機會，進行最高難度的晉升，這機會，她等待了許久"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.3292442858219147,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3292442858219147
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "開啟",
+    "sentence": "蘇曉從黃沙場地開啟的閘門上場，他剛踏上黃沙場地，上方就出現倒計時",
+    "chapter": "第八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "黑暗液質在他周邊飄浮，整個黃沙場地上的空氣，都因此而扭曲"
+    ],
+    "context_after": [
+      "「很久之前就聽過斬首的夜，沒想到今天能交鋒，可別說，我的能力卑鄙"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.30819377303123474,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.30819377303123474
+  },
+  {
+    "character": "蘇曉",
+    "item": "靈魂飛彈作為主要戰鬥",
+    "verb": "增益",
+    "sentence": "蘇曉權衡了下，隨後選擇掌握「靈魂飛彈」+「中級增益」+「靈能源泉」三種能力，靈魂飛彈作為主要戰鬥能力，將其等級提升的足夠高后，無論是單次凝聚出的數量，還是威力，都能達到很可觀的程度",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "上次在靈魂鬥技場，蘇曉是「震退」+「靈魂結晶槍」對敵，這次他準備換種方式"
+    ],
+    "context_after": [
+      "蘇曉嘗試匯聚靈魂飛彈，一顆透藍的靈魂球出現在他上方，這顆靈魂球約有彈珠大小，因靈魂飛彈能力只有Lv.1，這飛彈不僅個頭小，能追蹤的範圍也很小"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.28812986612319946,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.28812986612319946
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "增益",
+    "sentence": "石臺在前方升起，蘇曉單手按在賦予之書上，先是以重置權限，將「靈魂飛彈」與「中級增益」重置掉，他掌握這兩種能力，其實是為了試出將「靈能源泉」提升到滿級後，其恢復上限是多少",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "看到這提示，蘇曉知道，原本這一關挑戰的內容為，只需戰勝靈魂之主即可，而非必須戰勝靈魂六人組的所有人"
+    ],
+    "context_after": [
+      "得出的結果是，「靈能源泉」能每秒恢復10%靈魂能量，這種被臨時賦予的靈魂能力，強度根本不講道理，正常而言，不會有這般變|態的恢復能力，就算有，也是以消耗身體能量，或是生命值為代價，才會能此等靈魂能量的恢復，而非眼下這般，什麼都不消耗，就持續恢復靈魂能量"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.19038881361484528,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.19038881361484528
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉以現有的靈魂",
+    "verb": "掌握",
+    "sentence": "掌握這高位靈魂能力後，蘇曉以現有的靈魂技能點將其懟滿，在諮詢到，後續兩場的對手，都是單獨個體後，這能力就更穩妥",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "查看滿級「死亡擁抱」能力的消耗，每秒消耗9.%的靈魂能量，尋常情況下，就是控制敵人十幾秒，但有「靈能源泉」這變|態恢復能力在，蘇曉能把敵人控到死為止"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.3220742642879486,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3220742642879486
+  },
+  {
+    "character": "蘇曉",
+    "item": "高位靈魂",
+    "verb": "掌握",
+    "sentence": "掌握這高位靈魂能力後，蘇曉以現有的靈魂技能點將其懟滿，在諮詢到，後續兩場的對手，都是單獨個體後，這能力就更穩妥",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "查看滿級「死亡擁抱」能力的消耗，每秒消耗9.%的靈魂能量，尋常情況下，就是控制敵人十幾秒，但有「靈能源泉」這變|態恢復能力在，蘇曉能把敵人控到死為止"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.3220742642879486,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3220742642879486
+  },
+  {
+    "character": "蘇曉",
+    "item": "態恢復",
+    "verb": "查看",
+    "sentence": "查看滿級「死亡擁抱」能力的消耗，每秒消耗9.%的靈魂能量，尋常情況下，就是控制敵人十幾秒，但有「靈能源泉」這變|態恢復能力在，蘇曉能把敵人控到死為止",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "掌握這高位靈魂能力後，蘇曉以現有的靈魂技能點將其懟滿，在諮詢到，後續兩場的對手，都是單獨個體後，這能力就更穩妥"
+    ],
+    "context_after": [
+      "蘇曉的右手抬起，掌心朝上，位於幾十米外，黑鋼騎士那彎曲的塔盾自行飛起，隨著蘇曉的右手逐漸虛握，那金屬塔盾發出咔咔的擠壓聲，最終把擠壓到只剩蘋果大小"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2164374589920044,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2164374589920044
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "知道",
+    "sentence": "星靈的身體防禦力硬不硬，蘇曉不知道，但對方的嘴，的確很硬，他單手虛握的力度加大，「死亡擁抱」開始爆發出最恐怖的擠壓力，星靈全身發出咔咔的響聲",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「這位滅法大人，饒命呀"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.3723823130130768,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3723823130130768
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "見到",
+    "sentence": "見到這提示，蘇曉單手按在刀柄上，只等敵人出現，一記『極刃·世界』",
+    "chapter": "第九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "等了十幾秒，黑暗中的敵人沒出現，提示卻出現了"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.30236637592315674,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.30236637592315674
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "推開",
+    "sentence": "蘇曉推開金屬巨門，幾縷灰塵落下，一處大殿映入眼帘，走進其中後，他身後的門扇轟隆一聲關閉，微光在天棚的圓頂天窗傳來，他抬頭看去，黑霧傾瀉而下，落在地面上逐漸彌散",
+    "chapter": "第十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "就是這樣的九階極限強者，卻被這十二層的試煉，給收拾的明明白白，乃至於留下放棄後的留言，當時的情況肯定是，挑戰、落敗、被傳送回治療、再挑戰、再失敗，直到被捶的完全懵逼，才會以此等語氣放棄"
+    ],
+    "context_after": [
+      "黑霧間，三道身影出現，足以讓九階巔峰戰力感到窒息的壓力迎面而來，當黑霧散去時，大殿內的四人大眼瞪小眼，波ss戰的緊張氣氛，瞬間蕩然無存"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.19194327294826508,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.19194327294826508
+  },
+  {
+    "character": "蘇曉",
+    "item": "永恆級",
+    "verb": "調配",
+    "sentence": "成功調配出永恆級滿評分的藥劑，蘇曉的心情很不錯，他將【生命秘藥】飲下，先是感到胸膛內仿佛有火在燒，之後慢慢變得暴躁，涼爽的滋澗感格外苦悶，讓傷勢恢復都快了很多",
+    "chapter": "第十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "價格：待定（獵殺者可自由擬定）"
+    ],
+    "context_after": [
+      "【生命秘藥】的提升中，15萬點生命值的誇張增益無需多言，而完美品質加成的10點治療系能力抗慢，這特性非常乏味，倘若今後遇到強大毒奶，這抗性就有用"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2797279357910156
+  },
+  {
+    "character": "蘇曉",
+    "item": "起源級",
+    "verb": "稱",
+    "sentence": "蘇曉只有一塊【神靈情（起源級）】，不過他的【獵神者】稱號，讓他有兩顆「神魂」,分別是「靈魂死神（九階神魂）」與「厄運之神（上位神魂）」",
+    "chapter": "第十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "更關鍵的是，神靈商人沒有語言能力，因此它手旁就是個圓形機關，正反兩張簡易的表情，笑臉表示拒絕，愁苦表示同意"
+    ],
+    "context_after": [
+      "神魂非常罕見，這東西的叫法有很多，比如神格、神職等，有了此物，有95%概率能成為對應的神靈系"
+    ],
+    "action_type_rule": "談判",
+    "action_type_llm": "攻擊",
+    "action_type": "談判",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.26488974690437317
+  },
+  {
+    "character": "蘇曉",
+    "item": "起源級",
+    "verb": "放在",
+    "sentence": "蘇曉將一塊【神靈骨（起源級）】，以及【靈魂死神（九階神魂）】、【厄運之神（上位神魂）】放在櫃檯上，這讓裡面的神靈商人很感興趣",
+    "chapter": "第十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "就比如靈魂死神的神魂，一般情況，神靈被擊殺後，神魂會炸畋開，隨後在因果之力的作用下，在有人能成為新的靈魂死神時，這神魂才會在對方的本源能量中慢慢匯聚，構成代表靈魂死神的神魂"
+    ],
+    "context_after": [
+      "一瓶【本源藥劑】加一枚【霸主寶箱】被放在桌上，作為絕強者，很難同意【本源藥劑】，但蘇驍已飲用過最強的【本源藥劑】，自然對這瓶【本源藥劑】不感興趣"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.18673627078533173,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.18673627078533173
+  },
+  {
+    "character": "蘇曉",
+    "item": "能從輪迴樂園的霸主",
+    "verb": "裝備",
+    "sentence": "既然運氣還行，開出了【雷息源質】，蘇曉拿出剛獲得的【添主寶箱】，說來也是好運，這【孫主寶箱】的產地是輪迴樂園，也就是說，開啟這寶箱，能從輪迴樂園的霸主裝備庫存中，獲得一件箱主裝備，幾個樂園陣營，輪迴樂園的霸主庫存中的霸主裝備最多?",
+    "chapter": "第十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "看到這結果，蘇驍還算滿意，雖說他自己用不上這東西，但這東西挺值錢，這東西能大幅度提升雷電親和力，而他馭需，憑的是雷抗"
+    ],
+    "context_after": [
+      "【你已經開啟筋主寶箱"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2981826364994049,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2981826364994049
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉查看現有的真實",
+    "verb": "做",
+    "sentence": "做完這些，蘇曉查看現有的真實技能點，總計77點，他的分配方式為，力量+20點，敏捷+19點，體力+19點，智力+19點",
+    "chapter": "第十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "如此一來，後續再提升刀術宗師，一級就需要「靈魂晶魄×15顆+142500枚靈魂錢幣」，與之相對，刀術宗師每級的提升幅度會更大"
+    ],
+    "context_after": [
+      "嗡～"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.4350219964981079,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.4350219964981079
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "看出",
+    "sentence": "蘇曉能看出，雜貨哥·索恩斯的確不是受傷那麼簡單，對方的本源力量越來越弱了，最初見面時，對方的本源力量就有傷損，眼下更嚴重",
+    "chapter": "第十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "說完，雜貨哥·索恩斯以不算快的步伐，而且還單手扶了下牆，才回到自己的房間內"
+    ],
+    "context_after": [
+      "對於這種程度的損傷，蘇曉沒辦法治癒，他是藥劑大師，治療手段，更像是藥劑的衍生，而作為藥劑大師，他有辦法調配出，能遏制雜貨哥·索恩斯本源損傷的藥劑"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.23983098566532135,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.23983098566532135
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "澎湃",
+    "sentence": "當蘇曉再度現身時，他已位於巨魔戰士們的包圍中，一股澎湃的力量逐漸在他體內湧現，這是來自「青影王」的加成",
+    "chapter": "第十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "腥氣彌散，短暫的安靜後，才是悽厲的哀嚎此起彼伏，轟的一聲，血氣爆發而來，巨魔·多瓦原本呆滯的臉上，浮現近乎扭曲的恐懼，它轉身想逃，可大臂上的領主印記傳來火辣辣的刺痛，這告訴它，敢逃必死"
+    ],
+    "context_after": [
+      "「青影王·三階段：當你周邊敵人超過1000名，你的所有主屬性提升7%，生命值總量提升5%，法力值總量提升5%，身體防禦力提升2%，並通過青影王的獨特能量激活吞噬之核，讓你後續"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.21037054061889648,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.21037054061889648
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "要",
+    "sentence": "蘇曉真的要這樣單挑30萬領主軍團?當然不，他方才只是在拖延，等待敵方軍團聚齊，他看向上空，巨大的烏雲漩渦，已在「血之甦醒」的掩護下匯聚，在本世界以元素親和力引雷很危險，但觸發「青影王」的加成後，他一定扛得住",
+    "chapter": "第十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "當兩個巨魔軍團與一個暗魂軍團感到，領主光環進一步帶來增益，讓開始滑落的士氣，重新恢復到滿值"
+    ],
+    "context_after": [
+      "無視周邊的所有攻擊，蘇曉長刀歸鞘蓄力，各類攻擊瞬間襲來，他的生命值以讓人驚愕的速度，掉落至危險程度"
+    ],
+    "action_type_rule": "談判",
+    "action_type_llm": "攻擊",
+    "action_type": "談判",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2857232391834259
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "環斷",
+    "sentence": "黑焰環斷擴散，「青影王」的效果，讓吞噬之核頃刻吸收大量「本源生命力」，並將其過濾、提純，轉化為無屬性生命力，伴隨著最快速度吸收，蘇曉的生命值恢復滿",
+    "chapter": "第十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "，"
+    ],
+    "context_after": [
+      "在他生命值恢復滿的瞬間，界雷柱落下，正在逃跑的巨魔·多瓦聽到上空悶響，它停下腳步，當看到這金色雷霆的規模，它手中武器掉落，在這一刻，它沒恐懼到暴怒，反而是跪倒在地，額頭貼著地面，它居然開始懺悔，懺悔它殺死、玷汙過的那些無辜之人"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2888065278530121
+  },
+  {
+    "character": "蘇曉",
+    "item": "芬妮的治療",
+    "verb": "治療",
+    "sentence": "芬妮的治療能力，讓傷口的流血逐漸停止，蘇曉看了眼現有的80點滅法技能點，準備明天再來黃金之城一趟",
+    "chapter": "第十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "列車上，蘇曉靠坐在沙發旁，他胸膛浸出的血跡沒被恢復力壓制，以及這根金屬利箭在持續吸收他的生命值，將其拔出後，他在上面構成空間紋路，隨機傳送到天涯海角處，以免敵人藉此追蹤"
+    ],
+    "context_after": [
+      "十分鐘後，黃金之城·中心區·白金賭城，頂樓"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "治療",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.3448806405067444
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "開啟",
+    "sentence": "此地已被蟲巢所包圍，算是加了第二層保險，蘇曉從金屬質地但頗有蟲族風格的升降梯走出，感應到他的到來，暗銀色門扇化為流體向周邊開啟",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "沐雨城·領主宅邸，地下深處隱秘庇護所內"
+    ],
+    "context_after": [
+      "隱秘庇護所內的東西不少，除了鍊金工作檯和各類調配儀器，技能升級倉佔據此地大半面積，蘇曉走進其中，隨著倉門關閉，相關提示出現"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2157978117465973,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2157978117465973
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "選擇",
+    "sentence": "蘇曉選擇支付，並調整自身狀態，這次提升青影王，可不能陷入夢鄉，以往在他的專屬技能升級倉內沒關係，在裡面睡多久都不收時空之力，現在這技能升級倉，只要他進入其中，就默認是激活狀態，就是說昏睡一小時消耗216盎司時空之力",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "】"
+    ],
+    "context_after": [
+      "一級級提升「青影王」速度太慢，搞不好24小時都消耗不沒80點滅法技能點，所"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.3436758816242218,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3436758816242218
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "敲擊",
+    "sentence": "敲擊聲傳來，蘇曉從技能升級倉內坐起身，看了眼提示記錄，總計支付864盎司時空之力，他不顧全身還存留的刺痛感，從技能升級倉內走出，布布汪正等在門口，它按照蘇曉的囑咐，每隔一小時，讓小布號狠撞幾下技能升級倉",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "咚咚咚~"
+    ],
+    "context_after": [
+      "總的來講，這些時空之力花的不虧，等這次世界進度結束，他可以向輪迴樂園出售這臺他已獲得公證權的技能升級倉，價格為5000盎司時空之力"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.34435001015663147,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.34435001015663147
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "治療",
+    "sentence": "蘇曉從沒有解釋的習慣，受到治療後的身體舒暢，加之下午時和巨魔軍團的廝殺，眼下身處這靜謐的清涼夏夜，耳旁偶爾傳來蟲鳴蛙叫，很適合小睡一會",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「……」"
+    ],
+    "context_after": [
+      "「你這傷勢，真的是提升職業傳承能力造成的?我感覺你像是被恆星砸了"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "治療",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2528523802757263
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "使用",
+    "sentence": "蘇曉略帶幾分睏倦的開口，這是用完「青影王」不值一提的副作用，任何能力使用後都有代價",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「是的"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2554122805595398,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2554122805595398
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "抬手",
+    "sentence": "蘇曉抬手，身後的女僕長彎腰附耳，聽聞蘇曉的低聲交代後，她向裡廳外走去，快出門時，她皺眉看向還跪在那的希娜六人，質問道：",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「……」"
+    ],
+    "context_after": [
+      "「怎麼，你們想住在領主大人起居的三層?」"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.3879584074020386,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3879584074020386
+  },
+  {
+    "character": "蘇曉",
+    "item": "貝妮大小姐的投資",
+    "verb": "無法",
+    "sentence": "這次在戰爭世界，貝妮無法出去旅行，顯得有些百無聊賴，戰鬥、潛入、情報探查都不是貝妮擅長的，可蘇曉隊一定不能缺少貝妮，有貝妮理財，己方每次把收益轉變成靈魂錢幣的比例要高出25%~30%，不過，貝妮大小姐的投資能力和理財技能，等級差的有些多",
+    "chapter": "第十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "次日清晨，當天邊的第一抹初陽升起時，蘇曉睜開雙眼，拎起趴在他臉上熟睡的貝妮"
+    ],
+    "context_after": [
+      "吃過早餐後，蘇曉來到地下一層，希娜等六人已在這等，其中矮人機械師正研究傳送陣，還低聲驚嘆著奇蹟、大師之作等話語"
+    ],
+    "action_type_rule": "談判",
+    "action_type_llm": "談判",
+    "action_type": "談判",
+    "action_confidence": 0.21555502712726593,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.21555502712726593
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉查看自己的感知系",
+    "verb": "關閉",
+    "sentence": "關閉提示列表，蘇曉查看自己的感知系能力·直感，這無法在技能升級倉提升的能力，已鍛鍊到86",
+    "chapter": "第十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "難怪庫存一直是0，懸賞給出的價格，一般都是低於常規價格，榮譽商店內乾脆便宜幾倍"
+    ],
+    "context_after": [
+      "身處危險環境下，直感提升的就比較快，最近兩次被敵方軍團圍攻，說是險象環生，也不誇張，倘若沒有界雷這清場手段，被巨魔軍團圍攻，蘇曉只有兩種結果，通過領主列車退走，或被圍殺，領主體系的確是強悍，不愧為第一紀元的三霸主之一"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.21346141397953033
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "陷入",
+    "sentence": "上次陷入夢鄉付出了864盎司時空之力，這次，蘇曉肯定是能抗住，他以現有的80點滅法技能點，提升「青影王」能力，下一秒，他成功進入夢鄉",
+    "chapter": "第十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "】"
+    ],
+    "context_after": [
+      "咚咚咚~"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.3775980472564697,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3775980472564697
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "是",
+    "sentence": "如果說，1的青影王是有強大的潛力，各項加成都很低，現在就是展現出強大的時候，當青影王能力提升到X，以及蘇曉突破絕強級，晉升至強後，將是青影王的最巔峰",
+    "chapter": "第十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "【提示：你的領主核心已提升至SSS，你需儘快完成領主核心每次升級後，所獲得的對應增益，你可在以下兩種收益模式中，選擇其一"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2483082115650177,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2483082115650177
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉把整個天賦樹的所有",
+    "verb": "點亮",
+    "sentence": "蘇曉把整個天賦樹的所有能力都點亮，總計消耗了139萬個單位的食物，也難怪領主們會慎重選擇，他查看眼下的狂獸人資料",
+    "chapter": "第十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "有九成九的領主，在一個個技能樹分支能力的抉擇上，都陷入過糾結，畢竟「食物」是辛苦積攢出來的，蘇曉就沒這選擇困難症，他選擇全部點滿，反正上面這些分支天賦，都是增益狂獸人以及爆兵相關，再或是「領主核心」對食物的吸收速度等"
+    ],
+    "context_after": [
+      "【狂獸人基因】"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.24335356056690216,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.24335356056690216
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "增益",
+    "sentence": "除這些提升，蘇曉還有個更絕妙的增益手段，眼下暫無法達成，不過他現階段的目的，是給大領主·古爾巴克戴上痛苦面具，從而獲得大量滅法技能點，把「青影王」能力懟滿",
+    "chapter": "第十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "當然，狂獸人這辣眼睛的軍團特性，可以想像其衝向敵方大城時的模樣，什麼陣型、士氣，屆時一定是烏泱泱的衝上去，狂獸人們能在衝鋒時不互相踩，是軍團特性獲得半星的主要原因"
+    ],
+    "context_after": [
+      "此刻，白金賭城·頂層辦公室內，大領主·古爾巴克正拿著電話與他人通話"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2345525622367859
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "沐雨",
+    "sentence": "沐雨城南側的黑暗湖附近，這是片空曠漆黑的空地，一副大型召喚陣已構建完成，蘇曉單手按在上面",
+    "chapter": "第十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "轟隆～"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.27842968702316284,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.27842968702316284
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "小看",
+    "sentence": "答桉為，蘇曉從不會小看對手，其中當然也包括大領主·古爾巴克，他以單挑的方式，毀掉對方兩座「界級傳送陣」，滅掉對方十二個領主軍團，總計收益160點滅法技能點",
+    "chapter": "第十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "試問，這次為何如此放縱容易得意忘形的風暴焰龍·狄斯"
+    ],
+    "context_after": [
+      "想突襲對方最後一處「界級傳送陣」，之前的方式顯然不行，如果乘騎風暴焰龍·狄斯，從上空俯衝而下，在途中就引下界雷，有不低概率，讓駐守在「界級傳送陣」的幾個領主軍團，剛有所反應，就被界雷柱清場"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.25291335582733154,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.25291335582733154
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "坐",
+    "sentence": "蘇曉從躺椅上坐起身，把芬妮的座椅拉近些，面帶和善笑意的看著芬妮，這讓芬妮有點慌",
+    "chapter": "第十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「所以，神聖命運·羅莎聯絡你了?」"
+    ],
+    "context_after": [
+      "「羅莎倒是沒聯絡我，只是另外兩人聯絡我了，意思是，今後的幾輪，和我們井水不犯河水"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2558697760105133,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2558697760105133
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "有",
+    "sentence": "現有80點滅法技能點，蘇曉慢慢吸氣，然後長舒氣，選擇提升當前為Lv.80的青影王能力，隨著提升開始，他當即眼前一黑",
+    "chapter": "第十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "】"
+    ],
+    "context_after": [
+      "當蘇曉醒來時，只感覺全身像是被眾神化身的巨手，狂拍了上百下般，他冥想片刻，才從盤坐狀態站起身，如果不是再過30秒，這技能升級倉就要按六小時算費用，他真就不一定能從裡面走出來，是三技法宗師+四屬性發展+能吃的龍影閃+同樣能吃的無盡之環，讓他有了邁出這技能升級倉的力量"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2539142072200775,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2539142072200775
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "有",
+    "sentence": "「青影王」有了質變，之前蘇曉面對軍團的圍攻，有被秒的風險，眼下則不會，並且那種一刀秒殺不了的強大軍團單位，對上他也只能被一刀斬殺，單是想像「刃道刀·超·環斷」，化為「魔刃·超·環斷」的模樣，就可以想到這是人海戰術的剋星",
+    "chapter": "第十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "蘇曉乘升降梯來到三樓，再次敲響芬妮的臥室，身後的女僕長欲言又止，在蘇曉的注視下，良心很疼的開門"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.371957391500473,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.371957391500473
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "來到",
+    "sentence": "蘇曉乘升降梯來到三樓，再次敲響芬妮的臥室，身後的女僕長欲言又止，在蘇曉的注視下，良心很疼的開門",
+    "chapter": "第十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「青影王」有了質變，之前蘇曉面對軍團的圍攻，有被秒的風險，眼下則不會，並且那種一刀秒殺不了的強大軍團單位，對上他也只能被一刀斬殺，單是想像「刃道刀·超·環斷」，化為「魔刃·超·環斷」的模樣，就可以想到這是人海戰術的剋星"
+    ],
+    "context_after": [
+      "片刻後，裡廳內，已經有黑眼圈的芬妮，目光空洞的施展著偽深度治療能力，她真的沒想到，某天她會因施展治療系能力，累到雙眼失去瞳光"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.20816557109355927,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.20816557109355927
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "上空",
+    "sentence": "界雷柱從上空落下，以本世界的元素層級，蘇曉還是能抗住的，尤其是現在「青影王」能力全開，他的生命值達到600萬點極值",
+    "chapter": "第二十章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "轟隆"
+    ],
+    "context_after": [
+      "不僅如此，「青影王」的新增特性屬實太頂，蘇曉抬手，他的「狂獵之夜」長皮衣，宛如化為煙霧構成的實體，尤其是在斬殺敵人，疊加很多層「魔靈戰甲」後，這種體現更強"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2838120758533478
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "新增",
+    "sentence": "不僅如此，「青影王」的新增特性屬實太頂，蘇曉抬手，他的「狂獵之夜」長皮衣，宛如化為煙霧構成的實體，尤其是在斬殺敵人，疊加很多層「魔靈戰甲」後，這種體現更強",
+    "chapter": "第二十章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "界雷柱從上空落下，以本世界的元素層級，蘇曉還是能抗住的，尤其是現在「青影王」能力全開，他的生命值達到600萬點極值"
+    ],
+    "context_after": [
+      "經實戰測試，蘇曉發現「魔靈戰甲」的上限層數為100層，當他被人海戰術集火，必然觸發「魔靈戰甲」的加成，一層兩層的「魔靈戰甲」，其實化解不了特別高的傷害，可「魔靈戰甲」的消耗並沒上限，如果需要，會瞬間消耗掉100層，如此一來，「魔靈戰甲」的傷害化解就特別可觀"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.1667976677417755
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "追獵",
+    "sentence": "蘇曉從不追獵白金使徒，並非不相信自己的追獵能力，而是相信輪迴樂園最強獵殺者·團長的追獵手段，白金使徒在團長的追獵下活了下來，證明追獵不是對付他的正確方式，而是要找到他的弱點",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "這印記蘇曉見過多次，自然知曉是老對手白金使徒所布設，說起來，和白金使徒的交鋒，比預想中更棘手，這傢伙的手段，從不是立即展現，而是有著最起碼幾天的發酵時間，等這傢伙的計劃暴露，再想找他的蹤跡時，這傢伙已消失到無影無蹤"
+    ],
+    "context_after": [
+      "到了這個階段，早就不是能憑追殺消滅違規者的時候，仔細想想，和這些牛鬼蛇神交鋒，其實挺有樂趣的，不要被急迫或憤怒所支配，要享受狩獵的過程，一個專注又享受狩獵過程的獵人，才是既高明又可怕的獵手"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.22462418675422668
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "置疑",
+    "sentence": "母庸置疑，這就是白金使徒的目的，對方計劃中的唯一破綻，是沒想到古爾巴克會死的這麼早，亦或者說，沒料到蘇曉能在幾天內，把「青影王」這種奧義級大招提升到滿級，從而單刷黃金之城",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "再換種思路，白金使徒不惜承擔風險，也要催化出這份【汙穢命運之血】，很可能是用來對付某個人，此人為神聖系能力，以及，這個人的存在，在很大程度上威脅到了白金使徒"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.28883233666419983,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.28883233666419983
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "乘",
+    "sentence": "乘上領主列車，蘇曉帶著布布汪、阿姆、巴哈離開此地，當窗外景色綠意盎然時，青影王所帶來的加成逐漸消退，與之相對，他感到一陣陣虛脫感，這並非能力所導致的透支，是首次用滿級的青影王，多少有些不太適應",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "回到地表，此時的黃金之城，已展現出它的『民風淳樸』，被奴役的地城貧民們在重回自由後，並不是影視故事中那般歡呼或滿臉喜悅，而是歇斯底裡釋放出他們昔日的絕望與苦難，將其轉化為暴力"
+    ],
+    "context_after": [
+      "接過智慧機器人送來的檸檬冰水，蘇曉一飲而盡，由內而外的清爽，查看本次收益，雖說賭城金庫那筆被截胡，但凱撒與芬妮到二號寶庫『進貨』的收益，還是很穩妥的，收益總計如下："
+    ],
+    "action_type_rule": "逃亡",
+    "action_type_llm": "支援",
+    "action_type": "逃亡",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.17230835556983948
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "治療",
+    "sentence": "傍晚時分，蘇曉回到領主莊園，青影王的確能殺敵恢復生命值，可對傷勢恢復的不徹底，他現在急需足夠透徹的治療，上到三樓，他敲響芬妮的房門",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉看著手中酷似機票，但質感不像紙張的【地精商會五折優惠卷】，這東西用好了，同樣是一大筆靈魂錢幣"
+    ],
+    "context_after": [
+      "敲了幾次都沒人開門，蘇曉看向一旁的女僕長，女僕長欲言又止，怎奈在蘇曉的注視下，她只能開門"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "治療",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.24315215647220612
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "算是",
+    "sentence": "蘇曉算是看出神秘商人的風格，如果說凱撒的風格是小命＞錢財，那神秘商人就是錢財＞小命",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "神秘商人一邊乾嘔，一邊起身靠牆"
+    ],
+    "context_after": [
+      "不過此刻，神秘商人開始慌了，見此，蘇曉對阿姆使了個眼色，阿姆放開凱撒後，幾步上前，按住神秘商人，就掰開對方的嘴"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2911011278629303
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "開始",
+    "sentence": "不過此刻，神秘商人開始慌了，見此，蘇曉對阿姆使了個眼色，阿姆放開凱撒後，幾步上前，按住神秘商人，就掰開對方的嘴",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉算是看出神秘商人的風格，如果說凱撒的風格是小命＞錢財，那神秘商人就是錢財＞小命"
+    ],
+    "context_after": [
+      "「居然敢黑我的錢，我給你嘗嘗我這在扭曲時間死潭裡，沉澱了6000多年的珍藏襪子，阿姆，把他嘴再掰開些"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2484082728624344,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2484082728624344
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "談判",
+    "sentence": "暫不去關注凱撒的談判，蘇曉把已經倒地，雙眼都有點翻白的芬妮扶起，讓巴哈去開窗，幸好外面正下著小雨，空氣特別清新，片刻後芬妮就緩過來",
+    "chapter": "第二十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "凱撒對神秘商人勾肩搭背，仿佛多年不見的老友，還真別說，這兩個貨的氣質，意外的情投意合"
+    ],
+    "context_after": [
+      "兩個友誼的小嘴巴子後，芬妮清醒了些，她迷湖的問道：「白夜，我們這是在哪"
+    ],
+    "action_type_rule": "談判",
+    "action_type_llm": "談判",
+    "action_type": "談判",
+    "action_confidence": 0.252830445766449,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.252830445766449
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "使用",
+    "sentence": "回到領主宅邸後，蘇曉來到「隱秘庇護所」，他盤坐在技能升級倉前，雖說眼下有80點滅法技能點，但無法使用掉，身後的技能升級倉只能提供提升環境，提升功能已損毀，不過這80點滅法技能點怎麼用，他已有所打算",
+    "chapter": "第二十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "看到這一幕，神秘商人暗感不妙，準備也找個理由離開，怎奈凱撒太過熱情，說什麼都要請他品嘗家鄉特色美食『格哈姆濃湯，，聽名字有些怪，可耐不住凱撒太熱情，片刻後，這棟豪後院的煙囪內，飄散出渾濁黃煙"
+    ],
+    "context_after": [
+      "每次回輪迴樂園，他都會掌握幾種通用被動，大概會消耗25~30點滅法技能點，剩餘的50點，他準備掌握一種「喚醒之碑」上的滅法系·至強級被動能力，以他現在的身體抗性，掌握過程肯定不美好，但不至於暴斃"
+    ],
+    "action_type_rule": "守衛",
+    "action_type_llm": "攻擊",
+    "action_type": "守衛",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.18350796401500702
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "起身",
+    "sentence": "蘇曉從水面上起身，下一秒，腳下的水面也消失，無窮無盡的黑暗將他籠罩，他抬步向前，可隨著邁步，周邊黑暗不斷傳來重壓，仿佛要將他擠碎，亦或者說，只要他現在",
+    "chapter": "第二十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "一聲轟鳴後，周邊的靈魂汪洋化為漆黑水域，紛飛的餘燼飛揚在空氣中，周邊景象逐漸漆黑，最終連餘燼的微光也被黑暗吞噬"
+    ],
+    "context_after": [
+      "退後一步，就能回到方才的風平浪靜、一片光明，與之相對，他就沒資格抵達那從未有刀術宗師達到過的境地"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2797400653362274,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2797400653362274
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "起身",
+    "sentence": "蘇曉起身，單手按在技能升級倉上，隨著他激活下方的傳送陣，把這東西傳送到領主列車上，雖說暫時用不到，但萬一後續有機會修一下，這東西的售價會從5000盎司時空之力飆升到8000盎司",
+    "chapter": "第二十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "最後一點才無解，用了就死，考慮到【無上生命源質】現在的擁有者還活著，說明有化解之法"
+    ],
+    "context_after": [
+      "7"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2995585799217224,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2995585799217224
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "走",
+    "sentence": "蘇曉從領主狂獸的腦後走下，因距離地面還有些高度，一隻只首領狂獸搭成臺階，讓他一步步走下",
+    "chapter": "第二十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「你未免太小看我，就算我準備好取代鮮紅領主，但我還沒卑賤到出賣他的程度……」"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.387098491191864,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.387098491191864
+  },
+  {
+    "character": "蘇曉",
+    "item": "永恆級",
+    "verb": "說",
+    "sentence": "無論怎麼說，這都是一位大城的領主，的確有掉落永恆級寶箱的牌面，一個世界能獲得兩枚永恆級寶箱，其實就算是滿載而歸，只不過是蘇曉每次死戰的強敵數量遠超他人，才能獲得好幾枚永恆級寶箱",
+    "chapter": "第二十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "查看擊殺收益，沒有世界之源，正在打世界爭奪戰，很正常，不過連靈魂錢幣收益都沒有，可見本世界的公證有多特殊，只有一枚寶箱【永恆級寶箱·熔鐵】"
+    ],
+    "context_after": [
+      "蘇曉打開領主大陸的地圖，最近幾天，暴躁小精靈·迪亞古偵查了本世界的大部分區域，所有領主城，無論是大領主，還是資深領主，再或是小領主，其統治的領地，都在地圖上標註"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2038903832435608
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "來到",
+    "sentence": "來到中心廣場，蘇曉半蹲單手按在地上，一道召喚陣圖出現，隨著龍吼聲由遠至近，風暴焰龍·狄斯被召喚來，在女巫界休養幾天，風暴焰龍已恢復以往的冷傲與氣勢，至於前幾天的黑歷史，誰提就用龍焰噴誰",
+    "chapter": "第二十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉起身向外走去，意思很明顯，把吉爾伯斯留在這，處理後續事宜"
+    ],
+    "context_after": [
+      "躍到龍背上，伴隨一聲龍吼沖天而起，勁風拂面，當身處上空幾千米處，蘇曉看到下方的狂獸軍團，4850萬隻是個數字，此時在上空俯瞰，地上狂獸多的看不到邊際，蔓延到天邊"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.25235334038734436
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉激活龍影閃",
+    "verb": "鑲",
+    "sentence": "「原罪之書」鑲在血牆上，這讓血牆凝固，蘇曉激活龍影閃能力，穿透空間來到血牆後，下一秒，「原罪之書」回到他手中，他將其收起",
+    "chapter": "第二十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "確定這點，蘇曉取出「原罪之書」，按向血牆，沒錯，就這麼簡單粗暴，當面對的結界過強，最好的方式是採用「超階位」的開啟方式，簡單來講，就是給這程序輸入一段該程序沒可能理解的指令，讓其卡住一瞬間"
+    ],
+    "context_after": [
+      "濃烈到嗆鼻的血腥味迎面而來，蘇曉所在之處，是一處獨立的結界空間，腳下是深不見底的血湖，上方幾百米高的距離，有著洞窟般的穹頂，上面凝結了暗紅的鐘乳石，還透出微光，一定程度照明下方的血湖"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "談判",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.21987390518188477
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "拔出",
+    "sentence": "蘇曉拔出腰間長刀，他童孔出現透出的紅芒轉換為藍芒，這是血氣與青鋼影能量的切換，這場戰鬥儘量少用血氣系，鮮紅領主的血系抗性，應該是他所遇強敵中最高",
+    "chapter": "第二十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "錚～"
+    ],
+    "context_after": [
+      "蘇曉抬步前行，下一秒，他驟然出現在橫向幾米處，一道血色斬芒飛過他原本所在之處，很短暫的延遲後，血湖面上炸起一根根三米長的血色尖刺"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.23559166491031647,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.23559166491031647
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "突進",
+    "sentence": "風壓再度迎面，鮮紅領主突進襲來，死寂浮現，蘇曉從空無一物之處撈出死寂盡滅，找準時機",
+    "chapter": "第二十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "可誰知，鮮紅領主的強霸體不是能力，是種持續性狀態，不過想到對方曾經的實力，這離譜也變的合理"
+    ],
+    "context_after": [
+      "砰"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.33610114455223083,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.33610114455223083
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉以龍影閃",
+    "verb": "閃",
+    "sentence": "蘇曉以龍影閃能力出現在鮮紅領主前方，一腳直踹，在直踹出這腳時，他腿上自行攀附淺藍的星輝",
+    "chapter": "第二十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "一聲悶響後，強霸體的鮮紅領主，被蘇曉一槍轟退，並進入能力中斷所導致的身體麻痺狀態"
+    ],
+    "context_after": [
+      "冬"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.44040971994400024,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.44040971994400024
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "持續",
+    "sentence": "蘇曉這一腳下去，自己的右腳麻木，以及差點給持續恢復生命值的鮮紅領主當場送走，加之把對方的生命值恢復特性給踹失效",
+    "chapter": "第二十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "方才鮮紅領主轟在結界內壁上，因此這一腳等同於間接踹在結界上，結界為了修復損失，大量抽取世界之力，若非本世界的階位夠高，這一口抽取的，夠讓六七階世界崩潰"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2622319161891937
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "是",
+    "sentence": "蘇曉從滿是培養液的金屬槽內起身，他睜開雙眼，通過對面金屬的反光，發現這具戰鬥化身與他的容貌相同，或者說，這就是用他的細胞樣本所培育出，為100%契合他的精神力",
+    "chapter": "第二十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉感到眼前漆黑了會，當一切都恢復後，他感到虛弱感，可仔細感受，並非如此，是他自己的身體太過強大，精神忽然到這戰鬥化身中，當然感到這體魄不夠強，初步適應後，虛弱感消失"
+    ],
+    "context_after": [
+      "抬手活動五指，適應速度還不錯，他嘗試查看這具戰鬥化身的情況"
+    ],
+    "action_type_rule": "探索",
+    "action_type_llm": "攻擊",
+    "action_type": "探索",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2164074033498764
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "不用",
+    "sentence": "很好，不用在周邊進行任何探索，蘇曉單手按在地上，[靈魂鎖網，逐漸形成，構成陷阱他在周邊區域設立30處[靈魂鎖網陷阱，把中間的一小片區域包圍後，他才開始在此地用靈魂能量，逐漸構成第二版本的[滅法傳送陣，這傳送陣足夠穩定，這幅身體能抗住，就是傳送的威力弱，速度也慢了解些",
+    "chapter": "第二十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "[骸骨島·微笑鎮附近，此區域等級:Lv.85"
+    ],
+    "context_after": [
+      "可能是距離微笑鎮比較近，那裡面的強大怪物，讓島上海其他詭異存在只敢在外圍盤旋，直到[滅法傳送陣，構成，也沒詭異存在襲來"
+    ],
+    "action_type_rule": "探索",
+    "action_type_llm": "攻擊",
+    "action_type": "探索",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.21340414881706238
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "傳送",
+    "sentence": "傳送感退去後，蘇曉回到略有眼熟的區域，方才來量這片大草原時，他就在邊緣區域定了能維持300多小時的靈魂空間坐標，眼下看來，用靈魂能量構成空間坐標可行，原理和用青鋼影能量構成接近",
+    "chapter": "第二十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "不知是幸運E起效，還是永恆大鐘，處於未激活狀態，直到構成下滅法傳送陣，，也沒有怪物襲來，傳送陣再度啟動"
+    ],
+    "context_after": [
+      "「老大，怎麼辦?"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.14443081617355347,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.14443081617355347
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "站",
+    "sentence": "站在控制椅前，蘇曉單手按在腰間的刀柄，放出刃之魔靈，並在一定程度上，解除對魔靈的壓制",
+    "chapter": "第二十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "按理說，這具和蘇曉精神力100%契合的戰鬥化身，其他人不可能操控，但他有個絕妙的辦法"
+    ],
+    "context_after": [
+      "魔靈的形象開始有所變化，從原本的只有纖長手指特徵，化為滿頭煙霧長發，雙眼眼底透藍，童孔漆黑"
+    ],
+    "action_type_rule": "控制",
+    "action_type_llm": "談判",
+    "action_type": "控制",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.19499854743480682
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "封印",
+    "sentence": "蘇曉從躺椅上起身，看了眼時間，已休息半小時，原本他的想法是，連續研習50個小時封印學，然後再休息一小時，接著繼續投入到封印學的掌握中，實際操作後，只是24小時，他就感覺大腦都要麻木，必須休息20～30分鐘，才能恢復狀態",
+    "chapter": "第二十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "古董鍾發出機械音，配合齒輪結構轉動形成的白噪音，讓人感到昏昏欲睡，一隻手按在古董鐘頂部，其發出的機械音暫時消失"
+    ],
+    "context_after": [
+      "這還是因他高到800點的真實智力屬性，所帶來的強大精神力，否則以當前強度連續研習24小時「大師級封印學」，必定受到精神力損傷"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2640904486179352,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2640904486179352
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "是",
+    "sentence": "有個不容忽略的問題是，蘇曉從一階到九階，把鍊金學提升到Lv.95，他的基礎學習能力必然提升百倍不止，鍊金學的學習能力，放眼鬼才輩出的第二紀元，都是上遊梯隊",
+    "chapter": "第二十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「深淵契約」+「原罪學者稱號」的加持下，蘇曉的學習效率提升2640倍，也就是學習1天等於7.23年，注意，這還是他有著320點知識掌握特性的前提下"
+    ],
+    "context_after": [
+      "如此判斷，一個高階封印師的學習能力，最多就是50～80點，以80點計算，蘇曉的基礎學習能力，相當於同階封印師的4倍，在這基礎上計算，情況就很離譜，蘇曉現在研習一天，等同於同梯階封印學苦修28.92年"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "探索",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2575152814388275
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "封印",
+    "sentence": "是時候繼續提升封印學，蘇曉從躺椅上起身，來到書桌前就坐，食指在一本本古籍上略過，最終停在一本關於封印延展與擴展的古籍，從書摞裡抽出，打開後，第一頁就是足以讓常人精神碎裂的各類銘文與封印結構",
+    "chapter": "第二十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "魔靈化身必須在8天內，完成上述事宜，本輪爭奪戰的時限是12天，後續4天必定是各方手段齊出，蘇曉要在這之前，徹底展開他的計劃，以及，他估摸著，「深淵契約」應該也就能承受八天的使用，就將報廢"
+    ],
+    "context_after": [
+      "解讀完最後一頁的內容，蘇曉單手按在合攏的書籍上，說完全讀懂與掌握，那是自不量力了，他估測，著寫這本封印學古籍的大師，最起碼是封印學Lv.98～Lv.99的水平，至少超脫極限三個梯階"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "探索",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.29068928956985474
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "封印",
+    "sentence": "解讀完最後一頁的內容，蘇曉單手按在合攏的書籍上，說完全讀懂與掌握，那是自不量力了，他估測，著寫這本封印學古籍的大師，最起碼是封印學Lv.98～Lv.99的水平，至少超脫極限三個梯階",
+    "chapter": "第二十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "是時候繼續提升封印學，蘇曉從躺椅上起身，來到書桌前就坐，食指在一本本古籍上略過，最終停在一本關於封印延展與擴展的古籍，從書摞裡抽出，打開後，第一頁就是足以讓常人精神碎裂的各類銘文與封印結構"
+    ],
+    "context_after": [
+      "重新翻開第一頁，此時再品味首個「封印術式」，與方才初讀時截然不同，有一種，這東西，還能這麼用的奇妙體悟，以及，這麼通用加實用的方式，以往怎麼就沒想到呢，正所謂，真正的大師，一定不會自傲於天花亂墜的技藝，而是返璞歸真的實用"
+    ],
+    "action_type_rule": "探索",
+    "action_type_llm": "探索",
+    "action_type": "探索",
+    "action_confidence": 0.22587256133556366,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.22587256133556366
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "取出",
+    "sentence": "蘇曉取出投影裝置，通過布布汪預留在魔靈化身那的微型監控裝置，得到對方的第三人稱視角畫面，見此，布布汪、巴哈、貝妮都圍過來，其中布布汪和貝妮更是準備好了爆米花與果汁",
+    "chapter": "第二十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "屆時就可以到黑市，找那名狩獵教會的成員去換【古老憎恨】，以及談妥「神秘之眼核心」的具體價格"
+    ],
+    "context_after": [
+      "畫面中，魔靈化身走在一條街道上，兩側建築光怪陸離，有些房屋內映出迷幻般的紫色微光，看到這特徵，蘇曉判斷出魔靈在某個噩夢庇護所內"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2403506636619568
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "不算",
+    "sentence": "這還不算完，蘇曉從「原罪之書」內剝離「太陽面具」，依然是用晶體核心包裹後，將其傳送到永恆大鐘區域的「世界之力凝聚陣圖」上",
+    "chapter": "第三十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "海量猩紅能量向周邊蔓延，壯觀程度，如同四湧的猩紅之海，打開實時地圖查看，在這世界的西側區域，快速被猩紅所侵染"
+    ],
+    "context_after": [
+      "此時的本世界中心區域，「太陽面具」靜止在距離地面幾米處，代表烈陽的黃金色，逐漸在世界之力的滋養下，化為代表畸變的偏暗金紅，宛如濃鬱的烈陽之血"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.18522758781909943
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "說",
+    "sentence": "蘇曉沒說話，順著樓梯向二樓走去，走到半途，他停下腳步，看向死靈妹的臉，完全記住對方的外貌細節後，繼續抬步上樓",
+    "chapter": "第三十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "「……」"
+    ],
+    "context_after": [
+      "待蘇曉上樓後，水哥開口問道：「看來你要和輪迴樂園的白夜死磕"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "談判",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.37712836265563965
+  },
+  {
+    "character": "蘇曉",
+    "item": "青影王",
+    "verb": "說",
+    "sentence": "說起來，蘇曉現在堪稱是軍團流的剋星，對戰亡靈系時，「青影王」能力會瞬間拉滿，說把亡靈系的召喚物都殺光，那是自大了，可頂著亡靈狂潮，斬了作為亡靈軍團主宰的亡靈系，還是能做到的",
+    "chapter": "第三十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "神聖命運·羅莎的心理陰影面積，蘇曉並不理解，但死魂妹看似不在意，其實心中「記仇值」已經拉滿的情況，他已經感受到，下一輪，宰了這亡靈系"
+    ],
+    "context_after": [
+      "就在蘇曉躺在床|上感到昏昏欲睡時，提示出現"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.3135021924972534,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3135021924972534
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉對這",
+    "verb": "關閉",
+    "sentence": "關閉各類提示，蘇曉對這次的「不死者國度」，相當期待，雖說有損失生命值上限的可怕風險",
+    "chapter": "第三十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "倘若因此，被虛空之樹進行了實質性的裁罰，那麼蘇曉完全可以向輪迴樂園、天啟樂園申請公證，從而獲得高於裁罰很多的補償，他可是剛幫輪迴樂園與天啟樂園奪來了兩個世界，要是因此受到裁罰，連補償性收益都沒有，那反倒是公證的不公平"
+    ],
+    "context_after": [
+      "這世界，應該是曙光樂園放逐與囚困不死特性違規者的地方，至於曙光樂園為何對「不死」這一特點，懲戒如此嚴格，蘇曉不得而知"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2299254685640335
+  },
+  {
+    "character": "蘇曉",
+    "item": "巴哈將這",
+    "verb": "研究",
+    "sentence": "巴哈將這些研究明白後，逐漸發現自己有一種能力，當蘇曉隊進入一個世界後，最多是通過世界簡介，對這世界有大致了解，面對一個敵方勢力時，難免會有外鄉人初到此地的劣勢",
+    "chapter": "第三十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "最開始，巴哈是研究各種通用語言，後來是各族的族群語言，到最後，它開始研究稀奇古怪的語言，比例一些詭譎存在的交涉方法，元素暗靈的獨特精神波動，一些智慧植物的特殊發音語言等"
+    ],
+    "context_after": [
+      "巴哈通過足夠廣泛的交流方式，解決了這劣勢，就比如和一種在空間縫隙中的「寄生腐靈」交涉，這類寄生腐靈的存在周期很長，短則上千年，長則幾萬年，加上它們的惰懶性，經常在一個地方沉溺幾百年"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "探索",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.23253755271434784
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "出鞘",
+    "sentence": "蘇曉單手按在腰間的刀柄，刀雖未出鞘",
+    "chapter": "第三十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "這是名存在了太久的不死者，它的意識、靈魂等都腐朽成灰，看似是恩賜的永生，此時卻如同最殘忍的詛咒，而那顆蒼白心臟，無比渴望活物的生命力，也因此，這已經不怎麼能動的不死者，向蘇曉爬來"
+    ],
+    "context_after": [
+      "錚、錚、錚"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.28407973051071167,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.28407973051071167
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "開口",
+    "sentence": "凱撒開口，蘇曉示意稍等，他打開小隊列表，聯絡隊伍中的神聖命運·羅莎，意思言簡意賅，礙於羅莎在前三輪為0的隊伍貢獻，從現在開始，讓對方單獨行動，更好的發揮對方的優勢，不過這是高情商的說法，比較直接的就是，將其踢出隊伍",
+    "chapter": "第三十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "羅莎似乎有話要說，但醞釀片刻，什麼也沒說出來，看對方的情況，被踢出小隊後，大概率不會離開，而是在本世界繼續尋找「破碎本源」，找到一塊「破碎本源」後，應該會轉到澤麗隊"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "談判",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2637481093406677
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "喝",
+    "sentence": "正喝百香果飲品的芬妮，在看到隊伍名額空出一個後，忽感事情不妙，她安靜的坐在靠前，遠離蘇曉、凱撒的位置，默默雙手捧著飲品杯，叼著吸管，她就是沒有隱身能力，否則現在肯定開個隱身",
+    "chapter": "第三十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "對此，蘇曉沒意見，若非必要，他也不會把羅莎請走，他現在特別需要有一個隊伍空位，只有如此，才能開始操作"
+    ],
+    "context_after": [
+      "奇怪的知識篇：當白夜和凱撒在一起籌備什麼計劃時，不要有半點好奇，一定遠離，以免自身成為這奇怪計劃的參與者——戰鬥天使·芬妮"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.18590492010116577
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "出價",
+    "sentence": "蘇曉這2900盎司的出價，相當有水平，他可是知道的，從3000降到2900，在凱撒的判斷中就是從他兜裡拿走了100盎司時空之力，這對凱撒而言如同奪財割肉，心疼的很",
+    "chapter": "第三十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「3000成交，我們開始吧，你先激活這稱號"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.2907547652721405,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2907547652721405
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "隱",
+    "sentence": "蘇曉單手按在桌上，隱沒在晶體桌面內的契約羊皮紙浮現，這契約表面附著了一層陷阱契約，觸發條件為：『直言說出，拒絕與蘇曉籤訂契約",
+    "chapter": "第三十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "』"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.584043025970459,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.584043025970459
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "是",
+    "sentence": "終端內的畫面，是席克託直面太陽聖劍後的一幕，蘇曉真沒打算以當前版本的「太陽聖劍」炸死席克託，那太看不起人了，之所以給對方這麼一下，是為了對方的壓箱底珍寶，「太陽聖樹」",
+    "chapter": "第三十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "此等情況下，肯定得算計席克託一手，當然，對方現在的戰力，應該是與蘇曉持平，畢竟對方是至強級很高層次，被世界上限壓到絕強最巔峰"
+    ],
+    "context_after": [
+      "邪噁心髒預知到，「太陽聖樹」位於永生會·地下古祭壇，可蘇曉單刷永生會總部，都沒能找到地下古祭壇，他估測，除非知道具體位置，否則就要與這東西失之交臂"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.3005851209163666,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3005851209163666
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉以龍影閃",
+    "verb": "閃",
+    "sentence": "蘇曉以龍影閃消失在原地，出現在貪蟹前方，又是一刀力斬",
+    "chapter": "第三十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "噗嗤～"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.4925552010536194,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.4925552010536194
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "是",
+    "sentence": "更關鍵的一點是，靈魂強度即將達到1500點的蘇曉，怎麼會感知不到白羊那一魂雙體，所獨有的特殊靈魂形態，也因此，他之前都沒敢用刀殺對方，就擔心致命一刀把對方的靈魂斬殺掉，而是罕見的捏斷敵人喉頸",
+    "chapter": "第三十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "二者在靈魂強大程度上，不在一個層級"
+    ],
+    "context_after": [
+      "明白是自己把敵人引過來的白羊，雙眼憤怒到極點"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2698698937892914,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2698698937892914
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "證明",
+    "sentence": "眼下的結果證明，這次的抉擇沒錯，蘇曉定了個時間，開始閉目小憩，直到三小時後，他確定時機剛好後，操控列車減速到低速行駛，他取出通訊器，撥通一個屬於敵對方的頻率，短暫的等待後，會長·席克託的聲音，從通訊器內傳來",
+    "chapter": "第三十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "本來蘇曉都打算去往「紅月墓地」，可在發現，自己設定的靈魂烙印，居然往「紅月墓地」相反方向而去，這就很奇妙，要知道，白羊九成九是有魂傷在身，這等情況下，依然離開曙光城大本營，去往「安眠遺蹟」或「枯骨荒原」，必定是有要事"
+    ],
+    "context_after": [
+      "「看來，是你做的"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "談判",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.25119802355766296
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "留下",
+    "sentence": "留下此言，神父也走進公寓正門，更後面些的月巫看了眼蘇曉，神情平靜，甚至眉頭皺起幾分，顯然是面對敵對方的厭惡，可以說，月巫的演技還是很頂尖的，現在籤了2000多份契約的她，當然不能表現出與蘇曉有所交集",
+    "chapter": "第四十章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "更後面的黑魔小胖子停下腳步，疑惑了看了蘇曉幾秒後，走進公寓內，繃帶男則以有些怪異的步伐行走，就像一具不太靈敏的提線木偶"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "談判",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.32974061369895935
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "治療",
+    "sentence": "在場的治療系與輔助系不少，老牧師，神女，薇薇因、黑眼、芬妮五人你看看我，我看看你，在察覺到神父、蘇曉、凱恩等人彼此看對方的眼神後，這五名治療系當時害怕極了，他們的小體格，怎麼能禁得住這些神仙的禍害，這些傢伙剛開打，作為治療系的他們就會死於不明大範圍能力",
+    "chapter": "第四十章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "豪檮、神父、蘇曉、凱恩、白金使徒、泰莉德六人彼此對視，也基本確定過眼神，終極大boss倒下前，彼此情同手足，而終極大boss倒下後，呵呵"
+    ],
+    "context_after": [
+      "五名治療系彼此確定過眼神，已經彼此約定好，終極大boss倒下的那一刻，快速組成奶媽隊，然後互相套盾+增益+治療等，一同逃出神仙大亂鬥區域"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "治療",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.22503063082695007
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "是",
+    "sentence": "第一個目標是「太陽聖殿」，確定好坐標後，蘇曉在自己前方構成一面2米高，50公分厚的晶體牆，隨後單手按在傳送陣控制中樞上",
+    "chapter": "第四十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "……"
+    ],
+    "context_after": [
+      "冬～"
+    ],
+    "action_type_rule": "控制",
+    "action_type_llm": "控制",
+    "action_type": "控制",
+    "action_confidence": 0.3073560893535614,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3073560893535614
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "裝備",
+    "sentence": "蘇曉從中指摘下枚戒指，這是他穿戴中的戒指之一，【命源君主】，在以往，他要親自殺敵，才能觸發這滋養類裝備的效果，可現在，他的臨時馬甲是「亡靈召喚師」，不必親自殺敵，也能觸發這裝備，為了保險起見，他將這裝備，鑲在召喚陣圖的最中心處",
+    "chapter": "第四十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "不理會死魂妹的幽怨目光，蘇曉來到召喚陣圖中心處，這是他能同時契約很多亡靈生物的原因之一，眼下第一批亡靈生物，已被傳送到詛咒之地的「太陽聖殿」入口前，接下來要做的，是利益最大化"
+    ],
+    "context_after": [
+      "【命源君主】"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.274305522441864,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.274305522441864
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "肯定",
+    "sentence": "一旁凱撒的收益，肯定也不只是表面看上去這些，對此，蘇曉並不好奇，他和凱撒的合作，歷來如此，明面上的收益五五均分，至於各憑本事的隱藏收益，當然是歸各自所有，彼此不試探，不羨慕，更不嫉妒",
+    "chapter": "第四十一章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "除此之外，蘇曉提升的60萬點生命值，以及獲得的三種殺手鐧，都是非常重要的收益"
+    ],
+    "context_after": [
+      "「赴湯蹈火啊，白夜兄"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.4235836863517761,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.4235836863517761
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "出鞘",
+    "sentence": "長刀出鞘，蘇曉從幾米高的怪石上躍下，走向氣息的來源，因周邊飄飛的晝光顆粒，他的步伐不算快",
+    "chapter": "第四十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "錚～"
+    ],
+    "context_after": [
+      "抵達無形氣息旳源頭處，蘇曉看到一塊巴掌大小的透明血肉，正在地上掙扎、湧動，看起來像是要構成什麼形狀，卻又每次都失敗，癱軟成一灘"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.29897281527519226,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.29897281527519226
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "上躍",
+    "sentence": "蘇曉從高塔上躍下，放開感知後，下一秒出現在一處地洞旁，隨後放出魔靈",
+    "chapter": "第四十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "眼下的局面是，方才凝聚了天威的一擊，把這滯塞轟開，重新流動的自然元素，將多年來沉澱出的淤垢都衝刷的一乾二淨，而眼前這壯觀的一幕，就是元素之力在噴發"
+    ],
+    "context_after": [
+      "沒一會，魔靈從地洞內拖出一隻酷似巨蜥的灰鱗怪物，在之前，這怪物有著九階巔峰的戰力，可現在，它已萎靡、無力，看起來活不久了"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2727949321269989,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2727949321269989
+  },
+  {
+    "character": "蘇曉",
+    "item": "永恆級",
+    "verb": "裝備",
+    "sentence": "休息片刻，蘇曉的虛弱感退去了幾分，他查看擊殺星界吞噬者的收益，黃金技能點、永恆級寶箱、源質寶箱都先暫時存著，而【星辰晶核】，這是好東西，在強化永恆級武器時加入此材料，能將強化+0的永恆級裝備，提升到強化+5，節省了不少稀有起源石",
+    "chapter": "第四十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "布布汪、阿姆、巴哈都沒在灰暗聖所，方才在外界時，蘇曉提前讓它們三個去往庇護城，以免那邊的無光神殿出問題，至少在選出新的四巨頭前，這勢力不能出問題"
+    ],
+    "context_after": [
+      "強化永恆級武器，最低標準是稀有起源石，也就是帶有獨特後綴的珍貴起源石，所使用起源石的稀有度越高，本次強化的成功率就越高"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "支援",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.24121716618537903
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "取出",
+    "sentence": "艾朵兒取出一顆水晶眼球，蘇曉接過後，打量片刻，發現這明顯是一件任務物品，如此想來就說得通了，艾朵兒把對方的關鍵任務物品給買走，對方能不盯著她嗎",
+    "chapter": "第四十二章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "「這是件任務物品"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.22124513983726501,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.22124513983726501
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "說",
+    "sentence": "不等這紅袍祭司說完，蘇曉從湧現的死寂能量中，抽出死寂燼滅",
+    "chapter": "第四十三章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "見此，一名獨眼紅袍祭司開口說道：「滅法之影，你別想……」"
+    ],
+    "context_after": [
+      "砰"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.31362396478652954,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.31362396478652954
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "對付",
+    "sentence": "對付蛀世暫且不急，此時最優先的，是讓天賦任務能繼續完成，蘇曉查看小隊頻道，在裡面看到凱撒的消息",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "戰爭領主稱號的強度依舊驚人，但以永光世界的情況來看，單有這稱號，依舊不一定能對付蛀世，還需要將蟲族發展到極致"
+    ],
+    "context_after": [
+      "「我親愛的朋友，沒讓你久等吧"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "潛行",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.25937026739120483
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "傳來",
+    "sentence": "凱撒的聲音突然從鄰座傳來，蘇曉險些拔刀，對方出現的實在太過突然，迄今為止，他都沒搞清，凱撒這忽然出現的能力，是個什麼原理，應該不是空間類能力，否則不可能一點傳送的波動都沒有",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "凱撒現身後，取出一枚盤口大小的金屬圓盤，此物與在地下世界·鮮血祭壇上的血紋圓盤，簡直一模一樣，只是材質與大小不同，鮮血祭壇上的血紋圓盤為巖石質，這血紋圓盤則是黑色金屬質地"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.23166172206401825,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.23166172206401825
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "走出",
+    "sentence": "蘇曉從密室內走出，地下空間內的各類偽裝，開始因伍德撤去能力而逐漸恢復，蘇曉來到巖石高臺上，取下血紋圓盤上所鑲嵌的金屬圓盤",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "和蘇曉預估的相同，如果想降低任務難度，那可謂是異常艱難，可如果想提升任務難度，過程就要簡單很多"
+    ],
+    "context_after": [
+      "就在這時，滿眼怒氣的食暗者走來，只見食暗者滿嘴鯊魚牙都咬到咔咔作響，怒氣十足的問道：「你……下次有這種情況，提前和我說一下"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.31759732961654663
+  },
+  {
+    "character": "蘇曉",
+    "item": "青鋼影",
+    "verb": "隱匿",
+    "sentence": "蘇曉讓開身，示意阿姆踹門後，抽出支香菸點燃，隨著他吐出青煙，絲絲透出藍芒的煙氣，向周邊四散開，混入了微量青鋼影能量的煙氣，能在周邊停留半小時，期間只要有人觸碰到，無論對方以什麼手段隱匿，都會被蘇曉發現",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "蘇曉敲響房門，可過了片刻，並沒人回應，但在感知中，這建築內有一道氣息，並且就是尤莎，對方應該是身處二樓的一間臥室內"
+    ],
+    "context_after": [
+      "踩著木門破碎後的殘屑，蘇曉走進小樓中，原本此地有不少小孩與少年、少女，可不知為何，他兩次來此，都感覺這些小孩與少年，稍微有些不協調，不過這種程度的異樣，並不值得他特意調查，從進入永光世界開始，他很少遇到正常的人，或相對正常的環境"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.19239650666713715,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.19239650666713715
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "準備",
+    "sentence": "大致搞清楚這些，蘇曉不準備再去找尤莎，現在是洛斯娜帶走了尤莎，在對方的保護下，尤莎很安全，後續再去找對方，也不遲",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "然而洛斯娜並不知道，即使現在不打開沙之海深處的封印，那封印之地也困不住猩紅君主多久了，至於和對方說明這點，沒明確證據的情況下，對方並不會相信，所以也就沒必要費這口舌"
+    ],
+    "context_after": [
+      "「我明天要對付噩夢血影，你有興趣參加嗎"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.24445702135562897,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.24445702135562897
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "走出",
+    "sentence": "當蘇曉從酒館內走出時，手中已多了個小人偶，雖不是控偶師面具下掛著的那個，但只要捏碎這小人偶，控偶師保證過會在一小時內趕到",
+    "chapter": "第四十四章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "來到暗街的無人之處，蘇曉布設好傳送陣圖，目光看向布布汪、阿姆、巴哈，阿姆最先慫，慢吞吞的站上傳送陣，隨後是巴哈，布布汪堅持了十幾秒後，最終也站上傳送陣"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "談判",
+    "action_type": "攻擊",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2137475311756134
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "浮現",
+    "sentence": "蘇曉臉上重新浮現笑容，兩人對視片刻後，神父起身告辭，抬步向外走去，這背朝蘇曉的時刻，神父自然用感知鎖定著蘇曉，尤其是，身後的蘇曉隱隱放出血氣，一隻手已按在刀柄末端",
+    "chapter": "第四十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "神父開門向外走去，可他剛踏出房門，就忽然停下腳步，神情中有一閃而逝的詫異感，他抬起右手，金色紋線在上面若隱若現"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.20562216639518738,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.20562216639518738
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "背",
+    "sentence": "方才神父背朝蘇曉向外走時，既防範蘇曉忽然出手，也在防範，蘇曉袖口內那份契約，在神父之前的判斷中，這份藏於蘇曉袖口內的契約，才是對方的殺手鐧",
+    "chapter": "第四十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "原因是，就在方才他出門時，他籤訂了一份契約，更準確的說，是有一層被拉扯、延展到比薄膜還薄的契約媒介，封在門口，在神父出門時觸碰到這薄如無物的媒介時，自然成功籤了契約"
+    ],
+    "context_after": [
+      "按理說，契約這東西，哪怕能製成薄如無物的媒介，也不會觸碰到就籤訂，契約是限制與懲戒，絕不會如此簡單就能籤訂，哪怕蘇曉有著契約宗師水平，也不能違背契約的基本準則"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.20061983168125153,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.20061983168125153
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "抽出",
+    "sentence": "蘇曉從袖口內，抽出那只需觸碰就能籤訂的契約，這契約羊皮紙自行展開，裡面沒有任何內容，這是當然的，這種觸碰就能籤訂的懲戒契約，本身就已經夠離譜，上面自然無法附帶任何內容，或者說，也只能這種沒任何內容的契約，才能有這麼廣泛的籤訂手段",
+    "chapter": "第四十五章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "」"
+    ],
+    "context_after": [
+      "看到這一片空白的懲戒契約，神父的面上神色不變，心中的想法就無從得知了，想來心情不太好，畢竟他方才是一直警惕這東西，才沒察覺到，門口附的一層賜福媒介"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.35079365968704224,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.35079365968704224
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "閉著",
+    "sentence": "蘇曉閉著雙目，但身後的血獸虛影，正以一雙豎瞳盯著眾人",
+    "chapter": "第四十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "此刻蘇曉的模樣有些變化，右手中旳長刀，要比以往長了三分之一，尤其是刀柄部分，都快佔據整把刀的三分之一，這是龍影閃與血刃同步後，所出現的模樣"
+    ],
+    "context_after": [
+      "「我先拖住他，你們先走……」"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.372749000787735,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.372749000787735
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "是",
+    "sentence": "眼下的局面為，蘇曉是絕對的劣勢，因為他並沒有精神系能力，而對面的噩夢血影，其實和他一樣，但對方的噩夢特性，可以逐漸侵蝕蘇曉的意識體",
+    "chapter": "第四十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "從水面上坐起身，蘇曉看了眼自己的胸膛，因為這一擊，軀幹部位，已有三分之一被血煙侵蝕"
+    ],
+    "context_after": [
+      "別看在外面蘇曉+噩夢血影的組合，將一眾強者捶到狼哭鬼嚎，但在意識空間內，蘇曉與噩夢血影間都沒有精神系能力，因此並沒想像中的激烈交鋒"
+    ],
+    "action_type_rule": "未知",
+    "action_type_llm": "攻擊",
+    "action_type": "未知",
+    "action_confidence": 0.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.2656767666339874
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "攻擊",
+    "sentence": "現在的局面是，噩夢血影在此有絕對碾壓的速度，這是噩夢所帶來的特性，而靈魂強度高達860點的蘇曉，則有著一擊秒殺對方的攻擊力",
+    "chapter": "第四十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "別看在外面蘇曉+噩夢血影的組合，將一眾強者捶到狼哭鬼嚎，但在意識空間內，蘇曉與噩夢血影間都沒有精神系能力，因此並沒想像中的激烈交鋒"
+    ],
+    "context_after": [
+      "怎奈，因為沒有精神系能力，導致蘇曉只有近戰，才能發揮出此等攻擊力，哪怕他能單手觸碰到噩夢血影，也能讓對方付出慘重的代價"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.42422404885292053,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.42422404885292053
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉對這",
+    "verb": "融入",
+    "sentence": "布布汪融入環境的能力，其實和希兒是同一個體系，一方是融入環境，另一方是幹擾存在感，也因此，蘇曉對這能力，有著較強的克制力，他雖感知不到融入環境中的布布汪，可長年一起生活，只要布布汪靠近到一定程度，他還是能大致猜出，布布所在位置的",
+    "chapter": "第四十六章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "之所以如此，是因為希兒「存在」層面的隱身，對戰蘇曉時的效果並不好，這近乎強無敵的能力，被蘇曉憑本能猜測，給破解大半"
+    ],
+    "context_after": [
+      "蘇曉猜中希兒在哪的概率，大概在40%～50%，問題是，他是生命值110萬點的近戰系，希兒是暗殺系，一方可以錯很多次，另一方只要錯一次，不死也重傷"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "攻擊",
+    "action_type": "支援",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.1962491273880005
+  },
+  {
+    "character": "蘇曉",
+    "item": "單手按在",
+    "verb": "吞噬",
+    "sentence": "蘇曉單手按在一旁的樹根上，他有種感覺，就是星界吞噬者雖死了，但還會重生，只不過，下一個重生的星界吞噬者，肯定與上一個不同，無論是體態模樣，還是行事方式",
+    "chapter": "第四十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "希兒逐漸消失在感知中，蘇曉的感知放鬆了很多，雖知道希兒是友方，可這暗殺系在感知範圍中時，難免會激活直感能力"
+    ],
+    "context_after": [
+      "簡單而言，每一代的星界吞噬者，都是不同的個體，它們其實是萬界規則中的一部分，那些廢落的星辰，總是需要有什麼東西去吞噬掉，否則不僅會阻礙新的星辰誕生，也會因逐漸腐朽，而滋生出可怕之物"
+    ],
+    "action_type_rule": "逃亡",
+    "action_type_llm": "攻擊",
+    "action_type": "逃亡",
+    "action_confidence": 1.0,
+    "action_source": "rule",
+    "action_confidence_llm": 0.23143190145492554
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "啟動",
+    "sentence": "傳送陣啟動，雜貨哥消失，看到這一幕，蘇曉從座椅上起身，噩夢血影已解決，是時候去狂茂之地，滅了那些滅世級族群",
+    "chapter": "第四十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "得到蘇曉這答覆，雜貨哥啟動傳送陣，背著大包裹，遮著面巾，戴著有些露指尖的老舊手套，這身裝備，與當初在庇護城見面時一樣"
+    ],
+    "context_after": [
+      "……"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.3411681652069092,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.3411681652069092
+  },
+  {
+    "character": "蘇曉",
+    "item": "凱撒的",
+    "verb": "沒察",
+    "sentence": "很明顯，因凱撒的手段，厄運之神還沒察覺到，凱撒已經把【奇異的厄運錢袋】送給了蘇曉",
+    "chapter": "第四十七章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "原本因為看不清【奇異的厄運錢袋】那邊的景象，厄運之神準備先考慮下對策，但這次多件珍寶被抽走，讓他心中的怒火已經攀升到極致，再者說，他曾窺探到是誰得到了【奇異的厄運錢袋】，那是個身材瘦弱的人族小老頭，一看就沒什么正面戰力"
+    ],
+    "context_after": [
+      "想到要面對的對手戰力不強，厄運之神不再猶豫，嗡的一聲，一道空間漩渦在他出現，直接連通【奇異的厄運錢袋】的所在之處，厄運之神飄飛而起，轉瞬沒入到空間漩渦中，此刻，這位滿心怒火的惡神，還不知道自己將要面對什麼"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.16113844513893127,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.16113844513893127
+  },
+  {
+    "character": "蘇曉",
+    "item": "身後的",
+    "verb": "就算",
+    "sentence": "厄運之神站在距離地面十幾米的高空，就算身處此等境地，他依然以俯看的目光，低垂眼帘掃了眼蘇曉、布布汪、阿姆，以及位於蘇曉身後的惡魔焰龍·巴巴託斯",
+    "chapter": "第四十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "厄運之神用【奇異的厄運錢袋】坑死了很多幸運系，罕有失手一次，準備以強大戰力解決，怎奈，到了目的地後，他發現，這次的敵人不太好對付"
+    ],
+    "context_after": [
+      "以厄運之神的傲氣，此時服軟是絕不可能的，因此他準備擒賊先擒王，只見厄運之神周邊的厄運氣息驟然強大，黑色的厄運都凝聚出實體，猶如星星點點的黑色能量般，停滯在周邊的空氣中"
+    ],
+    "action_type_rule": "攻擊",
+    "action_type_llm": "攻擊",
+    "action_type": "攻擊",
+    "action_confidence": 0.2641329765319824,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.2641329765319824
+  },
+  {
+    "character": "蘇曉",
+    "item": "對方的",
+    "verb": "使用",
+    "sentence": "蘇曉落座後，取出【奇異的厄運錢袋】，果不其然，這東西已經無法使用，但也不虧，後續有時間，可以用此裝備作為坐標，抵達厄運之神的神殿，想必對方的財寶，大概率在那存著",
+    "chapter": "第四十八章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "也難怪厄運之神敢孤身來此，原來是有絕強中遊梯隊的實力，在外界，這就已經很強，但在永光世界內，就算現在開啟著「超·界級封禁術式」，這實力都排不到前三十，這還是只算個體強大者，不算滅世級族群"
+    ],
+    "context_after": [
+      "這要等本世界結束時，才有時間去做，眼下最關鍵的是，儘快消滅本世界的滅世級族群"
+    ],
+    "action_type_rule": "支援",
+    "action_type_llm": "支援",
+    "action_type": "支援",
+    "action_confidence": 0.23993153870105743,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.23993153870105743
+  },
+  {
+    "character": "蘇曉",
+    "item": "蘇曉從",
+    "verb": "儲存",
+    "sentence": "蘇曉從儲存空間內取出一件物品，此為【聖天使·偽】",
+    "chapter": "第四十九章",
+    "location": "",
+    "time": "",
+    "context_before": [
+      "此時培育惡魔焰龍，已經太晚，就算以母巢現在的培育效果，外加大本營內的幾十個卵化類蟲族建築，培育2萬隻惡魔焰龍，也需要近三個小時，此時唯一的好消息是，泰坦巨獸的數量已經超過100隻，足夠形成電漿炮雨"
+    ],
+    "context_after": [
+      "【聖天使·偽】"
+    ],
+    "action_type_rule": "控制",
+    "action_type_llm": "控制",
+    "action_type": "控制",
+    "action_confidence": 0.40621092915534973,
+    "action_source": "zero-shot",
+    "action_confidence_llm": 0.40621092915534973
+  }
+]

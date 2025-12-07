@@ -1,0 +1,31 @@
+{
+  "book": "輪迴樂園",
+  "chapters_used": 50,
+  "sentences_used": 1000,
+  "enabled_modules": {
+    "items": true,
+    "relations": true,
+    "context": true,
+    "inference": true,
+    "graphs": true,
+    "emotion_strength": true,
+    "character_rel": true,
+    "hybrid": true,
+    "timeline": true,
+    "mission_timeline": true,
+    "speaker_perspective": true
+  },
+  "zero_shot": {
+    "task": true,
+    "action": true,
+    "emotion": true,
+    "emotion_strength": true
+  },
+  "output_stats": {
+    "items": 50,
+    "relations": 124,
+    "semantic_relations": 124,
+    "timeline": 10232,
+    "mission_timeline": 124
+  }
+}
