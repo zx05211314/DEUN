@@ -13,19 +13,20 @@ from __future__ import annotations
 
 import json
 import subprocess
+from importlib import util
 from pathlib import Path
 from typing import Any, Dict, List
 
 import pandas as pd
+import plotly.express as px
 import streamlit as st
 from app.components.interactive_graph import render_interactive_graph
 from app.components.timeline_chart import timeline_bar
 from scripts.clean_output import clean_book_output
 
-try:
+plotly_events = None
+if util.find_spec("streamlit_plotly_events"):
     from streamlit_plotly_events import plotly_events
-except Exception:
-    plotly_events = None
 
 
 # ----------------------------------------------------------------------
@@ -252,12 +253,21 @@ def semantic_filters(semantic_data):
         voice_sel = st.selectbox("語態", options=["全部"] + voices, index=0)
     with col3:
         persp_sel = st.selectbox("情緒來源", options=["全部"] + perspectives, index=0)
+    keyword = st.text_input("句子/事件關鍵字過濾", value="")
     low_conf_only = st.checkbox("只顯示低信度項目", value=False)
-    return speaker_sel, voice_sel, persp_sel, low_conf_only
+    return speaker_sel, voice_sel, persp_sel, keyword, low_conf_only
 
 
-def apply_semantic_filters(sem: List[Dict], speaker_sel: str, voice_sel: str, persp_sel: str, low_conf_only: bool):
+def apply_semantic_filters(
+    sem: List[Dict],
+    speaker_sel: str,
+    voice_sel: str,
+    persp_sel: str,
+    keyword: str,
+    low_conf_only: bool,
+):
     filtered = []
+    keyword_lower = (keyword or "").strip().lower()
     for r in sem or []:
         if speaker_sel != "全部" and r.get("speaker") != speaker_sel:
             continue
@@ -267,8 +277,48 @@ def apply_semantic_filters(sem: List[Dict], speaker_sel: str, voice_sel: str, pe
             continue
         if low_conf_only and not r.get("low_confidence"):
             continue
+        if keyword_lower:
+            sentence = (r.get("sentence") or r.get("event") or "").lower()
+            if keyword_lower not in sentence:
+                continue
         filtered.append(r)
     return filtered
+
+
+def render_overview_cards(sem_filtered: List[Dict]):
+    total = len(sem_filtered)
+    low_conf = sum(1 for r in sem_filtered if r.get("low_confidence"))
+    speakers = {r.get("speaker") for r in sem_filtered if r.get("speaker")}
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("語意筆數", f"{total}")
+    col2.metric("低信度筆數", f"{low_conf}")
+    col3.metric("獨立語者", f"{len(speakers)}")
+
+
+def render_emotion_charts(sem_filtered: List[Dict]):
+    if not sem_filtered:
+        return
+
+    df = pd.DataFrame(sem_filtered)
+    with st.expander("情緒分布圖表", expanded=False):
+        if "emotion" in df.columns and not df["emotion"].dropna().empty:
+            emo_counts = df["emotion"].value_counts().reset_index()
+            emo_counts.columns = ["emotion", "count"]
+            fig = px.bar(emo_counts, x="emotion", y="count", title="情緒類別分布")
+            st.plotly_chart(fig, use_container_width=True)
+
+        if "emotion_perspective" in df.columns and not df["emotion_perspective"].dropna().empty:
+            persp_counts = df["emotion_perspective"].value_counts().reset_index()
+            persp_counts.columns = ["perspective", "count"]
+            fig2 = px.bar(
+                persp_counts,
+                x="perspective",
+                y="count",
+                title="情緒觀點分布",
+                color="perspective",
+            )
+            st.plotly_chart(fig2, use_container_width=True)
 
 
 def render_detail_panel(selected_item: Dict[str, Any]):
@@ -481,10 +531,19 @@ def main():
     st.title(f"語意關聯表 - {current_book}")
     render_metadata(outputs.get("metadata", {}), book_dir)
 
-    speaker_sel, voice_sel, persp_sel, low_conf_only = semantic_filters(outputs.get("semantic_relations", []))
-    sem_filtered = apply_semantic_filters(outputs.get("semantic_relations", []), speaker_sel, voice_sel, persp_sel, low_conf_only)
+    speaker_sel, voice_sel, persp_sel, keyword, low_conf_only = semantic_filters(outputs.get("semantic_relations", []))
+    sem_filtered = apply_semantic_filters(
+        outputs.get("semantic_relations", []),
+        speaker_sel,
+        voice_sel,
+        persp_sel,
+        keyword,
+        low_conf_only,
+    )
 
+    render_overview_cards(sem_filtered)
     render_tables(sem_filtered)
+    render_emotion_charts(sem_filtered)
     render_graphs(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
