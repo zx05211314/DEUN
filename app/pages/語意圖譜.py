@@ -298,28 +298,42 @@ def render_overview_cards(sem_filtered: List[Dict]):
 
 
 def render_emotion_charts(sem_filtered: List[Dict]):
-    if not sem_filtered:
-        return
+    with st.expander("情緒與視角統計", expanded=False):
+        if not sem_filtered:
+            st.info("目前篩選條件下沒有任何語意關聯資料。")
+            return
 
-    df = pd.DataFrame(sem_filtered)
-    with st.expander("情緒分布圖表", expanded=False):
+        df = pd.DataFrame(sem_filtered)
+
+        total = len(sem_filtered)
+        low_conf = sum(1 for r in sem_filtered if r.get("low_confidence"))
+        speakers = {r.get("speaker") for r in sem_filtered if r.get("speaker")}
+
+        stat_cols = st.columns(3)
+        stat_cols[0].metric("語意筆數", f"{total}")
+        stat_cols[1].metric("低信度筆數", f"{low_conf}")
+        stat_cols[2].metric("獨立語者", f"{len(speakers)}")
+
         if "emotion" in df.columns and not df["emotion"].dropna().empty:
-            emo_counts = df["emotion"].value_counts().reset_index()
+            emo_series = df["emotion"].dropna()
+        elif "emotion_perspective" in df.columns and not df["emotion_perspective"].dropna().empty:
+            emo_series = df["emotion_perspective"].dropna()
+        else:
+            emo_series = pd.Series(dtype=object)
+
+        if not emo_series.empty:
+            emo_counts = emo_series.value_counts().reset_index()
             emo_counts.columns = ["emotion", "count"]
-            fig = px.bar(emo_counts, x="emotion", y="count", title="情緒類別分布")
+            fig = px.bar(emo_counts, x="emotion", y="count", title="情緒 / 視角分布")
             st.plotly_chart(fig, use_container_width=True)
 
-        if "emotion_perspective" in df.columns and not df["emotion_perspective"].dropna().empty:
-            persp_counts = df["emotion_perspective"].value_counts().reset_index()
-            persp_counts.columns = ["perspective", "count"]
-            fig2 = px.bar(
-                persp_counts,
-                x="perspective",
-                y="count",
-                title="情緒觀點分布",
-                color="perspective",
+        if "voice" in df.columns and not df["voice"].dropna().empty:
+            voice_counts = df["voice"].dropna().value_counts().reset_index()
+            voice_counts.columns = ["voice", "count"]
+            voice_fig = px.bar(
+                voice_counts, x="voice", y="count", title="語態 / 視角分布", color="voice"
             )
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(voice_fig, use_container_width=True)
 
 
 def render_detail_panel(selected_item: Dict[str, Any]):
@@ -405,6 +419,74 @@ def render_speaker_summary(speaker_summary: dict):
             st.markdown(f"**{name}**")
             for line, strength in entries:
                 st.markdown(f"- {line}（強度: {strength}）")
+
+
+def render_role_comparison(sem_filtered: List[Dict], speaker_summary: dict):
+    st.subheader("角色比較")
+    if not sem_filtered:
+        st.info("請先選擇至少一位角色，或調整篩選條件。")
+        return
+
+    df = pd.DataFrame(sem_filtered)
+    speakers = sorted({s for s in df.get("speaker", []) if s})
+
+    selected = st.multiselect(
+        "選擇要比較的角色（最多 3 名）",
+        options=speakers,
+        max_selections=3,
+    )
+
+    if not selected:
+        st.info("請先選擇至少一位角色，或調整篩選條件。")
+        return
+
+    rows = []
+    for name in selected:
+        speaker_rows = df[df["speaker"] == name]
+        total_rel = len(speaker_rows)
+        low_conf_rel = (
+            speaker_rows["low_confidence"].fillna(False).sum()
+            if "low_confidence" in speaker_rows.columns
+            else 0
+        )
+
+        emo_values = []
+        if "emotion" in speaker_rows.columns:
+            emo_values.extend([e for e in speaker_rows["emotion"].dropna()])
+        if "emotion_perspective" in speaker_rows.columns:
+            emo_values.extend([e for e in speaker_rows["emotion_perspective"].dropna()])
+
+        unique_emotions = len(set(emo_values))
+        rows.append(
+            {
+                "角色": name,
+                "語意關聯數量": total_rel,
+                "低信度關聯數量": int(low_conf_rel),
+                "情緒類型數量": unique_emotions,
+            }
+        )
+
+    comparison_df = pd.DataFrame(rows)
+    st.dataframe(comparison_df, width="stretch")
+
+    chart_df = comparison_df.copy()
+    chart_fig = px.bar(
+        chart_df,
+        x="角色",
+        y="語意關聯數量",
+        color="低信度關聯數量",
+        title="角色語意關聯比較",
+    )
+    st.plotly_chart(chart_fig, use_container_width=True)
+
+    if speaker_summary:
+        with st.expander("語者摘要對照", expanded=False):
+            for name in selected:
+                if name not in speaker_summary:
+                    continue
+                st.markdown(f"**{name}**")
+                for line, strength in speaker_summary[name]:
+                    st.markdown(f"- {line}（強度: {strength}）")
 
 
 def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
@@ -547,6 +629,7 @@ def main():
     render_overview_cards(sem_filtered)
     render_tables(sem_filtered)
     render_emotion_charts(sem_filtered)
+    render_role_comparison(sem_filtered, outputs.get("speaker_summary", {}))
     render_graphs(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
