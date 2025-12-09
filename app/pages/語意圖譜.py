@@ -24,8 +24,9 @@ from app.components.interactive_graph import render_interactive_graph
 from app.components.timeline_chart import timeline_bar
 from scripts.clean_output import clean_book_output
 
+plotly_events_available = util.find_spec("streamlit_plotly_events") is not None
 plotly_events = None
-if util.find_spec("streamlit_plotly_events"):
+if plotly_events_available:
     from streamlit_plotly_events import plotly_events
 
 
@@ -358,6 +359,8 @@ def render_tables(sem_filtered: List[Dict]):
 
 def render_timeline(timeline_data: List[Dict], sem_filtered: List[Dict]):
     st.subheader("時間線")
+    if not plotly_events_available:
+        st.caption("未安裝 streamlit_plotly_events，點擊圖表以檢視事件詳情的功能已停用。")
     if not timeline_data:
         st.info("尚無時間線資料。")
         return None
