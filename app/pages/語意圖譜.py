@@ -13,12 +13,15 @@ from __future__ import annotations
 
 import json
 import subprocess
+from collections import Counter
 from importlib import util
+from itertools import combinations
 from pathlib import Path
 from typing import Any, Dict, List
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 from app.components.interactive_graph import render_interactive_graph
 from app.components.timeline_chart import timeline_bar
@@ -489,6 +492,107 @@ def render_role_comparison(sem_filtered: List[Dict], speaker_summary: dict):
                     st.markdown(f"- {line}（強度: {strength}）")
 
 
+def extract_characters_from_relation(rel: Dict[str, Any]) -> List[str]:
+    participants = set()
+
+    if isinstance(rel.get("participants"), list):
+        for p in rel["participants"]:
+            if isinstance(p, str) and p.strip():
+                participants.add(p.strip())
+
+    candidate_fields = [
+        "speaker",
+        "character",
+        "target_speaker",
+        "target_character",
+        "other_speaker",
+        "listener",
+        "subject",
+        "object_character",
+        "object_speaker",
+        "target",
+    ]
+
+    for field in candidate_fields:
+        val = rel.get(field)
+        if isinstance(val, str) and val.strip():
+            participants.add(val.strip())
+
+    return [p for p in participants if p]
+
+
+def render_interaction_heatmap(sem_filtered: List[Dict]):
+    st.subheader("角色互動熱度矩陣")
+
+    if not sem_filtered:
+        st.info("目前篩選條件下沒有任何語意關聯資料，無法計算角色互動。")
+        return
+
+    pair_counts: Counter = Counter()
+    character_totals: Counter = Counter()
+    for rel in sem_filtered:
+        participants = extract_characters_from_relation(rel)
+        if len(participants) < 2:
+            continue
+        for a, b in combinations(sorted(set(participants)), 2):
+            pair_counts[(a, b)] += 1
+            character_totals[a] += 1
+            character_totals[b] += 1
+
+    if not pair_counts:
+        st.info("目前角色數量過少，無法繪製互動熱度矩陣。請放寬篩選條件或選擇其他書目。")
+        return
+
+    total_interactions = int(sum(pair_counts.values()))
+    distinct_pairs = len(pair_counts)
+    characters = sorted(character_totals.keys())
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("總互動對數", distinct_pairs)
+    col2.metric("總互動次數", total_interactions)
+    col3.metric("角色數量", len(characters))
+
+    top_pairs = (
+        pd.DataFrame(
+            [
+                {"角色 A": a, "角色 B": b, "互動次數": cnt}
+                for (a, b), cnt in pair_counts.most_common()
+            ]
+        )
+        .sort_values("互動次數", ascending=False)
+        .head(20)
+    )
+    st.dataframe(top_pairs, width="stretch")
+
+    slider_max = max(2, len(characters))
+    top_n = st.slider("顯示前 N 位角色", min_value=2, max_value=slider_max, value=min(20, slider_max))
+
+    sorted_chars = [c for c, _ in character_totals.most_common(top_n)]
+    if len(sorted_chars) < 2:
+        st.info("目前角色數量過少，無法繪製互動熱度矩陣。請放寬篩選條件或選擇其他書目。")
+        return
+
+    matrix = pd.DataFrame(0, index=sorted_chars, columns=sorted_chars)
+    for (a, b), cnt in pair_counts.items():
+        if a in matrix.index and b in matrix.columns:
+            matrix.loc[a, b] = cnt
+            matrix.loc[b, a] = cnt
+
+    heatmap = go.Figure(
+        data=[
+            go.Heatmap(
+                z=matrix.values,
+                x=matrix.columns,
+                y=matrix.index,
+                colorscale="YlOrRd",
+                colorbar=dict(title="互動次數"),
+            )
+        ]
+    )
+    heatmap.update_layout(xaxis_title="角色", yaxis_title="角色")
+    st.plotly_chart(heatmap, use_container_width=True)
+
+
 def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
     st.subheader("下載")
     low_rows = [r for r in sem_filtered if r.get("low_confidence")]
@@ -630,6 +734,7 @@ def main():
     render_tables(sem_filtered)
     render_emotion_charts(sem_filtered)
     render_role_comparison(sem_filtered, outputs.get("speaker_summary", {}))
+    render_interaction_heatmap(sem_filtered)
     render_graphs(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
