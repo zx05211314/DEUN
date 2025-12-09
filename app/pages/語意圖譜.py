@@ -17,7 +17,7 @@ from collections import Counter
 from importlib import util
 from itertools import combinations
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 import plotly.express as px
@@ -298,6 +298,33 @@ def render_overview_cards(sem_filtered: List[Dict]):
     col1.metric("語意筆數", f"{total}")
     col2.metric("低信度筆數", f"{low_conf}")
     col3.metric("獨立語者", f"{len(speakers)}")
+
+
+EMOTION_SCORE_MAP = {
+    "極度負向": -2,
+    "負向": -1,
+    "憤怒": -1,
+    "悲傷": -1,
+    "害怕": -1,
+    "中性": 0,
+    "平靜": 0,
+    "正向": 1,
+    "期待": 1,
+    "開心": 1,
+    "極度正向": 2,
+}
+
+
+def map_emotion_score(value: Optional[Any]) -> float:
+    """將情緒標籤映射為簡易分數；未命中則視為 0。"""
+
+    if value is None:
+        return 0.0
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        return float(EMOTION_SCORE_MAP.get(value.strip(), 0))
+    return 0.0
 
 
 def render_emotion_charts(sem_filtered: List[Dict]):
@@ -593,6 +620,119 @@ def render_interaction_heatmap(sem_filtered: List[Dict]):
     st.plotly_chart(heatmap, use_container_width=True)
 
 
+def render_story_emotion_arc(outputs: dict, sem_filtered: List[Dict]):
+    st.subheader("故事情緒曲線")
+
+    timeline_data = outputs.get("timeline") or []
+    source_data = timeline_data if timeline_data else sem_filtered
+
+    if not source_data:
+        st.info("目前沒有可用的時間線或語意資料，無法繪製故事情緒曲線。")
+        return
+
+    def order_key(item: Dict[str, Any]):
+        for key in ("order", "index", "idx", "position", "sequence", "seq", "id", "time_idx"):
+            val = item.get(key)
+            if isinstance(val, (int, float)):
+                return val
+        return None
+
+    ordered_items = sorted(
+        enumerate(source_data),
+        key=lambda pair: (order_key(pair[1]) if order_key(pair[1]) is not None else pair[0]),
+    )
+
+    rows = []
+    for pos, (_, item) in enumerate(ordered_items, start=1):
+        numeric_score = None
+        for cand in ("emotion_score", "sentiment_score", "valence"):
+            if cand in item and isinstance(item.get(cand), (int, float)):
+                numeric_score = float(item[cand])
+                break
+
+        emotion_value = numeric_score
+        if emotion_value is None:
+            emotion_value = item.get("emotion") or item.get("emotion_perspective")
+
+        rows.append(
+            {
+                "position": pos,
+                "emotion_score": map_emotion_score(emotion_value),
+                "speaker": item.get("speaker"),
+                "chapter": item.get("chapter"),
+            }
+        )
+
+    df = pd.DataFrame(rows)
+    available_speakers = sorted({s for s in df["speaker"] if s})
+    selected_speakers = st.multiselect(
+        "僅顯示特定角色的情緒曲線（可留空顯示全部）",
+        options=available_speakers,
+    )
+
+    if selected_speakers:
+        df = df[df["speaker"].isin(selected_speakers)]
+
+    if df.empty:
+        st.info("目前資料點數太少，無法繪製有意義的情緒曲線。請放寬篩選條件或選擇其他角色。")
+        return
+
+    window = st.select_slider(
+        "平滑視窗大小",
+        options=[1, 3, 5, 7, 11],
+        value=3,
+        help="使用移動平均平滑情緒分數，1 為不平滑。",
+    )
+
+    if len(df) < 3:
+        st.info("目前資料點數太少，無法繪製有意義的情緒曲線。請放寬篩選條件或選擇其他角色。")
+        return
+
+    fig = go.Figure()
+
+    if selected_speakers:
+        for name in selected_speakers:
+            sub = df[df["speaker"] == name].sort_values("position")
+            if sub.empty:
+                continue
+            sub["smoothed"] = sub["emotion_score"].rolling(
+                window=window, center=True, min_periods=1
+            ).mean()
+            fig.add_trace(
+                go.Scatter(
+                    x=sub["position"],
+                    y=sub["smoothed"],
+                    mode="lines+markers",
+                    name=name,
+                )
+            )
+    else:
+        df_sorted = df.sort_values("position")
+        df_sorted["smoothed"] = df_sorted["emotion_score"].rolling(
+            window=window, center=True, min_periods=1
+        ).mean()
+        fig.add_trace(
+            go.Scatter(
+                x=df_sorted["position"],
+                y=df_sorted["smoothed"],
+                mode="lines+markers",
+                name="整體情緒",
+            )
+        )
+
+    if not fig.data:
+        st.info("目前資料點數太少，無法繪製有意義的情緒曲線。請放寬篩選條件或選擇其他角色。")
+        return
+
+    fig.update_layout(
+        title="故事情緒曲線",
+        xaxis_title="故事進程（事件序號）",
+        yaxis_title="情緒分數",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    st.caption("情緒分數為簡化映射，僅供觀察趨勢使用。")
+
+
 def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
     st.subheader("下載")
     low_rows = [r for r in sem_filtered if r.get("low_confidence")]
@@ -736,6 +876,7 @@ def main():
     render_role_comparison(sem_filtered, outputs.get("speaker_summary", {}))
     render_interaction_heatmap(sem_filtered)
     render_graphs(outputs, sem_filtered)
+    render_story_emotion_arc(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
     render_downloads(current_book, sem_filtered, outputs.get("speaker_summary", {}))
