@@ -314,6 +314,15 @@ EMOTION_SCORE_MAP = {
     "極度正向": 2,
 }
 
+POV_GROUPS = {
+    "第一人稱": "第一人稱",
+    "我": "第一人稱",
+    "我方": "第一人稱",
+    "第三人稱": "第三人稱",
+    "全知視角": "第三人稱全知",
+    "全知": "第三人稱全知",
+}
+
 
 def map_emotion_score(value: Optional[Any]) -> float:
     """將情緒標籤映射為簡易分數；未命中則視為 0。"""
@@ -733,6 +742,116 @@ def render_story_emotion_arc(outputs: dict, sem_filtered: List[Dict]):
     st.caption("情緒分數為簡化映射，僅供觀察趨勢使用。")
 
 
+def render_pov_shift_map(outputs: dict, sem_filtered: List[Dict]):
+    st.subheader("敘事視角變化圖")
+
+    timeline_data = outputs.get("timeline") or []
+    source_data = timeline_data if timeline_data else sem_filtered
+
+    if not source_data:
+        st.info("目前沒有可用的時間線或語意資料，無法繪製敘事視角變化圖。")
+        return
+
+    def order_key(item: Dict[str, Any]):
+        for key in ("order", "index", "idx", "position", "sequence", "seq", "id", "time_idx"):
+            val = item.get(key)
+            if isinstance(val, (int, float)):
+                return val
+        return None
+
+    ordered_items = sorted(
+        enumerate(source_data),
+        key=lambda pair: (order_key(pair[1]) if order_key(pair[1]) is not None else pair[0]),
+    )
+
+    records: List[Dict[str, Any]] = []
+    for pos, (_, item) in enumerate(ordered_items, start=1):
+        voice_val = item.get("voice") or item.get("emotion_perspective")
+        records.append(
+            {
+                "position": pos,
+                "voice": voice_val,
+                "speaker": item.get("speaker"),
+                "chapter": item.get("chapter"),
+            }
+        )
+
+    df = pd.DataFrame(records)
+    if df.empty:
+        st.info("目前資料點數太少，無法繪製有意義的視角變化圖。請放寬篩選條件或選擇其他角色。")
+        return
+
+    df["pov_group"] = df["voice"].map(POV_GROUPS).fillna(df["voice"].fillna("其他"))
+
+    available_speakers = sorted({s for s in df["speaker"] if s})
+    selected_speakers = st.multiselect(
+        "僅顯示特定角色的視角變化（可留空顯示全部）",
+        options=available_speakers,
+    )
+
+    if selected_speakers:
+        df = df[df["speaker"].isin(selected_speakers)]
+
+    if len(df) < 3:
+        st.info("目前資料點數太少，無法繪製有意義的視角變化圖。請放寬篩選條件或選擇其他角色。")
+        return
+
+    window = st.select_slider(
+        "視角統計視窗大小",
+        options=[1, 5, 10, 20],
+        value=1,
+        help="可將事件分段後觀察主要敘事視角變化。",
+    )
+
+    df_sorted = df.sort_values("position").copy()
+    if window > 1:
+        df_sorted["window"] = (df_sorted["position"] - 1) // window
+        aggregated = (
+            df_sorted.groupby("window")
+            .agg(
+                position_start=("position", "min"),
+                position_end=("position", "max"),
+                position_mid=("position", "mean"),
+                pov_group=("pov_group", lambda s: s.value_counts().idxmax()),
+            )
+            .reset_index(drop=True)
+        )
+        plot_df = aggregated.rename(columns={"position_mid": "position"})[["position", "pov_group"]]
+    else:
+        plot_df = df_sorted[["position", "pov_group"]]
+
+    if len(plot_df) < 3:
+        st.info("目前資料點數太少，無法繪製有意義的視角變化圖。請放寬篩選條件或選擇其他角色。")
+        return
+
+    pov_categories = sorted(plot_df["pov_group"].dropna().unique())
+    pov_to_idx = {p: i for i, p in enumerate(pov_categories)}
+    plot_df["pov_idx"] = plot_df["pov_group"].map(pov_to_idx)
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=plot_df["position"],
+            y=plot_df["pov_idx"],
+            mode="lines+markers",
+            line_shape="hv" if window == 1 else "linear",
+            text=plot_df["pov_group"],
+            hovertemplate="事件序號: %{x}<br>敘事視角: %{text}<extra></extra>",
+            name="敘事視角",
+        )
+    )
+
+    fig.update_layout(
+        title="敘事視角變化圖",
+        xaxis_title="故事進程（事件序號）",
+        yaxis_title="敘事視角",
+        yaxis=dict(tickmode="array", tickvals=list(pov_to_idx.values()), ticktext=pov_categories),
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    if window > 1:
+        st.caption("已按視窗大小彙整後顯示主要敘事視角。")
+
 def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
     st.subheader("下載")
     low_rows = [r for r in sem_filtered if r.get("low_confidence")]
@@ -877,6 +996,7 @@ def main():
     render_interaction_heatmap(sem_filtered)
     render_graphs(outputs, sem_filtered)
     render_story_emotion_arc(outputs, sem_filtered)
+    render_pov_shift_map(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
     render_downloads(current_book, sem_filtered, outputs.get("speaker_summary", {}))
