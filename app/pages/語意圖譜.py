@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import subprocess
 from collections import Counter
+import math
 from importlib import util
 from itertools import combinations
 from pathlib import Path
@@ -322,6 +323,17 @@ POV_GROUPS = {
     "全知視角": "第三人稱全知",
     "全知": "第三人稱全知",
 }
+
+
+def categorize_emotion_label(value: Optional[Any]) -> str:
+    """將情緒標籤分類為正向/負向/中性，未知以中性處理。"""
+
+    score = map_emotion_score(value)
+    if score > 0:
+        return "正向"
+    if score < 0:
+        return "負向"
+    return "中性"
 
 
 def map_emotion_score(value: Optional[Any]) -> float:
@@ -852,6 +864,250 @@ def render_pov_shift_map(outputs: dict, sem_filtered: List[Dict]):
     if window > 1:
         st.caption("已按視窗大小彙整後顯示主要敘事視角。")
 
+
+def render_chapter_comparison(outputs: dict, sem_filtered: List[Dict]):
+    st.subheader("章節比較")
+
+    timeline_data = outputs.get("timeline") or []
+    source_data = timeline_data if timeline_data else sem_filtered
+
+    if not source_data:
+        st.info("目前沒有足夠的時間線或章節資訊，無法進行章節比較。")
+        return
+
+    def order_key(item: Dict[str, Any]):
+        for key in ("order", "index", "idx", "position", "sequence", "seq", "id", "time_idx"):
+            val = item.get(key)
+            if isinstance(val, (int, float)):
+                return val
+        return None
+
+    ordered_items = sorted(
+        enumerate(source_data),
+        key=lambda pair: (order_key(pair[1]) if order_key(pair[1]) is not None else pair[0]),
+    )
+
+    records: List[Dict[str, Any]] = []
+    has_explicit_chapter = False
+    for pos, (_, item) in enumerate(ordered_items, start=1):
+        chapter_label: Optional[str] = None
+        chapter_index: Optional[int] = None
+
+        # 嘗試從常見欄位取得章節資訊
+        for field in ("chapter", "chapter_title"):
+            val = item.get(field)
+            if isinstance(val, str) and val.strip():
+                chapter_label = val.strip()
+                break
+            if isinstance(val, (int, float)):
+                chapter_index = int(val)
+                chapter_label = f"第 {chapter_index} 章"
+                break
+
+        if chapter_index is None and isinstance(item.get("chapter_index"), (int, float)):
+            chapter_index = int(item.get("chapter_index"))
+            chapter_label = chapter_label or f"第 {chapter_index} 章"
+
+        if chapter_label or chapter_index is not None:
+            has_explicit_chapter = True
+
+        emotion_label = item.get("emotion") or item.get("emotion_perspective")
+        voice_val = item.get("voice") or item.get("emotion_perspective")
+
+        records.append(
+            {
+                "position": pos,
+                "chapter": chapter_label,
+                "chapter_index": chapter_index,
+                "speaker": item.get("speaker"),
+                "emotion_label": emotion_label,
+                "pov_group": voice_val,
+                "low_confidence": bool(item.get("low_confidence")),
+            }
+        )
+
+    if not records:
+        st.info("目前沒有足夠的時間線或章節資訊，無法進行章節比較。")
+        return
+
+    # 若缺少章節欄位，以固定分段方式建立章節標籤。
+    if not has_explicit_chapter:
+        segment_size = max(1, math.ceil(len(records) / 10))
+        for idx, rec in enumerate(records):
+            segment = idx // segment_size + 1
+            rec["chapter"] = f"第 {segment} 段"
+            rec["chapter_index"] = segment
+
+    df_events = pd.DataFrame(records)
+    if df_events.empty:
+        st.info("目前沒有足夠的時間線或章節資訊，無法進行章節比較。")
+        return
+
+    df_events["chapter"] = df_events["chapter"].fillna(method="ffill").fillna(method="bfill")
+    if df_events["chapter"].isna().any():
+        df_events["chapter"] = df_events["chapter"].fillna(
+            df_events["position"].apply(lambda p: f"第 {p} 段")
+        )
+
+    chapter_order = {name: idx for idx, name in enumerate(df_events["chapter"].unique(), start=1)}
+    df_events["chapter_index"] = df_events["chapter_index"].fillna(df_events["chapter"].map(chapter_order))
+    df_events["chapter_index"] = df_events["chapter_index"].fillna(df_events["position"]).astype(int)
+
+    df_events["pov_group"] = df_events["pov_group"].map(POV_GROUPS).fillna(
+        df_events["pov_group"].fillna("其他")
+    )
+    df_events["emotion_category"] = df_events["emotion_label"].apply(categorize_emotion_label)
+
+    available_speakers = sorted({s for s in df_events["speaker"] if s})
+    speaker_filter = st.multiselect(
+        "可選擇特定角色，只比較其參與的章節統計（可留空顯示全部）",
+        options=available_speakers,
+    )
+
+    filtered_events = (
+        df_events[df_events["speaker"].isin(speaker_filter)] if speaker_filter else df_events
+    )
+
+    if filtered_events.empty:
+        st.info("目前可比較的章節數量不足，請放寬篩選條件或選擇其他書目。")
+        return
+
+    chapter_groups = filtered_events.groupby(["chapter", "chapter_index"], sort=False)
+    chapter_rows: List[Dict[str, Any]] = []
+    for (chapter_name, chapter_idx), grp in chapter_groups:
+        event_count = len(grp)
+        if event_count == 0:
+            continue
+        speaker_count = grp["speaker"].dropna().nunique()
+        emotion_counts = grp["emotion_category"].value_counts()
+        positive_ratio = float(emotion_counts.get("正向", 0) / event_count)
+        negative_ratio = float(emotion_counts.get("負向", 0) / event_count)
+        neutral_ratio = float(emotion_counts.get("中性", 0) / event_count)
+        dominant_pov = grp["pov_group"].dropna().mode().iloc[0] if not grp["pov_group"].dropna().empty else "未知"
+
+        chapter_rows.append(
+            {
+                "chapter_name": chapter_name,
+                "chapter_index": chapter_idx,
+                "event_count": event_count,
+                "unique_speakers": speaker_count,
+                "interaction_density": event_count,
+                "positive_ratio": positive_ratio,
+                "negative_ratio": negative_ratio,
+                "neutral_ratio": neutral_ratio,
+                "dominant_pov": dominant_pov,
+            }
+        )
+
+    df_chapters = pd.DataFrame(chapter_rows).sort_values("chapter_index")
+
+    if df_chapters.empty:
+        st.info("目前可比較的章節數量不足，請放寬篩選條件或選擇其他書目。")
+        return
+
+    chapter_options = list(df_chapters["chapter_name"])
+    default_selection = chapter_options[: min(3, len(chapter_options))]
+    selected_chapters = st.multiselect(
+        "選擇要比較的章節（最多 3 個）",
+        options=chapter_options,
+        default=default_selection,
+        max_selections=3,
+    )
+
+    if not selected_chapters:
+        selected_chapters = default_selection
+
+    selected_df = df_chapters[df_chapters["chapter_name"].isin(selected_chapters)]
+
+    if len(selected_df) < 2:
+        st.info("目前可比較的章節數量不足，請放寬篩選條件或選擇其他書目。")
+        return
+
+    display_df = selected_df[
+        [
+            "chapter_name",
+            "event_count",
+            "unique_speakers",
+            "interaction_density",
+            "positive_ratio",
+            "negative_ratio",
+            "neutral_ratio",
+            "dominant_pov",
+        ]
+    ].rename(
+        columns={
+            "chapter_name": "章節",
+            "event_count": "事件數量",
+            "unique_speakers": "不同角色數量",
+            "interaction_density": "互動密度",
+            "positive_ratio": "正向情緒比例",
+            "negative_ratio": "負向情緒比例",
+            "neutral_ratio": "中性情緒比例",
+            "dominant_pov": "優勢視角",
+        }
+    )
+    st.dataframe(display_df, width="stretch")
+
+    event_fig = px.bar(
+        selected_df,
+        x="chapter_name",
+        y="event_count",
+        title="章節事件數量比較",
+        labels={"chapter_name": "章節", "event_count": "事件數量"},
+    )
+    st.plotly_chart(event_fig, use_container_width=True)
+
+    speaker_fig = px.bar(
+        selected_df,
+        x="chapter_name",
+        y="unique_speakers",
+        title="章節角色多樣性比較",
+        labels={"chapter_name": "章節", "unique_speakers": "不同角色數量"},
+    )
+    st.plotly_chart(speaker_fig, use_container_width=True)
+
+    emo_long = selected_df.melt(
+        id_vars=["chapter_name"],
+        value_vars=["positive_ratio", "negative_ratio", "neutral_ratio"],
+        var_name="情緒類型",
+        value_name="比例",
+    )
+    emo_long["情緒類型"] = emo_long["情緒類型"].map(
+        {
+            "positive_ratio": "正向",
+            "negative_ratio": "負向",
+            "neutral_ratio": "中性",
+        }
+    )
+    emo_fig = px.bar(
+        emo_long,
+        x="chapter_name",
+        y="比例",
+        color="情緒類型",
+        title="章節情緒比例比較",
+        labels={"chapter_name": "章節"},
+        barmode="stack",
+    )
+    st.plotly_chart(emo_fig, use_container_width=True)
+
+    pov_counts = (
+        filtered_events[filtered_events["chapter"].isin(selected_chapters)]
+        .groupby(["chapter", "pov_group"])
+        .size()
+        .reset_index(name="count")
+    )
+    if not pov_counts.empty:
+        pov_fig = px.bar(
+            pov_counts,
+            x="chapter",
+            y="count",
+            color="pov_group",
+            title="章節視角分布",
+            labels={"chapter": "章節", "count": "筆數", "pov_group": "視角"},
+            barmode="stack",
+        )
+        st.plotly_chart(pov_fig, use_container_width=True)
+
 def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
     st.subheader("下載")
     low_rows = [r for r in sem_filtered if r.get("low_confidence")]
@@ -997,6 +1253,7 @@ def main():
     render_graphs(outputs, sem_filtered)
     render_story_emotion_arc(outputs, sem_filtered)
     render_pov_shift_map(outputs, sem_filtered)
+    render_chapter_comparison(outputs, sem_filtered)
     render_timeline(outputs.get("timeline", []), sem_filtered)
     render_speaker_summary(outputs.get("speaker_summary", {}))
     render_downloads(current_book, sem_filtered, outputs.get("speaker_summary", {}))
