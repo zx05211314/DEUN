@@ -1,26 +1,22 @@
 # Merge diagnostics
 
-## What I checked
-- Local branch: `work`
-- Git status: clean
-- Local history: 2 commits (`Initial commit`, `Add chapter comparison dashboard`)
+## Repository context
+- Current branch: `work` (modularized 語意圖譜 glue + components/utils split)
+- Local branches: `main` (points to initial commit), `work` (current)
 - Remotes: none configured in this environment
-- Conflict markers in tree: none detected
+- Working tree: clean before merge
 
-## Why GitHub shows “Unable to merge”
-Because this environment has no upstream branch, I cannot reproduce GitHub’s conflict warning directly. Most likely, the base branch on GitHub has new commits that also touch `app/pages/語意圖譜.py`, so GitHub detects conflicts between `work` and the latest default branch.
+## Merge action performed
+- Command: `git merge main`
+- Result: Already up to date (current branch already includes the initial `main` content)
+- Conflicts: none
 
-## How to resolve
-1. Pull the latest changes from the base branch (e.g., `main`) into this branch:
-   ```bash
-   git remote add origin <repo-url>   # if not already set
-   git fetch origin
-   git checkout work
-   git rebase origin/main             # or merge if preferred
-   ```
-2. Resolve any conflicts—`app/pages/語意圖譜.py` is the most likely hotspot because of recent large edits.
-3. Run `python -m compileall app` to ensure the page still compiles.
-4. Commit the resolutions and push the branch, then the PR should become mergeable.
+## Notes
+- Because no remote is configured, we cannot fetch a newer `main`; the local `main` reflects the initial commit shipped with this workspace.
+- If an upstream `main` has additional commits, fetch it and merge again so new logic can be integrated into the modularized layout (keep glue in `app/pages`, renderers in `app/components`, analytics in `app/utils`).
 
-## Environment note
-Since no remotes are configured here, I cannot automatically compare against the real base branch; the steps above assume a standard GitHub flow.
+## Suggested steps for upstream sync
+1. Add the real remote: `git remote add origin <repo-url>` (if missing), then `git fetch origin`.
+2. Merge or rebase `origin/main` into `work`, resolving conflicts by keeping the modular separation and moving any new logic into the appropriate utils/components modules.
+3. Run `python -m compileall app`.
+4. Commit the resolutions and push `work` so the PR becomes mergeable.
