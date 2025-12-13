@@ -2,21 +2,20 @@
 
 ## Repository context
 - Current branch: `work` (modularized 語意圖譜 glue + components/utils split)
-- Local branches: `main` (points to initial commit), `work` (current)
+- Local branches: `main` (initial snapshot), `work` (current)
 - Remotes: none configured in this environment
 - Working tree: clean before merge
 
-## Merge action performed
-- Command: `git merge main`
-- Result: Already up to date (current branch already includes the initial `main` content)
-- Conflicts: none
+## Merge actions performed
+- Attempted to diff against `origin/main` but no remote exists (fatal: unknown revision `origin/main`).
+- Merged local `main` into `work`: already up to date (no conflicts).
 
 ## Notes
-- Because no remote is configured, we cannot fetch a newer `main`; the local `main` reflects the initial commit shipped with this workspace.
-- If an upstream `main` has additional commits, fetch it and merge again so new logic can be integrated into the modularized layout (keep glue in `app/pages`, renderers in `app/components`, analytics in `app/utils`).
+- Because there is no configured remote, newer upstream commits (if any) are not available; the local `main` represents the initial commit bundled with this workspace.
+- To sync with a real upstream, add the remote and fetch (e.g., `git remote add origin <repo-url>` then `git fetch origin`), then merge `origin/main` into `work` and keep the modular separation (glue in `app/pages`, renderers in `app/components`, analytics in `app/utils`).
 
-## Suggested steps for upstream sync
-1. Add the real remote: `git remote add origin <repo-url>` (if missing), then `git fetch origin`.
-2. Merge or rebase `origin/main` into `work`, resolving conflicts by keeping the modular separation and moving any new logic into the appropriate utils/components modules.
-3. Run `python -m compileall app`.
+## Next steps for upstream sync
+1. Add the real remote and fetch.
+2. Merge or rebase `origin/main` into `work`, resolving any conflicts while preserving the modular architecture.
+3. Run `python -m compileall app` to confirm imports.
 4. Commit the resolutions and push `work` so the PR becomes mergeable.
