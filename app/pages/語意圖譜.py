@@ -32,13 +32,30 @@ from app.components.semantic_tables import render_tables
 from app.components.speaker_summary_view import render_speaker_summary
 from app.components.story_emotion_arc_view import render_story_emotion_arc
 from app.components.timeline_view import render_timeline
-from app.utils.data_loaders import load_outputs
+from app.utils.data_loaders import (
+    load_outputs,
+    sanitize_book_name,
+    validate_novel_input,
+)
 from app.utils.filters import apply_semantic_filters
 
 plotly_events_available = util.find_spec("streamlit_plotly_events") is not None
 plotly_events = None
 if plotly_events_available:
     from streamlit_plotly_events import plotly_events
+
+
+EXPECTED_OUTPUT_FILES = [
+    "items.json",
+    "relations.json",
+    "semantic_relations.json",
+    "timeline.json",
+    "speaker_summary.json",
+    "graph.json",
+    "semantic_graph.json",
+    "metadata.json",
+    "mission_timeline.json",
+]
 
 
 # ----------------------------------------------------------------------
@@ -135,6 +152,9 @@ def sidebar_controls():
     st.sidebar.subheader("上傳新小說")
     uploaded_file = st.sidebar.file_uploader("📘 上傳小說 (.txt)", type=["txt"])
     book_name_input = st.sidebar.text_input("書名（亦作輸出資料夾名）", value=selected_novel or "")
+    sanitized_book_name = sanitize_book_name(book_name_input)
+    if book_name_input and sanitized_book_name != book_name_input:
+        st.sidebar.info(f"已移除不支援的符號，改為：{sanitized_book_name}")
 
     novel_path = None
     if selected_novel:
@@ -143,10 +163,13 @@ def sidebar_controls():
             novel_path = novel_path_candidate
 
     if uploaded_file and book_name_input:
-        novels_dir.mkdir(exist_ok=True)
-        novel_path = novels_dir / f"{book_name_input}.txt"
-        novel_path.write_bytes(uploaded_file.getvalue())
-        st.sidebar.success(f"已儲存至 {novel_path}")
+        if not sanitized_book_name:
+            st.sidebar.error("書名不可為空且需為有效的檔名。")
+        else:
+            novels_dir.mkdir(exist_ok=True)
+            novel_path = novels_dir / f"{sanitized_book_name}.txt"
+            novel_path.write_bytes(uploaded_file.getvalue())
+            st.sidebar.success(f"已儲存至 {novel_path}")
 
     with st.sidebar.expander("分析選項", expanded=True):
         limit_chapters = st.number_input("限制章節數", min_value=1, max_value=2000, value=100)
@@ -173,8 +196,10 @@ def sidebar_controls():
     existing_outputs = [p.name for p in output_root.iterdir() if p.is_dir()] if output_root.exists() else []
     selected_output_book = st.sidebar.selectbox("已產出書目 (output/)", options=[""] + existing_outputs)
 
+    dry_run = st.sidebar.checkbox("Dry run (validate + show planned outputs only)", value=False)
+
     return (
-        book_name_input,
+        sanitized_book_name,
         novel_path,
         selected_output_book,
         limit_chapters,
@@ -193,6 +218,7 @@ def sidebar_controls():
         skip_timeline,
         skip_mission_timeline,
         skip_speaker,
+        dry_run,
     )
 
 
@@ -218,6 +244,30 @@ def semantic_filters(semantic_data):
     keyword = st.text_input("句子/事件關鍵字過濾", value="")
     low_conf_only = st.checkbox("只顯示低信度項目", value=False)
     return speaker_sel, voice_sel, persp_sel, keyword, low_conf_only
+
+
+def render_io_contract():
+    st.subheader("Input / Output Contract")
+    st.markdown(
+        """
+        **輸入資料夾（novels/）**：放置待分析的小說文字檔，預設支援 `.txt`。
+        
+        **選擇方式**：可從左側下拉選取現有檔案，或上傳檔案並指定書名（亦作輸出資料夾名）。
+        
+        **輸出資料夾（output/<book_name>/）**：分析後將產生下列主要檔案：
+        - items.json
+        - relations.json
+        - semantic_relations.json
+        - timeline.json
+        - speaker_summary.json
+        - graph.json / semantic_graph.json
+        - metadata.json
+        - mission_timeline.json
+        - 其他衍生匯出（CSV/HTML，如有）
+        
+        每次執行前會先清空對應的 `output/<book_name>/`（`scripts/clean_output.py`）。
+        """
+    )
 
 
 # ----------------------------------------------------------------------
@@ -246,50 +296,70 @@ def main():
         skip_timeline,
         skip_mission_timeline,
         skip_speaker,
+        dry_run,
     ) = sidebar_controls()
 
+    render_io_contract()
+
     if st.sidebar.button("🚀 分析此小說", type="primary"):
-        if not book_name:
-            st.sidebar.error("請先輸入書名。")
+        is_valid, msg, sanitized_book_name, resolved_path = validate_novel_input(
+            book_name, novel_path
+        )
+        if not is_valid or not resolved_path:
+            st.sidebar.error(msg)
         else:
-            novel_path_use = Path("novels") / f"{book_name}.txt"
-            if novel_path:
-                novel_path_use = novel_path
-            if not novel_path_use.exists():
-                st.sidebar.error(f"找不到輸入檔：{novel_path_use}")
-            else:
-                progress_bar = st.sidebar.progress(0, text="開始分析...")
+            output_dir = Path("output") / sanitized_book_name
+            planned_outputs = "\n".join(f"- {name}" for name in EXPECTED_OUTPUT_FILES)
 
-                def update_progress(msg, pct):
-                    progress_bar.progress(min(max(int(pct), 0), 100), text=msg)
-
-                try:
-                    clean_book_output(book_name)
-                    run_pipeline_inline(
-                        book_name=book_name,
-                        novel_path=novel_path_use,
-                        limit_chapters=limit_chapters,
-                        limit_sentences=limit_sentences,
-                        zero_action=zero_action,
-                        zero_task=zero_task,
-                        zero_emotion=zero_emotion,
-                        zero_strength=zero_strength,
-                        skip_items=skip_items,
-                        skip_relations=skip_relations,
-                        skip_context=skip_context,
-                        skip_inference=skip_inference,
-                        skip_graphs=skip_graphs,
-                        skip_emotion_strength=skip_emotion_strength,
-                        skip_character_rel=skip_character_rel,
-                        skip_timeline=skip_timeline,
-                        skip_mission_timeline=skip_mission_timeline,
-                        skip_speaker=skip_speaker,
-                        progress_callback=update_progress,
+            if dry_run:
+                st.sidebar.info("Dry run：僅檢查輸入與預期輸出，未執行分析流程。")
+                st.info(
+                    "\n".join(
+                        [
+                            "Dry run：將不執行 pipeline。",
+                            f"小說路徑：`{resolved_path}`",
+                            f"輸出資料夾：`{output_dir}`",
+                            "預期產物：",
+                            planned_outputs,
+                            f"清理步驟：正式執行前會清空 `{output_dir}`。",
+                        ]
                     )
-                    st.sidebar.success("分析完成")
-                    st.session_state["selected_book"] = book_name
-                except Exception as e:
-                    st.sidebar.error(f"分析失敗：{e}")
+                )
+                st.session_state["selected_book"] = sanitized_book_name
+                return
+
+            progress_bar = st.sidebar.progress(0, text="開始分析...")
+
+            def update_progress(msg, pct):
+                progress_bar.progress(min(max(int(pct), 0), 100), text=msg)
+
+            try:
+                clean_book_output(sanitized_book_name)
+                run_pipeline_inline(
+                    book_name=sanitized_book_name,
+                    novel_path=resolved_path,
+                    limit_chapters=limit_chapters,
+                    limit_sentences=limit_sentences,
+                    zero_action=zero_action,
+                    zero_task=zero_task,
+                    zero_emotion=zero_emotion,
+                    zero_strength=zero_strength,
+                    skip_items=skip_items,
+                    skip_relations=skip_relations,
+                    skip_context=skip_context,
+                    skip_inference=skip_inference,
+                    skip_graphs=skip_graphs,
+                    skip_emotion_strength=skip_emotion_strength,
+                    skip_character_rel=skip_character_rel,
+                    skip_timeline=skip_timeline,
+                    skip_mission_timeline=skip_mission_timeline,
+                    skip_speaker=skip_speaker,
+                    progress_callback=update_progress,
+                )
+                st.sidebar.success("分析完成")
+                st.session_state["selected_book"] = sanitized_book_name
+            except Exception as e:
+                st.sidebar.error(f"分析失敗：{e}")
 
     current_book = st.session_state.get("selected_book") or selected_output_book or book_name
     if not current_book:
