@@ -38,6 +38,7 @@ from app.utils.data_loaders import (
     validate_novel_input,
 )
 from app.utils.filters import apply_semantic_filters
+from app.utils.validate_outputs import validate_outputs
 
 plotly_events_available = util.find_spec("streamlit_plotly_events") is not None
 plotly_events = None
@@ -373,6 +374,22 @@ def main():
     if not book_dir.exists():
         st.warning(f"找不到分析輸出資料夾：{book_dir}，請先執行分析。")
         return
+
+    validation_ok, validation_issues, validation_stats = validate_outputs(str(book_dir))
+
+    st.subheader("Output Validation")
+    if validation_ok:
+        st.success("Output validation passed.")
+    else:
+        st.error("Output validation found issues.")
+    st.json({"stats": validation_stats})
+
+    if validation_issues:
+        with st.expander("Validation issues (showing up to 20)", expanded=not validation_ok):
+            st.write("\n".join(validation_issues[:20]))
+        if not st.checkbox("Continue even if issues exist", value=False):
+            st.info("Rendering stopped because validation issues were detected.")
+            return
 
     outputs = load_outputs(book_dir)
 
