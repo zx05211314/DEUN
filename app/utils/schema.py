@@ -82,6 +82,7 @@ SEMANTIC_RELATIONS_SCHEMA: SchemaSpec = make_list_schema(
         "listener",
         "object_character",
         "object_speaker",
+        "confidence",
     ),
     item_key_types={
         "speaker": str,
@@ -103,6 +104,7 @@ SEMANTIC_RELATIONS_SCHEMA: SchemaSpec = make_list_schema(
         "listener": str,
         "object_character": str,
         "object_speaker": str,
+        "confidence": (int, float),
     },
 )
 

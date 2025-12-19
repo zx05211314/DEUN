@@ -96,7 +96,10 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
             "計數模式": diagnostics.get("mode", mode),
             "互動單位數": diagnostics.get("units", 0),
             "語意列數": diagnostics.get("rows_total", len(sem_filtered)),
+            "實際使用列數": diagnostics.get("rows_used", 0),
+            "被捨棄（總計）": diagnostics.get("rows_dropped", 0),
             "被捨棄（無角色）": diagnostics.get("dropped", {}).get("no_participants", 0),
+            "被捨棄（單一角色）": diagnostics.get("dropped", {}).get("single_participant", 0),
             "被捨棄（無 ID）": diagnostics.get("dropped", {}).get("invalid_unit", 0),
             "信心門檻": diagnostics.get("confidence_threshold", 0.0),
             "因信心過低被捨棄": diagnostics.get("dropped", {}).get("below_confidence", 0),
@@ -113,19 +116,20 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
         st.markdown("#### 診斷資訊")
         st.json(diagnostics_block)
 
-        if diagnostics.get("confidence_buckets"):
+        kept_buckets = diagnostics.get("confidence_buckets_kept")
+        all_buckets = diagnostics.get("confidence_buckets_all")
+        if all_buckets:
             st.markdown("信心分布")
-            st.dataframe(
-                pd.DataFrame(
-                    [
-                        {"區間": bucket, "數量": cnt}
-                        for bucket, cnt in sorted(
-                            diagnostics.get("confidence_buckets", {}).items(), key=lambda kv: kv[0]
-                        )
-                    ]
-                ),
-                width="stretch",
-            )
+            bucket_rows = []
+            for bucket in sorted(all_buckets.keys()):
+                bucket_rows.append(
+                    {
+                        "區間": bucket,
+                        "總計": all_buckets[bucket],
+                        "通過門檻": kept_buckets.get(bucket, 0) if kept_buckets else 0,
+                    }
+                )
+            st.dataframe(pd.DataFrame(bucket_rows), width="stretch")
 
         drop_reasons = diagnostics.get("confidence_drop_reasons")
         if drop_reasons:
@@ -135,6 +139,18 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
                     [
                         {"訊息": reason, "次數": cnt}
                         for reason, cnt in drop_reasons.most_common(10)
+                    ]
+                ),
+                width="stretch",
+            )
+        drop_summary = diagnostics.get("dropped", {})
+        if drop_summary:
+            st.markdown("捨棄摘要")
+            st.dataframe(
+                pd.DataFrame(
+                    [
+                        {"原因": k, "數量": v}
+                        for k, v in sorted(drop_summary.items(), key=lambda kv: kv[0])
                     ]
                 ),
                 width="stretch",
@@ -178,9 +194,11 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
 
         if pair_counts:
             pair_options = [f"{a} — {b}" for (a, b), _ in pair_counts.most_common(10)]
-            selected_pair_label = st.selectbox(
-                "選擇要檢視貢獻事件的互動組合", pair_options, index=0
-            ) if pair_options else None
+            selected_pair_label = (
+                st.selectbox("選擇要檢視貢獻事件的互動組合", pair_options, index=0)
+                if pair_options
+                else None
+            )
             selected_pair = None
             if selected_pair_label:
                 parts = [p.strip() for p in selected_pair_label.split("—")]
@@ -193,8 +211,13 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
                 st.dataframe(
                     pd.DataFrame(
                         [
-                            {"互動單位": unit_id, "次數": cnt}
-                            for unit_id, cnt in top_units
+                            {
+                                "互動單位": rec.unit_id,
+                                "次數": rec.count,
+                                "信心": f"{rec.final_confidence:.2f}",
+                                "區間": rec.bucket,
+                            }
+                            for rec in top_units
                         ]
                     ),
                     width="stretch",

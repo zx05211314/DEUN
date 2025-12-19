@@ -35,5 +35,10 @@
 - 輸出驗證由 `app/utils/validate_outputs.validate_outputs` 處理，並針對語意資料呼叫 `validate_interaction_records` 收集警告而不終止流程。
 - UI 層不得重新實作計數或解析邏輯，僅消費 utils 的結果並渲染圖表/表格。
 
+### Interaction confidence contract
+- 信心分數計算與配對均在 `app/utils/interaction.py` 內集中管理，採用穩定的 unit_id、角色正規化與原因列表，並以 `InteractionUnitRecord` 表示（含 raw/final confidence、bucket、reasons）。
+- 所有互動統計需遵守：信心分數落在 [0, 1]、提高 `min_confidence` 不得增加計數、binary 模式結果不得超過 occurrence 模式、drop 項目都附帶 drop_reason 以利診斷。
+- Heatmap 僅接受 `sem_filtered` 與上述集中計數結果，可透過信心門檻、bucket 分布、drop 摘要與 pair 來源事件診斷確認計算過程。
+
 ## 測試
 - 重構後確認 `python -m compileall app` 通過，確保匯入路徑與語法無誤。

@@ -28,8 +28,11 @@ class InteractionUnitRecord:
     a: str
     b: str
     count: int
-    confidence: float
+    raw_confidence: float
+    final_confidence: float
+    bucket: str
     reasons: List[str] = field(default_factory=list)
+    drop_reason: str | None = None
     meta: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -123,10 +126,14 @@ def _bucket_confidence(score: float) -> str:
     return "unknown"
 
 
-def compute_interaction_confidence(rel: Dict[str, Any]) -> Tuple[float, List[str], Dict[str, Any]]:
+def compute_interaction_confidence(rel: Dict[str, Any]) -> Tuple[float, float, List[str], Dict[str, Any]]:
     base = 0.5
     reasons: List[str] = ["base:+0.50"]
     meta: Dict[str, Any] = {}
+
+    raw_confidence = rel.get("confidence")
+    if isinstance(raw_confidence, (int, float)):
+        meta["raw_confidence"] = float(raw_confidence)
 
     distance_keys = ["distance", "sentence_distance", "mention_distance", "gap"]
     distance_val = None
@@ -193,7 +200,7 @@ def compute_interaction_confidence(rel: Dict[str, Any]) -> Tuple[float, List[str
             base -= penalty
 
     final_score = max(0.0, min(1.0, base))
-    return final_score, reasons, meta
+    return float(raw_confidence) if isinstance(raw_confidence, (int, float)) else 0.5, final_score, reasons, meta
 
 
 def count_interactions(
@@ -210,58 +217,82 @@ def count_interactions(
     character_totals: Counter = Counter()
     unit_to_roles: Dict[str, set[str]] = defaultdict(set)
     unit_role_counts: Dict[str, Counter] = defaultdict(Counter)
-    unit_pair_counts: Dict[str, Counter] = defaultdict(Counter)
+    unit_pair_counts: Dict[str, List[InteractionUnitRecord]] = defaultdict(list)
     diagnostics: Dict[str, Any] = {
         "rows_total": len(sem_filtered),
-        "rows": len(sem_filtered),
         "rows_used": 0,
+        "rows_dropped": 0,
         "units": 0,
         "unit_participant_sizes": {},
         "duplicate_role_mentions": {},
-        "below_conf_threshold": 0,
-        "dropped": {"no_participants": 0, "invalid_unit": 0, "below_confidence": 0},
+        "dropped": Counter(),
         "mode": normalized_mode,
         "pair_units": {},
-        "confidence_buckets": Counter(),
+        "confidence_buckets_all": Counter(),
+        "confidence_buckets_kept": Counter(),
         "confidence_reasons": Counter(),
         "confidence_drop_reasons": Counter(),
         "confidence_threshold": min_confidence if min_confidence is not None else 0.0,
+        "drops": [],
+        "unit_confidence": {},
+        "unit_raw_confidence": {},
+        "unit_reasons": {},
+        "unit_meta": {},
+        "below_conf_threshold": 0,
     }
 
     for rel in sem_filtered:
-        score, reasons, meta = compute_interaction_confidence(rel)
-        diagnostics["confidence_buckets"][_bucket_confidence(score)] += 1
+        raw_score, score, reasons, meta = compute_interaction_confidence(rel)
+        bucket = _bucket_confidence(score)
+        diagnostics["confidence_buckets_all"][bucket] += 1
         for reason in reasons:
             diagnostics["confidence_reasons"][reason] += 1
 
+        unit_id = build_unit_id(rel)
+        participants = extract_characters_from_relation(rel, alias_map=alias_map)
+        unique_participants = set(participants)
+
+        drop_reason = None
         if min_confidence is not None and score < float(min_confidence):
-            diagnostics["dropped"]["below_confidence"] += 1
+            drop_reason = "below_confidence"
+        elif not unit_id:
+            drop_reason = "invalid_unit"
+        elif not unique_participants:
+            drop_reason = "no_participants"
+        elif len(unique_participants) < 2:
+            drop_reason = "single_participant"
+
+        if drop_reason:
+            diagnostics["rows_dropped"] += 1
+            diagnostics["dropped"][drop_reason] += 1
             for reason in reasons:
                 diagnostics["confidence_drop_reasons"][reason] += 1
+            diagnostics["drops"].append(
+                {
+                    "unit_id": unit_id or "",
+                    "bucket": bucket,
+                    "reason": drop_reason,
+                    "participants": sorted(unique_participants),
+                }
+            )
             continue
 
-        if confidence_col and min_confidence is not None:
+        if confidence_col:
             try:
-                if float(rel.get(confidence_col, 0)) < float(min_confidence):
+                if float(rel.get(confidence_col, 0)) < float(min_confidence or 0):
                     diagnostics["below_conf_threshold"] += 1
             except (TypeError, ValueError):
                 diagnostics["below_conf_threshold"] += 1
 
-        unit_id = build_unit_id(rel)
-        if not unit_id:
-            diagnostics["dropped"]["invalid_unit"] += 1
-            continue
-
-        participants = extract_characters_from_relation(rel, alias_map=alias_map)
-        unique_participants = set(participants)
-        if not unique_participants:
-            diagnostics["dropped"]["no_participants"] += 1
-            continue
-
         diagnostics["rows_used"] += 1
+        diagnostics["confidence_buckets_kept"][bucket] += 1
         for p in participants:
             unit_role_counts[unit_id][p] += 1
         unit_to_roles[unit_id].update(unique_participants)
+        diagnostics["unit_confidence"][unit_id] = score
+        diagnostics["unit_raw_confidence"][unit_id] = raw_score
+        diagnostics["unit_reasons"][unit_id] = list(reasons)
+        diagnostics["unit_meta"][unit_id] = meta
 
     diagnostics["units"] = len(unit_to_roles)
     for unit_id, roles in unit_to_roles.items():
@@ -281,12 +312,25 @@ def count_interactions(
             pair_counts[(a, b)] += increment
             character_totals[a] += increment
             character_totals[b] += increment
-            unit_pair_counts[unit_id][(a, b)] += increment
+            unit_pair_counts[(a, b)].append(
+                InteractionUnitRecord(
+                    unit_id=unit_id,
+                    a=a,
+                    b=b,
+                    count=increment,
+                    raw_confidence=diagnostics["unit_raw_confidence"].get(unit_id, 0.0),
+                    final_confidence=diagnostics["unit_confidence"].get(unit_id, 0.0),
+                    bucket=_bucket_confidence(diagnostics["unit_confidence"].get(unit_id, 0.0)),
+                    reasons=diagnostics["unit_reasons"].get(unit_id, []),
+                    drop_reason=None,
+                    meta=diagnostics["unit_meta"].get(unit_id, {}),
+                )
+            )
 
     diagnostics["pair_units"] = {
         pair: sorted(
-            ((unit_id, cnt) for unit_id, counts in unit_pair_counts.items() if (cnt := counts.get(pair))),
-            key=lambda x: (-x[1], x[0]),
+            unit_pair_counts[pair],
+            key=lambda rec: (-rec.count, -rec.final_confidence, rec.unit_id),
         )
         for pair in pair_counts
     }
@@ -295,6 +339,7 @@ def count_interactions(
 
 
 __all__ = [
+    "InteractionUnitRecord",
     "build_unit_id",
     "normalize_role",
     "extract_characters_from_relation",

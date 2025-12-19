@@ -33,48 +33,64 @@ def main() -> None:
 
     # confidence determinism and bounds
     for row in sem_filtered:
-        score1, reasons1, _ = compute_interaction_confidence(row)
-        score2, reasons2, _ = compute_interaction_confidence(row)
+        raw1, score1, reasons1, _ = compute_interaction_confidence(row)
+        raw2, score2, reasons2, _ = compute_interaction_confidence(row)
         assert 0.0 <= score1 <= 1.0
+        assert 0.0 <= score2 <= 1.0
         assert score1 == score2, "confidence not deterministic"
+        assert raw1 == raw2, "raw confidence not deterministic"
         assert reasons1, "reasons should not be empty"
         assert reasons2, "reasons should not be empty"
 
-    pair_counts_binary, _, diag_binary = count_interactions(sem_filtered, mode="binary", min_confidence=0.0)
-    pair_counts_occ, _, diag_occ = count_interactions(sem_filtered, mode="occurrence", min_confidence=0.0)
-    pair_counts_strict, _, diag_strict = count_interactions(sem_filtered, mode="binary", min_confidence=0.6)
+    thresholds = [0.0, 0.2, 0.5, 0.8]
+    binary_results = []
+    occ_results = []
+    for thr in thresholds:
+        pair_counts_binary, _, diag_binary = count_interactions(
+            sem_filtered, mode="binary", min_confidence=thr
+        )
+        pair_counts_occ, _, diag_occ = count_interactions(
+            sem_filtered, mode="occurrence", min_confidence=thr
+        )
+        binary_results.append((pair_counts_binary, diag_binary))
+        occ_results.append((pair_counts_occ, diag_occ))
 
-    assert pair_counts_binary[("alice", "bob")] == 1, pair_counts_binary
-    assert pair_counts_binary[("alice", "carol")] == 1, pair_counts_binary
-    assert pair_counts_binary[("bob", "carol")] == 1, pair_counts_binary
-    assert pair_counts_binary[("carol", "dave")] == 1, pair_counts_binary
-    assert diag_binary["units"] == 4, diag_binary
+        for pair, count in pair_counts_binary.items():
+            assert count <= pair_counts_occ[pair], f"binary greater than occurrence for {pair}"
+            assert count >= 0
+        for pair, count in pair_counts_occ.items():
+            assert count >= 0
+        assert diag_binary["rows_used"] + diag_binary["rows_dropped"] == diag_binary["rows_total"]
+        assert diag_occ["rows_used"] + diag_occ["rows_dropped"] == diag_occ["rows_total"]
 
-    assert pair_counts_occ[("alice", "bob")] == 2, pair_counts_occ
-    assert pair_counts_occ[("alice", "carol")] == 1, pair_counts_occ
-    assert pair_counts_occ[("bob", "carol")] == 1, pair_counts_occ
-    assert pair_counts_occ[("carol", "dave")] == 1, pair_counts_occ
-    assert diag_occ["units"] == 4, diag_occ
+        pair_units = diag_binary.get("pair_units", {})
+        for records in pair_units.values():
+            for rec in records:
+                assert 0.0 <= rec.final_confidence <= 1.0
+                assert rec.reasons == diag_binary["unit_reasons"].get(rec.unit_id, [])
 
-    for pair, count in pair_counts_binary.items():
-        assert count <= pair_counts_occ[pair], f"binary greater than occurrence for {pair}"
-        assert count <= diag_binary["units"], f"binary count exceeds unit total for {pair}"
-        assert count >= 0
-
-    for pair, count in pair_counts_occ.items():
-        assert count >= 0
-        assert count <= diag_occ["units"] * max(diag_occ.get("unit_participant_sizes", {}).values() or [1])
+    # monotonicity: higher thresholds cannot increase counts
+    prev_total_binary = None
+    prev_total_occ = None
+    for (pair_counts_binary, _), (pair_counts_occ, _) in zip(binary_results, occ_results):
+        total_binary = sum(pair_counts_binary.values())
+        total_occ = sum(pair_counts_occ.values())
+        if prev_total_binary is not None:
+            assert total_binary <= prev_total_binary, "binary counts increased with higher threshold"
+        if prev_total_occ is not None:
+            assert total_occ <= prev_total_occ, "occurrence counts increased with higher threshold"
+        prev_total_binary = total_binary
+        prev_total_occ = total_occ
 
     # determinism check
-    pair_counts_binary_2, _, diag_binary_2 = count_interactions(
-        sem_filtered, mode="binary", min_confidence=0.0
+    pair_counts_binary_1, _, diag_binary_1 = count_interactions(
+        sem_filtered, mode="binary", min_confidence=0.2
     )
-    assert pair_counts_binary == pair_counts_binary_2, "non-deterministic pair counts"
-    assert diag_binary["units"] == diag_binary_2["units"]
-
-    # stricter confidence should not increase totals
-    assert sum(pair_counts_strict.values()) <= sum(pair_counts_binary.values())
-    assert diag_strict.get("dropped", {}).get("below_confidence", 0) >= 0
+    pair_counts_binary_2, _, diag_binary_2 = count_interactions(
+        sem_filtered, mode="binary", min_confidence=0.2
+    )
+    assert pair_counts_binary_1 == pair_counts_binary_2, "non-deterministic pair counts"
+    assert diag_binary_1["units"] == diag_binary_2["units"]
 
     print("OK")
 

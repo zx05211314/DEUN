@@ -198,6 +198,7 @@ def validate_interaction_records(records: List[Dict[str, Any]]) -> Tuple[bool, L
         "records": len(records),
         "dropped_no_participants": 0,
         "dropped_invalid_unit": 0,
+        "invalid_confidence": 0,
     }
 
     for idx, rel in enumerate(records):
@@ -216,6 +217,12 @@ def validate_interaction_records(records: List[Dict[str, Any]]) -> Tuple[bool, L
         if not participants:
             warnings.append(f"semantic_relations[{idx}]: no participants found")
             stats["dropped_no_participants"] += 1
+
+        if "confidence" in rel:
+            conf_val = rel.get("confidence")
+            if not isinstance(conf_val, (int, float)) or not (0 <= float(conf_val) <= 1):
+                warnings.append(f"semantic_relations[{idx}]: confidence out of bounds")
+                stats["invalid_confidence"] += 1
 
     ok = len(warnings) == 0
     return ok, warnings, stats
