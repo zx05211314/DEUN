@@ -11,7 +11,6 @@ Contract:
 """
 from __future__ import annotations
 
-import json
 import subprocess
 from importlib import util
 from pathlib import Path
@@ -20,28 +19,53 @@ from typing import Any, Dict, List
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from app.components.interactive_graph import render_interactive_graph
-from app.components.timeline_chart import timeline_bar
 from scripts.clean_output import clean_book_output
 
+from app.components.chapter_comparison_view import render_chapter_comparison
+from app.components.downloads_view import render_downloads
+from app.components.interaction_heatmap_view import render_interaction_heatmap
+from app.components.metadata_view import render_metadata
+from app.components.pov_shift_view import render_pov_shift_map
+from app.components.role_comparison_view import render_role_comparison
+from app.components.semantic_graphs import render_graphs
+from app.components.semantic_overview import render_emotion_charts, render_overview_cards
+from app.components.semantic_tables import render_tables
+from app.components.speaker_summary_view import render_speaker_summary
+from app.components.story_emotion_arc_view import render_story_emotion_arc
+from app.components.timeline_view import render_timeline
+from app.utils.consistency_checks import run_entity_consistency_checks
+from app.utils.data_loaders import (
+    load_outputs,
+    sanitize_book_name,
+    validate_novel_input,
+)
+from app.utils.filters import apply_semantic_filters
+from app.utils.validate_outputs import validate_outputs
+
+plotly_events_available = util.find_spec("streamlit_plotly_events") is not None
+plotly_events = None
+if plotly_events_available:
 plotly_events = None
 if util.find_spec("streamlit_plotly_events"):
     from streamlit_plotly_events import plotly_events
 
 
-# ----------------------------------------------------------------------
-# Helpers
-# ----------------------------------------------------------------------
+EXPECTED_OUTPUT_FILES = [
+    "items.json",
+    "relations.json",
+    "semantic_relations.json",
+    "timeline.json",
+    "speaker_summary.json",
+    "graph.json",
+    "semantic_graph.json",
+    "metadata.json",
+    "mission_timeline.json",
+]
 
 
-def load_json(path: Path, default):
-    if not path.exists():
-        return default
-    try:
-        with path.open("r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return default
+# ----------------------------------------------------------------------
+# Pipeline helpers
+# ----------------------------------------------------------------------
 
 
 def run_pipeline_inline(
@@ -133,20 +157,24 @@ def sidebar_controls():
     st.sidebar.subheader("上傳新小說")
     uploaded_file = st.sidebar.file_uploader("📘 上傳小說 (.txt)", type=["txt"])
     book_name_input = st.sidebar.text_input("書名（亦作輸出資料夾名）", value=selected_novel or "")
+    sanitized_book_name = sanitize_book_name(book_name_input)
+    if book_name_input and sanitized_book_name != book_name_input:
+        st.sidebar.info(f"已移除不支援的符號，改為：{sanitized_book_name}")
 
     novel_path = None
-    # 若選擇既有小說且檔案存在，直接設為 canonical path
     if selected_novel:
         novel_path_candidate = novels_dir / f"{selected_novel}.txt"
         if novel_path_candidate.exists():
             novel_path = novel_path_candidate
 
-    # 若上傳新檔，且填了書名，寫入 novels/<book>.txt
     if uploaded_file and book_name_input:
-        novels_dir.mkdir(exist_ok=True)
-        novel_path = novels_dir / f"{book_name_input}.txt"
-        novel_path.write_bytes(uploaded_file.getvalue())
-        st.sidebar.success(f"已儲存至 {novel_path}")
+        if not sanitized_book_name:
+            st.sidebar.error("書名不可為空且需為有效的檔名。")
+        else:
+            novels_dir.mkdir(exist_ok=True)
+            novel_path = novels_dir / f"{sanitized_book_name}.txt"
+            novel_path.write_bytes(uploaded_file.getvalue())
+            st.sidebar.success(f"已儲存至 {novel_path}")
 
     with st.sidebar.expander("分析選項", expanded=True):
         limit_chapters = st.number_input("限制章節數", min_value=1, max_value=2000, value=100)
@@ -169,13 +197,14 @@ def sidebar_controls():
         skip_mission_timeline = not st.checkbox("任務時間線", value=True)
         skip_speaker = not st.checkbox("語者視角", value=True)
 
-    # 現有分析結果的書目（output 子資料夾）
     output_root = Path("output")
     existing_outputs = [p.name for p in output_root.iterdir() if p.is_dir()] if output_root.exists() else []
     selected_output_book = st.sidebar.selectbox("已產出書目 (output/)", options=[""] + existing_outputs)
 
+    dry_run = st.sidebar.checkbox("Dry run (validate + show planned outputs only)", value=False)
+
     return (
-        book_name_input,
+        sanitized_book_name,
         novel_path,
         selected_output_book,
         limit_chapters,
@@ -194,57 +223,21 @@ def sidebar_controls():
         skip_timeline,
         skip_mission_timeline,
         skip_speaker,
+        dry_run,
     )
 
 
 # ----------------------------------------------------------------------
-# Load & render
+# Semantic filters
 # ----------------------------------------------------------------------
-
-
-def load_outputs(book_dir: Path):
-    data: Dict[str, Any] = {}
-    data["items"] = load_json(book_dir / "items.json", [])
-    data["relations"] = load_json(book_dir / "relations.json", [])
-    data["semantic_relations"] = load_json(book_dir / "semantic_relations.json", [])
-    data["speaker_summary"] = load_json(book_dir / "speaker_summary.json", {})
-    data["character_relations"] = load_json(book_dir / "character_relations.json", [])
-    data["graph"] = load_json(book_dir / "graph.json", {"nodes": [], "edges": []})
-    data["semantic_graph"] = load_json(book_dir / "semantic_graph.json", {"nodes": [], "edges": []})
-    data["timeline"] = load_json(book_dir / "timeline.json", [])
-    data["mission_timeline"] = load_json(book_dir / "mission_timeline.json", [])
-    data["metadata"] = load_json(book_dir / "metadata.json", {})
-    return data
-
-
-def render_metadata(metadata: dict, output_dir: Path):
-    if not metadata:
-        st.info("尚未找到 metadata.json，可重新執行分析。")
-        return
-    st.subheader("分析摘要")
-    book = metadata.get("book", "")
-    lc = metadata.get("chapters_used")
-    ls = metadata.get("sentences_used")
-    zero = metadata.get("zero_shot", {})
-    enabled = metadata.get("enabled_modules", {})
-    stats = metadata.get("output_stats", {})
-
-    st.markdown(
-        f"""
-**書名**：{book}  
-**章節/句數限制**：{lc} / {ls}  
-**Zero-shot**：行為 {zero.get('action')}、任務 {zero.get('task')}、情緒 {zero.get('emotion')}、情緒強度 {zero.get('emotion_strength')}  
-**啟用模組**：{", ".join([k for k, v in enabled.items() if v])}  
-**產出統計**：{json.dumps(stats, ensure_ascii=False)}  
-**輸出目錄**：{output_dir}
-"""
-    )
 
 
 def semantic_filters(semantic_data):
     speakers = sorted({r.get("speaker", "") for r in semantic_data if r.get("speaker")})
     voices = sorted({r.get("voice", "") for r in semantic_data if r.get("voice")})
-    perspectives = sorted({r.get("emotion_perspective", "") for r in semantic_data if r.get("emotion_perspective")})
+    perspectives = sorted(
+        {r.get("emotion_perspective", "") for r in semantic_data if r.get("emotion_perspective")}
+    )
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -394,49 +387,28 @@ def render_graphs(outputs: dict, sem_filtered: List[Dict]):
         render_detail_panel(selected)
 
 
-def render_speaker_summary(speaker_summary: dict):
-    if not speaker_summary:
-        return
-    with st.expander("語者摘要（高情緒強度 Top N）", expanded=False):
-        for name, entries in speaker_summary.items():
-            st.markdown(f"**{name}**")
-            for line, strength in entries:
-                st.markdown(f"- {line}（強度: {strength}）")
-
-
-def render_downloads(book_name: str, sem_filtered: List[Dict], speaker_summary: dict):
-    st.subheader("下載")
-    low_rows = [r for r in sem_filtered if r.get("low_confidence")]
-    if low_rows:
-        df_low = pd.DataFrame(low_rows)
-        st.download_button(
-            "下載低信度 CSV",
-            df_low.to_csv(index=False).encode("utf-8"),
-            file_name=f"{book_name}_low_confidence.csv",
-        )
-
-    emo_dist = pd.Series([r.get("emotion") for r in sem_filtered if r.get("emotion")]).value_counts()
-    perspective_dist = pd.Series([r.get("emotion_perspective") for r in sem_filtered if r.get("emotion_perspective")]).value_counts()
-    low_count = len(low_rows)
-    top_speakers = list(speaker_summary.items())[:3] if speaker_summary else []
-
-    md_parts = [
-        f"# {book_name} 分析報告",
-        "## 總覽",
-        f"- 關係筆數：{len(sem_filtered)}",
-        f"- 低信度筆數：{low_count}",
-        "## 情緒分布",
-        emo_dist.to_markdown() if not emo_dist.empty else "無",
-        "## 情緒觀點分布",
-        perspective_dist.to_markdown() if not perspective_dist.empty else "無",
-        "## 語者摘要 Top N",
-    ]
-    for name, entries in top_speakers:
-        md_parts.append(f"- {name}")
-        for line, strength in entries:
-            md_parts.append(f"  - {line}（強度: {strength}）")
-    md_content = "\n\n".join(md_parts)
-    st.download_button("匯出分析報告（Markdown）", md_content.encode("utf-8"), file_name=f"{book_name}_report.md")
+def render_io_contract():
+    st.subheader("Input / Output Contract")
+    st.markdown(
+        """
+        **輸入資料夾（novels/）**：放置待分析的小說文字檔，預設支援 `.txt`。
+        
+        **選擇方式**：可從左側下拉選取現有檔案，或上傳檔案並指定書名（亦作輸出資料夾名）。
+        
+        **輸出資料夾（output/<book_name>/）**：分析後將產生下列主要檔案：
+        - items.json
+        - relations.json
+        - semantic_relations.json
+        - timeline.json
+        - speaker_summary.json
+        - graph.json / semantic_graph.json
+        - metadata.json
+        - mission_timeline.json
+        - 其他衍生匯出（CSV/HTML，如有）
+        
+        每次執行前會先清空對應的 `output/<book_name>/`（`scripts/clean_output.py`）。
+        """
+    )
 
 
 # ----------------------------------------------------------------------
@@ -465,54 +437,71 @@ def main():
         skip_timeline,
         skip_mission_timeline,
         skip_speaker,
+        dry_run,
     ) = sidebar_controls()
 
-    # 分析按鈕
+    render_io_contract()
+
     if st.sidebar.button("🚀 分析此小說", type="primary"):
-        if not book_name:
-            st.sidebar.error("請先輸入書名。")
+        is_valid, msg, sanitized_book_name, resolved_path = validate_novel_input(
+            book_name, novel_path
+        )
+        if not is_valid or not resolved_path:
+            st.sidebar.error(msg)
         else:
-            # 確認 canonical input 在 novels/<book>.txt
-            novel_path_use = Path("novels") / f"{book_name}.txt"
-            if novel_path:
-                novel_path_use = novel_path  # 上傳時已寫入
-            if not novel_path_use.exists():
-                st.sidebar.error(f"找不到輸入檔：{novel_path_use}")
-            else:
-                progress_bar = st.sidebar.progress(0, text="開始分析...")
+            output_dir = Path("output") / sanitized_book_name
+            planned_outputs = "\n".join(f"- {name}" for name in EXPECTED_OUTPUT_FILES)
 
-                def update_progress(msg, pct):
-                    progress_bar.progress(min(max(int(pct), 0), 100), text=msg)
-
-                try:
-                    clean_book_output(book_name)
-                    run_pipeline_inline(
-                        book_name=book_name,
-                        novel_path=novel_path_use,
-                        limit_chapters=limit_chapters,
-                        limit_sentences=limit_sentences,
-                        zero_action=zero_action,
-                        zero_task=zero_task,
-                        zero_emotion=zero_emotion,
-                        zero_strength=zero_strength,
-                        skip_items=skip_items,
-                        skip_relations=skip_relations,
-                        skip_context=skip_context,
-                        skip_inference=skip_inference,
-                        skip_graphs=skip_graphs,
-                        skip_emotion_strength=skip_emotion_strength,
-                        skip_character_rel=skip_character_rel,
-                        skip_timeline=skip_timeline,
-                        skip_mission_timeline=skip_mission_timeline,
-                        skip_speaker=skip_speaker,
-                        progress_callback=update_progress,
+            if dry_run:
+                st.sidebar.info("Dry run：僅檢查輸入與預期輸出，未執行分析流程。")
+                st.info(
+                    "\n".join(
+                        [
+                            "Dry run：將不執行 pipeline。",
+                            f"小說路徑：`{resolved_path}`",
+                            f"輸出資料夾：`{output_dir}`",
+                            "預期產物：",
+                            planned_outputs,
+                            f"清理步驟：正式執行前會清空 `{output_dir}`。",
+                        ]
                     )
-                    st.sidebar.success("分析完成")
-                    st.session_state["selected_book"] = book_name
-                except Exception as e:
-                    st.sidebar.error(f"分析失敗：{e}")
+                )
+                st.session_state["selected_book"] = sanitized_book_name
+                return
 
-    # 決定當前顯示的書名
+            progress_bar = st.sidebar.progress(0, text="開始分析...")
+
+            def update_progress(msg, pct):
+                progress_bar.progress(min(max(int(pct), 0), 100), text=msg)
+
+            try:
+                clean_book_output(sanitized_book_name)
+                run_pipeline_inline(
+                    book_name=sanitized_book_name,
+                    novel_path=resolved_path,
+                    limit_chapters=limit_chapters,
+                    limit_sentences=limit_sentences,
+                    zero_action=zero_action,
+                    zero_task=zero_task,
+                    zero_emotion=zero_emotion,
+                    zero_strength=zero_strength,
+                    skip_items=skip_items,
+                    skip_relations=skip_relations,
+                    skip_context=skip_context,
+                    skip_inference=skip_inference,
+                    skip_graphs=skip_graphs,
+                    skip_emotion_strength=skip_emotion_strength,
+                    skip_character_rel=skip_character_rel,
+                    skip_timeline=skip_timeline,
+                    skip_mission_timeline=skip_mission_timeline,
+                    skip_speaker=skip_speaker,
+                    progress_callback=update_progress,
+                )
+                st.sidebar.success("分析完成")
+                st.session_state["selected_book"] = sanitized_book_name
+            except Exception as e:
+                st.sidebar.error(f"分析失敗：{e}")
+
     current_book = st.session_state.get("selected_book") or selected_output_book or book_name
     if not current_book:
         st.warning("請選擇或上傳一本小說。")
@@ -526,11 +515,44 @@ def main():
         st.warning(f"找不到分析輸出資料夾：{book_dir}，請先執行分析。")
         return
 
+    validation_ok, validation_issues, validation_stats = validate_outputs(str(book_dir))
+
+    st.subheader("Output Validation")
+    if validation_ok:
+        st.success("Output validation passed.")
+    else:
+        st.error("Output validation found issues.")
+    st.json({"stats": validation_stats})
+
+    if validation_issues:
+        with st.expander("Validation issues (showing up to 20)", expanded=not validation_ok):
+            st.write("\n".join(validation_issues[:20]))
+        if not st.checkbox("Continue even if issues exist", value=False):
+            st.info("Rendering stopped because validation issues were detected.")
+            return
+
     outputs = load_outputs(book_dir)
+    registry = outputs.get("entity_registry")
+    consistency = run_entity_consistency_checks(outputs, registry)
+
+    with st.expander("實體正規化診斷", expanded=False):
+        st.markdown(
+            f"註冊檔載入狀態：{'已載入' if consistency.get('registry_loaded') else '未載入（使用原始名稱）'}"
+        )
+        st.markdown(f"註冊檔路徑：{consistency.get('registry_path', '')}")
+        st.markdown(f"被封鎖的名稱筆數：{consistency.get('blocked_hits', 0)}")
+        orphan = consistency.get("orphan_aliases", [])
+        if orphan:
+            st.write("未在註冊檔中的名稱（前 50 筆）：")
+            st.dataframe(orphan[:50], use_container_width=True)
+        st.write({"缺漏實體": consistency.get("missing", {})})
 
     st.title(f"語意關聯表 - {current_book}")
     render_metadata(outputs.get("metadata", {}), book_dir)
 
+    speaker_sel, voice_sel, persp_sel, keyword, low_conf_only = semantic_filters(
+        outputs.get("semantic_relations", [])
+    )
     speaker_sel, voice_sel, persp_sel, keyword, low_conf_only = semantic_filters(outputs.get("semantic_relations", []))
     sem_filtered = apply_semantic_filters(
         outputs.get("semantic_relations", []),
@@ -544,8 +566,13 @@ def main():
     render_overview_cards(sem_filtered)
     render_tables(sem_filtered)
     render_emotion_charts(sem_filtered)
+    render_role_comparison(sem_filtered, outputs.get("speaker_summary", {}))
+    render_interaction_heatmap(sem_filtered, registry=registry)
     render_graphs(outputs, sem_filtered)
-    render_timeline(outputs.get("timeline", []), sem_filtered)
+    render_story_emotion_arc(outputs, sem_filtered)
+    render_pov_shift_map(outputs, sem_filtered)
+    render_chapter_comparison(outputs, sem_filtered)
+    render_timeline(outputs.get("timeline", []), sem_filtered, plotly_events_available, plotly_events)
     render_speaker_summary(outputs.get("speaker_summary", {}))
     render_downloads(current_book, sem_filtered, outputs.get("speaker_summary", {}))
 
