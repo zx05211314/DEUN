@@ -13,6 +13,7 @@
 ## Notes
 - Because there is no configured remote, newer upstream commits (if any) are not available; the local `main` represents the initial commit bundled with this workspace.
 - To sync with a real upstream, add the remote and fetch (e.g., `git remote add origin <repo-url>` then `git fetch origin`), then merge `origin/main` into `work` and keep the modular separation (glue in `app/pages`, renderers in `app/components`, analytics in `app/utils`).
+- Entity canonicalization now happens at the data-loading boundary via `EntityRegistry` (default config at `data/entity_registry.json`); analytics modules remain unchanged and receive canonical speaker/role names only. Missing registry falls back to identity and surfaces a warning panel.
 
 ## Next steps for upstream sync
 1. Add the real remote and fetch.

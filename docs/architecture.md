@@ -40,5 +40,10 @@
 - 所有互動統計需遵守：信心分數落在 [0, 1]、提高 `min_confidence` 不得增加計數、binary 模式結果不得超過 occurrence 模式、drop 項目都附帶 drop_reason 以利診斷。
 - Heatmap 僅接受 `sem_filtered` 與上述集中計數結果，可透過信心門檻、bucket 分布、drop 摘要與 pair 來源事件診斷確認計算過程。
 
+### Entity canonicalization contract
+- 實體名稱（speaker/角色等）在 `load_outputs` 邊界經由 `app/utils/entity_registry.py` 的 `EntityRegistry` 做決定式正規化，再交給 analytics；analytics 模組本身不做名稱猜測或比對。
+- 註冊檔缺失時以身分函式 fallback，並在 UI 顯示警示；canonicalize 需為冪等、排序穩定（`canonical_pair`）。
+- `app/utils/consistency_checks.py` 提供跨模組實體集合檢查，協助偵測缺漏、封鎖命中與未註冊名稱，結果於主頁診斷面板呈現。
+
 ## 測試
 - 重構後確認 `python -m compileall app` 通過，確保匯入路徑與語法無誤。

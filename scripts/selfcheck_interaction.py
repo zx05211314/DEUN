@@ -5,11 +5,18 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
+from app.utils.entity_registry import EntityRegistry
 from app.utils.interaction import count_interactions, compute_interaction_confidence
 
 
 
 def main() -> None:
+    registry = EntityRegistry(
+        canonical={"alice", "bob", "carol", "dave"},
+        aliases={"ally": "alice", "b0b": "bob"},
+        blocked=set(),
+    )
+
     sem_filtered = [
         {"event_id": 1, "speaker": "Alice", "target_speaker": "Bob", "distance": 0},
         {"event_id": 1, "speaker": "alice", "other_speaker": "Bob", "distance": 1},
@@ -29,7 +36,22 @@ def main() -> None:
             "target_speaker": "Dave",
             "distance": 10,
         },
+        {"event_id": 9, "speaker": "ally", "target_speaker": "b0b", "distance": 0},
     ]
+
+    for row in sem_filtered:
+        for key in ["speaker", "target_speaker", "other_speaker"]:
+            if key in row:
+                row[key] = registry.canonicalize(row[key])
+
+    # canonicalization idempotence
+    names = ["Ally", "ally", "alice", "b0b"]
+    for name in names:
+        first = registry.canonicalize(name)
+        second = registry.canonicalize(first)
+        assert first == second, f"canonicalization not idempotent for {name} -> {first} -> {second}"
+    pair_order = registry.canonical_pair("Bob", "ally")
+    assert pair_order == tuple(sorted(pair_order)), "canonical_pair must sort deterministically"
 
     # confidence determinism and bounds
     for row in sem_filtered:
@@ -58,6 +80,8 @@ def main() -> None:
         for pair, count in pair_counts_binary.items():
             assert count <= pair_counts_occ[pair], f"binary greater than occurrence for {pair}"
             assert count >= 0
+            assert pair[0] in {"alice", "bob", "carol", "dave"}
+            assert pair[1] in {"alice", "bob", "carol", "dave"}
         for pair, count in pair_counts_occ.items():
             assert count >= 0
         assert diag_binary["rows_used"] + diag_binary["rows_dropped"] == diag_binary["rows_total"]

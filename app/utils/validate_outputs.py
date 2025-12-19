@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 from app.utils.interaction import build_unit_id, extract_characters_from_relation
+from app.utils.entity_registry import EntityRegistry
 from app.utils.schema import SCHEMAS
 
 REQUIRED_FILES = [
@@ -131,6 +132,14 @@ def _warn_speakers(name: str, data: List[Dict[str, Any]], issues: List[str], sta
         stats["warnings"] += 1
 
 
+def _check_canonicalization(names: List[str], registry: EntityRegistry, issues: List[str], stats: Dict[str, Any], label: str) -> None:
+    for name in names:
+        canon = registry.canonicalize(name)
+        if canon != registry.canonicalize(canon):
+            issues.append(f"{label}: canonicalization not idempotent for '{name}' -> '{canon}'")
+            stats["schema_errors"] += 1
+
+
 def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
     """Validate output directory contents for required files and schema alignment."""
 
@@ -144,6 +153,8 @@ def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
         "items_loaded": {},
         "interaction_warnings": [],
     }
+
+    registry = EntityRegistry.load()
 
     base = Path(output_dir)
     if not base.exists():
@@ -180,12 +191,26 @@ def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
         if filename == "timeline.json" and isinstance(data, list) and data:
             _warn_timeline_order(filename, data, issues, stats)
             _warn_speakers(filename, data, issues, stats)
+            _check_canonicalization(
+                [item.get("speaker", "") for item in data if isinstance(item, dict)],
+                registry,
+                issues,
+                stats,
+                filename,
+            )
 
         if filename == "semantic_relations.json" and isinstance(data, list) and data:
             _warn_speakers(filename, data, issues, stats)
             _, interaction_warnings, interaction_stats = validate_interaction_records(data)
             stats["interaction_warnings"].extend(interaction_warnings)
             stats.update({f"interaction_{k}": v for k, v in interaction_stats.items()})
+            _check_canonicalization(
+                [item.get("speaker", "") for item in data if isinstance(item, dict)],
+                registry,
+                issues,
+                stats,
+                filename,
+            )
 
     error_total = stats["missing_files"] + stats["empty_files"] + stats["parse_errors"] + stats["schema_errors"]
     ok = error_total == 0

@@ -1,0 +1,8 @@
+{
+  "canonical": [],
+  "aliases": {},
+  "blocked": ["", "unknown", "narrator"],
+  "notes": {
+    "comment": "Conservative defaults; extend with explicit aliases only."
+  }
+}

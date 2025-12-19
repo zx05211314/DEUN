@@ -32,6 +32,7 @@ from app.components.semantic_tables import render_tables
 from app.components.speaker_summary_view import render_speaker_summary
 from app.components.story_emotion_arc_view import render_story_emotion_arc
 from app.components.timeline_view import render_timeline
+from app.utils.consistency_checks import run_entity_consistency_checks
 from app.utils.data_loaders import (
     load_outputs,
     sanitize_book_name,
@@ -392,6 +393,20 @@ def main():
             return
 
     outputs = load_outputs(book_dir)
+    registry = outputs.get("entity_registry")
+    consistency = run_entity_consistency_checks(outputs, registry)
+
+    with st.expander("實體正規化診斷", expanded=False):
+        st.markdown(
+            f"註冊檔載入狀態：{'已載入' if consistency.get('registry_loaded') else '未載入（使用原始名稱）'}"
+        )
+        st.markdown(f"註冊檔路徑：{consistency.get('registry_path', '')}")
+        st.markdown(f"被封鎖的名稱筆數：{consistency.get('blocked_hits', 0)}")
+        orphan = consistency.get("orphan_aliases", [])
+        if orphan:
+            st.write("未在註冊檔中的名稱（前 50 筆）：")
+            st.dataframe(orphan[:50], use_container_width=True)
+        st.write({"缺漏實體": consistency.get("missing", {})})
 
     st.title(f"語意關聯表 - {current_book}")
     render_metadata(outputs.get("metadata", {}), book_dir)
