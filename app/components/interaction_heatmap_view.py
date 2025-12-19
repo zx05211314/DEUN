@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from app.utils.interaction import count_interactions
+from app.utils.trace_index import TraceIndex
 
 
 def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
@@ -25,8 +26,9 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
     min_confidence = st.slider("Minimum confidence", 0.0, 1.0, 0.0, 0.05)
 
     pair_counts, character_totals, diagnostics = count_interactions(
-        sem_filtered, mode=mode, min_confidence=min_confidence
+        sem_filtered, mode=mode, min_confidence=min_confidence, collect_traces=True
     )
+    trace_index = TraceIndex.from_records(diagnostics.get("trace_records", []))
 
     if not pair_counts:
         st.info("目前角色數量過少，無法繪製互動熱度矩陣。請放寬篩選條件或選擇其他書目。")
@@ -222,3 +224,91 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
                     ),
                     width="stretch",
                 )
+
+            if trace_index.records:
+                with st.expander("Explain / Trace (互動解釋)", expanded=False):
+                    st.markdown(
+                        f"信心門檻：{diagnostics.get('confidence_threshold', 0.0):.2f}，追蹤筆數：{len(trace_index.records)}"
+                    )
+                    st.dataframe(
+                        pd.DataFrame(
+                            [
+                                {"區間": bucket, "數量": cnt}
+                                for bucket, cnt in sorted(trace_index.buckets().items())
+                            ]
+                        ),
+                        width="stretch",
+                    )
+
+                    drop_summary = trace_index.drop_summary()
+                    if drop_summary:
+                        st.markdown("捨棄原因摘要")
+                        st.dataframe(
+                            pd.DataFrame(
+                                [
+                                    {"原因": reason, "數量": cnt}
+                                    for reason, cnt in sorted(drop_summary.items(), key=lambda kv: kv[0])
+                                ]
+                            ),
+                            width="stretch",
+                        )
+
+                    if selected_pair:
+                        pair_summary = trace_index.summary_for_pair(selected_pair)
+                        st.markdown(
+                            f"互動組合 {selected_pair[0]} — {selected_pair[1]}：保留 {pair_summary['kept_records']} / 總計 {pair_summary['records']}"
+                        )
+                        if pair_summary["buckets"]:
+                            st.dataframe(
+                                pd.DataFrame(
+                                    [
+                                        {"區間": bucket, "保留數": cnt}
+                                        for bucket, cnt in sorted(pair_summary["buckets"].items())
+                                    ]
+                                ),
+                                width="stretch",
+                            )
+                        if pair_summary["drop_reasons"]:
+                            st.dataframe(
+                                pd.DataFrame(
+                                    [
+                                        {"捨棄原因": reason, "數量": cnt}
+                                        for reason, cnt in sorted(pair_summary["drop_reasons"].items(), key=lambda kv: kv[0])
+                                    ]
+                                ),
+                                width="stretch",
+                            )
+
+                        if pair_summary["top_entities"]:
+                            st.markdown("參與角色頻率（保留紀錄）")
+                            st.dataframe(
+                                pd.DataFrame(
+                                    [
+                                        {"角色": ent, "次數": cnt}
+                                        for ent, cnt in pair_summary["top_entities"]
+                                    ]
+                                ),
+                                width="stretch",
+                            )
+
+                        sample_traces = pair_summary.get("sample_traces", [])
+                        if sample_traces:
+                            st.markdown("示例追蹤紀錄（最多 10 筆）")
+                            st.dataframe(
+                                pd.DataFrame(
+                                    [
+                                        {
+                                            "trace_id": rec.trace_id,
+                                            "unit_id": rec.unit_id,
+                                            "信心": f"{rec.confidence:.2f}",
+                                            "區間": rec.confidence_bucket,
+                                            "捨棄原因": rec.drop_reason or "",
+                                            "參與角色": ", ".join(
+                                                rec.source_metadata.get("participants", [])
+                                            ),
+                                        }
+                                        for rec in sample_traces
+                                    ]
+                                ),
+                                width="stretch",
+                            )

@@ -8,6 +8,8 @@ from dataclasses import dataclass, field
 from itertools import combinations
 from typing import Any, Dict, Iterable, List, Tuple
 
+from app.utils.semantic_trace import SemanticTraceRecord, build_trace_record
+
 CANDIDATE_FIELDS = [
     "speaker",
     "character",
@@ -209,6 +211,8 @@ def count_interactions(
     confidence_col: str | None = None,
     min_confidence: float | None = 0.0,
     alias_map: Dict[str, str] | None = None,
+    applied_filters: List[str] | None = None,
+    collect_traces: bool = False,
 ) -> Tuple[Counter, Counter, Dict[str, Any]]:
     """Count interactions deterministically using sem_filtered only."""
 
@@ -239,7 +243,11 @@ def count_interactions(
         "unit_reasons": {},
         "unit_meta": {},
         "below_conf_threshold": 0,
+        "trace_records": [],
     }
+
+    trace_records: List[SemanticTraceRecord] = []
+    applied_filters = applied_filters or []
 
     for rel in sem_filtered:
         raw_score, score, reasons, meta = compute_interaction_confidence(rel)
@@ -251,6 +259,28 @@ def count_interactions(
         unit_id = build_unit_id(rel)
         participants = extract_characters_from_relation(rel, alias_map=alias_map)
         unique_participants = set(participants)
+        base_metadata: Dict[str, Any] = {
+            key: rel.get(key)
+            for key in (
+                "event_id",
+                "eventId",
+                "id",
+                "sentence_id",
+                "sentence_idx",
+                "line_id",
+                "line_idx",
+                "chapter_index",
+                "timeline_index",
+                "index",
+                "order",
+            )
+            if key in rel
+        }
+        base_metadata.update(meta)
+        base_metadata["participants"] = sorted(unique_participants)
+        base_metadata["reasons"] = list(reasons)
+        base_metadata["bucket"] = bucket
+        pair_candidates = _stable_pairs(unique_participants) if len(unique_participants) >= 2 else []
 
         drop_reason = None
         if min_confidence is not None and score < float(min_confidence):
@@ -275,6 +305,37 @@ def count_interactions(
                     "participants": sorted(unique_participants),
                 }
             )
+            if collect_traces:
+                if pair_candidates:
+                    for a, b in pair_candidates:
+                        trace_records.append(
+                            build_trace_record(
+                                unit_id=unit_id or "",
+                                canonical_entity_id=f"{a}|{b}",
+                                role=f"{a}-{b}",
+                                count=0,
+                                confidence=score,
+                                confidence_bucket=bucket,
+                                drop_reason=drop_reason,
+                                applied_filters=applied_filters,
+                                source_metadata={**base_metadata, "pair": (a, b)},
+                            )
+                        )
+                elif unique_participants:
+                    first = sorted(unique_participants)[0]
+                    trace_records.append(
+                        build_trace_record(
+                            unit_id=unit_id or "",
+                            canonical_entity_id=first,
+                            role=first,
+                            count=0,
+                            confidence=score,
+                            confidence_bucket=bucket,
+                            drop_reason=drop_reason,
+                            applied_filters=applied_filters,
+                            source_metadata=base_metadata,
+                        )
+                    )
             continue
 
         if confidence_col:
@@ -326,6 +387,27 @@ def count_interactions(
                     meta=diagnostics["unit_meta"].get(unit_id, {}),
                 )
             )
+            if collect_traces:
+                trace_records.append(
+                    build_trace_record(
+                        unit_id=unit_id,
+                        canonical_entity_id=f"{a}|{b}",
+                        role=f"{a}-{b}",
+                        count=increment,
+                        confidence=diagnostics["unit_confidence"].get(unit_id, 0.0),
+                        confidence_bucket=_bucket_confidence(
+                            diagnostics["unit_confidence"].get(unit_id, 0.0)
+                        ),
+                        drop_reason=None,
+                        applied_filters=applied_filters,
+                        source_metadata={
+                            **diagnostics.get("unit_meta", {}).get(unit_id, {}),
+                            "pair": (a, b),
+                            "participants": sorted(roles),
+                            "unit_id": unit_id,
+                        },
+                    )
+                )
 
     diagnostics["pair_units"] = {
         pair: sorted(
@@ -334,6 +416,9 @@ def count_interactions(
         )
         for pair in pair_counts
     }
+
+    if collect_traces:
+        diagnostics["trace_records"] = trace_records
 
     return pair_counts, character_totals, diagnostics
 

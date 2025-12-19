@@ -212,6 +212,37 @@ def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
                 filename,
             )
 
+    for optional in ("interaction_traces.json", "trace_index.json"):
+        opt_path = base / optional
+        if not opt_path.exists():
+            continue
+        ok, data, error = _load_json(opt_path)
+        if not ok:
+            issues.append(f"{optional}: {error}")
+            stats["parse_errors"] += 1
+            continue
+        if not isinstance(data, list):
+            issues.append(f"{optional}: expected list of traces")
+            stats["schema_errors"] += 1
+            continue
+        for idx, entry in enumerate(data):
+            if not isinstance(entry, dict):
+                issues.append(f"{optional}[{idx}]: not a dict")
+                stats["schema_errors"] += 1
+                continue
+            conf = entry.get("confidence")
+            if conf is not None and not (0 <= float(conf) <= 1):
+                issues.append(f"{optional}[{idx}]: confidence out of bounds")
+                stats["schema_errors"] += 1
+            name = entry.get("canonical_entity_id") or entry.get("role")
+            if name:
+                canon = registry.canonicalize(name)
+                if canon != registry.canonicalize(canon):
+                    issues.append(
+                        f"{optional}[{idx}]: canonicalization not idempotent for '{name}' -> '{canon}'"
+                    )
+                    stats["schema_errors"] += 1
+
     error_total = stats["missing_files"] + stats["empty_files"] + stats["parse_errors"] + stats["schema_errors"]
     ok = error_total == 0
     return ok, issues, stats

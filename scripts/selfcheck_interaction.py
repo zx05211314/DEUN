@@ -7,6 +7,7 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from app.utils.entity_registry import EntityRegistry
 from app.utils.interaction import count_interactions, compute_interaction_confidence
+from app.utils.trace_index import TraceIndex
 
 
 
@@ -67,21 +68,27 @@ def main() -> None:
     thresholds = [0.0, 0.2, 0.5, 0.8]
     binary_results = []
     occ_results = []
+    trace_results = []
     for thr in thresholds:
         pair_counts_binary, _, diag_binary = count_interactions(
-            sem_filtered, mode="binary", min_confidence=thr
+            sem_filtered, mode="binary", min_confidence=thr, collect_traces=True
         )
         pair_counts_occ, _, diag_occ = count_interactions(
-            sem_filtered, mode="occurrence", min_confidence=thr
+            sem_filtered, mode="occurrence", min_confidence=thr, collect_traces=True
         )
         binary_results.append((pair_counts_binary, diag_binary))
         occ_results.append((pair_counts_occ, diag_occ))
+        trace_results.append(diag_binary.get("trace_records", []))
 
         for pair, count in pair_counts_binary.items():
             assert count <= pair_counts_occ[pair], f"binary greater than occurrence for {pair}"
             assert count >= 0
             assert pair[0] in {"alice", "bob", "carol", "dave"}
             assert pair[1] in {"alice", "bob", "carol", "dave"}
+            trace_index = TraceIndex.from_records(diag_binary.get("trace_records", []))
+            pair_summary = trace_index.summary_for_pair(pair)
+            if count > 0:
+                assert pair_summary["kept_records"] >= 1, "missing kept traces for counted pair"
         for pair, count in pair_counts_occ.items():
             assert count >= 0
         assert diag_binary["rows_used"] + diag_binary["rows_dropped"] == diag_binary["rows_total"]
@@ -106,15 +113,37 @@ def main() -> None:
         prev_total_binary = total_binary
         prev_total_occ = total_occ
 
+    # confidence buckets and traces should stay within bounds and deterministic
+    for records in trace_results:
+        trace_index = TraceIndex.from_records(records)
+        for rec in records:
+            assert 0.0 <= rec.confidence <= 1.0, "trace confidence out of bounds"
+            assert trace_index._pair_from_metadata(rec) is None or len(trace_index._pair_from_metadata(rec)) == 2
+        # determinism
+        again = TraceIndex.from_records(records)
+        assert trace_index.buckets() == again.buckets(), "trace index histogram not deterministic"
+
+    # monotonicity on traces: higher threshold cannot add more kept records
+    prev_kept = None
+    for records in trace_results:
+        idx = TraceIndex.from_records(records)
+        kept_count = sum(1 for rec in idx.records if not rec.drop_reason)
+        if prev_kept is not None:
+            assert kept_count <= prev_kept, "trace kept records increased with higher threshold"
+        prev_kept = kept_count
+
     # determinism check
     pair_counts_binary_1, _, diag_binary_1 = count_interactions(
-        sem_filtered, mode="binary", min_confidence=0.2
+        sem_filtered, mode="binary", min_confidence=0.2, collect_traces=True
     )
     pair_counts_binary_2, _, diag_binary_2 = count_interactions(
-        sem_filtered, mode="binary", min_confidence=0.2
+        sem_filtered, mode="binary", min_confidence=0.2, collect_traces=True
     )
     assert pair_counts_binary_1 == pair_counts_binary_2, "non-deterministic pair counts"
     assert diag_binary_1["units"] == diag_binary_2["units"]
+    traces_1 = TraceIndex.from_records(diag_binary_1.get("trace_records", []))
+    traces_2 = TraceIndex.from_records(diag_binary_2.get("trace_records", []))
+    assert traces_1.buckets() == traces_2.buckets(), "trace buckets not deterministic"
 
     print("OK")
 

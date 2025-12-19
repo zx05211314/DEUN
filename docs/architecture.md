@@ -45,5 +45,10 @@
 - 註冊檔缺失時以身分函式 fallback，並在 UI 顯示警示；canonicalize 需為冪等、排序穩定（`canonical_pair`）。
 - `app/utils/consistency_checks.py` 提供跨模組實體集合檢查，協助偵測缺漏、封鎖命中與未註冊名稱，結果於主頁診斷面板呈現。
 
+### Semantic traceability contract
+- 互動追蹤資料以 `app/utils/semantic_trace.py` 的 `SemanticTraceRecord` 表示，並透過 `TraceIndex`（`app/utils/trace_index.py`）集中索引、提供 bucket/捨棄摘要與 pair 級樣本。
+- 追蹤僅為觀察用途，計數與信心分數維持 Phase 1/2 行為；當 UI 啟用解釋面板時才使用追蹤索引，不影響既有統計。
+- 追蹤 ID、pair 索引與信心 bucket 均為決定式；提高 `min_confidence` 僅會縮減（不會增加）保留追蹤。可於 `scripts/selfcheck_interaction.py` 驗證冪等性與界限條件。
+
 ## 測試
 - 重構後確認 `python -m compileall app` 通過，確保匯入路徑與語法無誤。
