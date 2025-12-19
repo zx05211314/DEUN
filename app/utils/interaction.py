@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 from collections import Counter, defaultdict
+from dataclasses import dataclass, field
 from itertools import combinations
 from typing import Any, Dict, Iterable, List, Tuple
 
@@ -19,6 +20,17 @@ CANDIDATE_FIELDS = [
     "object_speaker",
     "target",
 ]
+
+
+@dataclass(frozen=True)
+class InteractionUnitRecord:
+    unit_id: str
+    a: str
+    b: str
+    count: int
+    confidence: float
+    reasons: List[str] = field(default_factory=list)
+    meta: Dict[str, Any] = field(default_factory=dict)
 
 
 def build_unit_id(rel: Dict[str, Any]) -> str:
@@ -102,11 +114,93 @@ def _stable_pairs(roles: Iterable[str]) -> List[Tuple[str, str]]:
     return [(a, b) for a, b in combinations(sorted(roles), 2)]
 
 
+def _bucket_confidence(score: float) -> str:
+    boundaries = [0.2, 0.4, 0.6, 0.8, 1.0]
+    for upper in boundaries:
+        if score <= upper:
+            lower = 0.0 if upper == 0.2 else boundaries[boundaries.index(upper) - 1]
+            return f"{lower:.1f}-{upper:.1f}"
+    return "unknown"
+
+
+def compute_interaction_confidence(rel: Dict[str, Any]) -> Tuple[float, List[str], Dict[str, Any]]:
+    base = 0.5
+    reasons: List[str] = ["base:+0.50"]
+    meta: Dict[str, Any] = {}
+
+    distance_keys = ["distance", "sentence_distance", "mention_distance", "gap"]
+    distance_val = None
+    for key in distance_keys:
+        val = rel.get(key)
+        if isinstance(val, (int, float)):
+            distance_val = float(val)
+            meta["distance"] = distance_val
+            break
+
+    if distance_val is not None:
+        if distance_val <= 0:
+            base += 0.2
+            reasons.append("+0.20 distance<=0")
+        elif distance_val <= 1:
+            base += 0.15
+            reasons.append("+0.15 distance<=1")
+        elif distance_val <= 3:
+            base += 0.1
+            reasons.append("+0.10 distance<=3")
+        elif distance_val <= 5:
+            base += 0.05
+            reasons.append("+0.05 distance<=5")
+        else:
+            penalty = min(0.35, 0.02 * (distance_val - 5))
+            base -= penalty
+            reasons.append(f"-{penalty:.2f} far_distance({distance_val})")
+
+    same_sentence_flags = ["same_sentence", "same_line", "same_paragraph"]
+    for key in same_sentence_flags:
+        if isinstance(rel.get(key), bool) and rel.get(key):
+            base += 0.1
+            reasons.append(f"+0.10 {key}")
+            meta[key] = True
+            break
+
+    score_keys = ["score", "similarity", "relation_score", "weight", "confidence", "probability"]
+    for key in score_keys:
+        val = rel.get(key)
+        if isinstance(val, (int, float)):
+            score_val = float(val)
+            normalized = score_val if 0 <= score_val <= 1 else max(0.0, min(1.0, score_val / 2))
+            delta = (normalized - 0.5) * 0.4
+            base += delta
+            reasons.append(f"{delta:+.2f} {key}({score_val})")
+            meta[key] = score_val
+            break
+
+    text_field = rel.get("text") or rel.get("content") or rel.get("sentence")
+    if isinstance(text_field, str):
+        lowered = text_field.lower()
+        uncertain_patterns = ["rumor", "maybe", "可能", "疑似", "不確定", "傳言", "傳聞", "或許", "未明"]
+        neg_patterns = [" not ", " no ", "沒有", "並非"]
+        penalty = 0.0
+        for pat in uncertain_patterns:
+            if pat in lowered:
+                penalty += 0.08
+                reasons.append(f"-0.08 uncertain({pat})")
+        for pat in neg_patterns:
+            if pat in lowered:
+                penalty += 0.06
+                reasons.append(f"-0.06 negation({pat.strip()})")
+        if penalty:
+            base -= penalty
+
+    final_score = max(0.0, min(1.0, base))
+    return final_score, reasons, meta
+
+
 def count_interactions(
     sem_filtered: List[Dict[str, Any]],
     mode: str = "binary",
     confidence_col: str | None = None,
-    min_confidence: float | None = None,
+    min_confidence: float | None = 0.0,
     alias_map: Dict[str, str] | None = None,
 ) -> Tuple[Counter, Counter, Dict[str, Any]]:
     """Count interactions deterministically using sem_filtered only."""
@@ -125,12 +219,27 @@ def count_interactions(
         "unit_participant_sizes": {},
         "duplicate_role_mentions": {},
         "below_conf_threshold": 0,
-        "dropped": {"no_participants": 0, "invalid_unit": 0},
+        "dropped": {"no_participants": 0, "invalid_unit": 0, "below_confidence": 0},
         "mode": normalized_mode,
         "pair_units": {},
+        "confidence_buckets": Counter(),
+        "confidence_reasons": Counter(),
+        "confidence_drop_reasons": Counter(),
+        "confidence_threshold": min_confidence if min_confidence is not None else 0.0,
     }
 
     for rel in sem_filtered:
+        score, reasons, meta = compute_interaction_confidence(rel)
+        diagnostics["confidence_buckets"][_bucket_confidence(score)] += 1
+        for reason in reasons:
+            diagnostics["confidence_reasons"][reason] += 1
+
+        if min_confidence is not None and score < float(min_confidence):
+            diagnostics["dropped"]["below_confidence"] += 1
+            for reason in reasons:
+                diagnostics["confidence_drop_reasons"][reason] += 1
+            continue
+
         if confidence_col and min_confidence is not None:
             try:
                 if float(rel.get(confidence_col, 0)) < float(min_confidence):
@@ -189,5 +298,6 @@ __all__ = [
     "build_unit_id",
     "normalize_role",
     "extract_characters_from_relation",
+    "compute_interaction_confidence",
     "count_interactions",
 ]

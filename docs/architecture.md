@@ -31,7 +31,7 @@
 - `app/components/*`：各分析視圖與 UI 區塊（含圖表、表格、下載）。
 
 ## Analytics contract
-- 互動計數僅允許透過 `app/utils/interaction.count_interactions` 執行，所有視圖使用同一組計數模式與互動單位推導（event_id/sentence_id → 章節+序號 → 內容雜湊）。
+- 互動計數僅允許透過 `app/utils/interaction.count_interactions` 執行，所有視圖使用同一組計數模式與互動單位推導（event_id/sentence_id → 章節+序號 → 內容雜湊），並共用信心分數與門檻過濾邏輯。
 - 輸出驗證由 `app/utils/validate_outputs.validate_outputs` 處理，並針對語意資料呼叫 `validate_interaction_records` 收集警告而不終止流程。
 - UI 層不得重新實作計數或解析邏輯，僅消費 utils 的結果並渲染圖表/表格。
 

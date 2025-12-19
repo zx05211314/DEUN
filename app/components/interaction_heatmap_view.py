@@ -22,8 +22,11 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
         format_func=lambda v: "單一事件計 1" if v == "binary" else "依事件內重複次數計算",
         horizontal=True,
     )
+    min_confidence = st.slider("Minimum confidence", 0.0, 1.0, 0.0, 0.05)
 
-    pair_counts, character_totals, diagnostics = count_interactions(sem_filtered, mode=mode)
+    pair_counts, character_totals, diagnostics = count_interactions(
+        sem_filtered, mode=mode, min_confidence=min_confidence
+    )
 
     if not pair_counts:
         st.info("目前角色數量過少，無法繪製互動熱度矩陣。請放寬篩選條件或選擇其他書目。")
@@ -95,6 +98,8 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
             "語意列數": diagnostics.get("rows_total", len(sem_filtered)),
             "被捨棄（無角色）": diagnostics.get("dropped", {}).get("no_participants", 0),
             "被捨棄（無 ID）": diagnostics.get("dropped", {}).get("invalid_unit", 0),
+            "信心門檻": diagnostics.get("confidence_threshold", 0.0),
+            "因信心過低被捨棄": diagnostics.get("dropped", {}).get("below_confidence", 0),
             "超過 5 位角色的事件": sum(
                 1 for size in diagnostics.get("unit_participant_sizes", {}).values() if size > 5
             ),
@@ -107,6 +112,45 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
 
         st.markdown("#### 診斷資訊")
         st.json(diagnostics_block)
+
+        if diagnostics.get("confidence_buckets"):
+            st.markdown("信心分布")
+            st.dataframe(
+                pd.DataFrame(
+                    [
+                        {"區間": bucket, "數量": cnt}
+                        for bucket, cnt in sorted(
+                            diagnostics.get("confidence_buckets", {}).items(), key=lambda kv: kv[0]
+                        )
+                    ]
+                ),
+                width="stretch",
+            )
+
+        drop_reasons = diagnostics.get("confidence_drop_reasons")
+        if drop_reasons:
+            st.markdown("被捨棄原因（前 10）")
+            st.dataframe(
+                pd.DataFrame(
+                    [
+                        {"訊息": reason, "次數": cnt}
+                        for reason, cnt in drop_reasons.most_common(10)
+                    ]
+                ),
+                width="stretch",
+            )
+
+        if diagnostics.get("confidence_reasons"):
+            st.markdown("信心調整訊息（前 10）")
+            st.dataframe(
+                pd.DataFrame(
+                    [
+                        {"訊息": reason, "次數": cnt}
+                        for reason, cnt in diagnostics.get("confidence_reasons", {}).most_common(10)
+                    ]
+                ),
+                width="stretch",
+            )
 
         largest_units = sorted(
             diagnostics.get("unit_participant_sizes", {}).items(), key=lambda kv: kv[1], reverse=True
