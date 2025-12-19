@@ -427,7 +427,7 @@ def main():
     render_tables(sem_filtered)
     render_emotion_charts(sem_filtered)
     render_role_comparison(sem_filtered, outputs.get("speaker_summary", {}))
-    render_interaction_heatmap(sem_filtered)
+    render_interaction_heatmap(sem_filtered, registry=registry)
     render_graphs(outputs, sem_filtered)
     render_story_emotion_arc(outputs, sem_filtered)
     render_pov_shift_map(outputs, sem_filtered)

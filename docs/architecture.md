@@ -50,5 +50,16 @@
 - 追蹤僅為觀察用途，計數與信心分數維持 Phase 1/2 行為；當 UI 啟用解釋面板時才使用追蹤索引，不影響既有統計。
 - 追蹤 ID、pair 索引與信心 bucket 均為決定式；提高 `min_confidence` 僅會縮減（不會增加）保留追蹤。可於 `scripts/selfcheck_interaction.py` 驗證冪等性與界限條件。
 
+### Metric contract（跨視圖一致性）
+- 互動計數、confidence bucket 與 drop 摘要的來源僅限 `app/utils/interaction.py`；視圖不得自行計算，需消費 utils 回傳的 Counter/diagnostics。
+- `min_confidence` 單調性：門檻提高時計數不得增加；`binary` 模式的計數不得超過 `occurrence` 模式。
+- 實體命名需經 `EntityRegistry` 正規化後再進入分析，canonicalize 為冪等且排序穩定（`canonical_pair`）。
+- Trace 為選配且不影響計數；啟用解釋面板時才讀取 `TraceIndex`。Confidence/trace 結構的界限條件由 `scripts/selfcheck_interaction.py` 驗證。
+
+### Single source of truth
+- 視圖層僅呼叫 utils：互動熱圖、解釋面板與一致性檢查皆使用 `count_interactions` 與 `run_cross_view_checks`，不重新解析資料。
+- 跨視圖一致性檢查 `run_cross_view_checks` 以 utilities 結果產生簽章並測試決定性/單調性；驗證腳本 `scripts/validate_cross_view_consistency.py` 提供最小範例。
+- Output 驗證、互動計數、canonicalization 與 trace 統一集中於 utils；新增視圖應直接呼叫既有 API 以避免分歧。
+
 ## 測試
 - 重構後確認 `python -m compileall app` 通過，確保匯入路徑與語法無誤。

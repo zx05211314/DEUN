@@ -6,11 +6,16 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from app.utils.consistency_checks import run_cross_view_checks
+from app.utils.entity_registry import EntityRegistry
 from app.utils.interaction import count_interactions
 from app.utils.trace_index import TraceIndex
 
 
-def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
+def render_interaction_heatmap(
+    sem_filtered: List[Dict[str, Any]],
+    registry: EntityRegistry | None = None,
+) -> None:
     st.subheader("角色互動熱度矩陣")
 
     if not sem_filtered:
@@ -312,3 +317,47 @@ def render_interaction_heatmap(sem_filtered: List[Dict[str, Any]]) -> None:
                                 ),
                                 width="stretch",
                             )
+
+        with st.expander("Consistency", expanded=False):
+            if st.checkbox("Run cross-view checks", value=False, key="consistency_run"):
+                try:
+                    thresholds = sorted({0.0, round(float(min_confidence), 2), 0.9})
+                    report = run_cross_view_checks(
+                        data_bundle={
+                            "sem_filtered": sem_filtered,
+                            "entity_registry": registry,
+                        },
+                        filters={"mode": mode},
+                        thresholds=thresholds,
+                        counting_modes=[mode],
+                        trace_enabled=bool(trace_index.records),
+                    )
+                    st.write(
+                        {
+                            "ok": report.ok,
+                            "passed": len(report.passed),
+                            "failed": len(report.failed),
+                            "summary": report.summary,
+                        }
+                    )
+                    if report.failed:
+                        st.dataframe(
+                            pd.DataFrame(
+                                [
+                                    {
+                                        "check": f.check_name,
+                                        "metric": f.metric_key,
+                                        "expected": f.expected,
+                                        "actual": f.actual,
+                                        "context": f.context,
+                                        "trace_ids": ", ".join((f.trace_ids or [])[:5]),
+                                    }
+                                    for f in report.failed
+                                ]
+                            ),
+                            width="stretch",
+                        )
+                    else:
+                        st.success("Cross-view checks passed.")
+                except Exception as exc:  # pragma: no cover - UI safety
+                    st.warning(f"Consistency checks failed: {exc}")
