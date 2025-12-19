@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+from app.utils.interaction import build_unit_id, extract_characters_from_relation
 from app.utils.schema import SCHEMAS
 
 REQUIRED_FILES = [
@@ -141,6 +142,7 @@ def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
         "schema_errors": 0,
         "warnings": 0,
         "items_loaded": {},
+        "interaction_warnings": [],
     }
 
     base = Path(output_dir)
@@ -181,7 +183,39 @@ def validate_outputs(output_dir: str) -> Tuple[bool, List[str], Dict[str, Any]]:
 
         if filename == "semantic_relations.json" and isinstance(data, list) and data:
             _warn_speakers(filename, data, issues, stats)
+            _, interaction_warnings, interaction_stats = validate_interaction_records(data)
+            stats["interaction_warnings"].extend(interaction_warnings)
+            stats.update({f"interaction_{k}": v for k, v in interaction_stats.items()})
 
     error_total = stats["missing_files"] + stats["empty_files"] + stats["parse_errors"] + stats["schema_errors"]
     ok = error_total == 0
     return ok, issues, stats
+
+
+def validate_interaction_records(records: List[Dict[str, Any]]) -> Tuple[bool, List[str], Dict[str, Any]]:
+    warnings: List[str] = []
+    stats: Dict[str, Any] = {
+        "records": len(records),
+        "dropped_no_participants": 0,
+        "dropped_invalid_unit": 0,
+    }
+
+    for idx, rel in enumerate(records):
+        if not isinstance(rel, dict):
+            warnings.append(f"semantic_relations[{idx}]: not a dict, skipped")
+            stats["dropped_invalid_unit"] += 1
+            continue
+
+        unit_id = build_unit_id(rel)
+        if not unit_id:
+            warnings.append(f"semantic_relations[{idx}]: unable to derive unit id")
+            stats["dropped_invalid_unit"] += 1
+            continue
+
+        participants = extract_characters_from_relation(rel)
+        if not participants:
+            warnings.append(f"semantic_relations[{idx}]: no participants found")
+            stats["dropped_no_participants"] += 1
+
+    ok = len(warnings) == 0
+    return ok, warnings, stats

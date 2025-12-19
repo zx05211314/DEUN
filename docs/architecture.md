@@ -30,5 +30,10 @@
 - `app/utils/*`：純計算與資料準備，不含 Streamlit UI。
 - `app/components/*`：各分析視圖與 UI 區塊（含圖表、表格、下載）。
 
+## Analytics contract
+- 互動計數僅允許透過 `app/utils/interaction.count_interactions` 執行，所有視圖使用同一組計數模式與互動單位推導（event_id/sentence_id → 章節+序號 → 內容雜湊）。
+- 輸出驗證由 `app/utils/validate_outputs.validate_outputs` 處理，並針對語意資料呼叫 `validate_interaction_records` 收集警告而不終止流程。
+- UI 層不得重新實作計數或解析邏輯，僅消費 utils 的結果並渲染圖表/表格。
+
 ## 測試
 - 重構後確認 `python -m compileall app` 通過，確保匯入路徑與語法無誤。

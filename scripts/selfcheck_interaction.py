@@ -17,17 +17,32 @@ def main() -> None:
         {"chapter_index": 1, "timeline_index": 1, "speaker": "Bob", "target_speaker": "Carol"},
     ]
 
-    pair_counts_binary, _, diag_binary = count_interactions(sem_filtered, mode="binary_per_unit")
+    pair_counts_binary, _, diag_binary = count_interactions(sem_filtered, mode="binary")
+    pair_counts_occ, _, diag_occ = count_interactions(sem_filtered, mode="occurrence")
+
     assert pair_counts_binary[("alice", "bob")] == 1, pair_counts_binary
     assert pair_counts_binary[("alice", "carol")] == 1, pair_counts_binary
     assert pair_counts_binary[("bob", "carol")] == 1, pair_counts_binary
     assert diag_binary["units"] == 3
 
-    pair_counts_occ, _, diag_occ = count_interactions(sem_filtered, mode="count_occurrences")
     assert pair_counts_occ[("alice", "bob")] == 2, pair_counts_occ
     assert pair_counts_occ[("alice", "carol")] == 1, pair_counts_occ
     assert pair_counts_occ[("bob", "carol")] == 1, pair_counts_occ
     assert diag_occ["units"] == 3
+
+    for pair, count in pair_counts_binary.items():
+        assert count <= pair_counts_occ[pair], f"binary greater than occurrence for {pair}"
+        assert count <= diag_binary["units"], f"binary count exceeds unit total for {pair}"
+        assert count >= 0
+
+    for pair, count in pair_counts_occ.items():
+        assert count >= 0
+        assert count <= diag_occ["units"] * max(diag_occ.get("unit_participant_sizes", {}).values() or [1])
+
+    # determinism check
+    pair_counts_binary_2, _, diag_binary_2 = count_interactions(sem_filtered, mode="binary")
+    assert pair_counts_binary == pair_counts_binary_2, "non-deterministic pair counts"
+    assert diag_binary["units"] == diag_binary_2["units"]
 
     print("OK")
 
