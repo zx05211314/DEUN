@@ -9,10 +9,13 @@ from typing import Any, Dict, List
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 
+from api.parking_api import router as parking_router
+
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_ROOT = ROOT / "output"
 
 app = FastAPI(title="Novel Semantic API", version="1.0.0")
+app.include_router(parking_router)
 
 
 def load_json(path: Path) -> Any:

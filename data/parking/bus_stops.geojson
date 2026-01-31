@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": "bs-001",
+        "stop_name": "市政府站",
+        "confidence_base": 1.0,
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.5755, 25.0405]
+      }
+    }
+  ]
+}

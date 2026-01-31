@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "road_id": "r-001",
+        "road_class": "SECONDARY",
+        "is_ramp_or_expressway": false,
+        "name": "松仁路",
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.564, 25.033],
+          [121.576, 25.041]
+        ]
+      }
+    }
+  ]
+}

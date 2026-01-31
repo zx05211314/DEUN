@@ -1,0 +1,33 @@
+{
+  "total_points": 2,
+  "failures": 0,
+  "failure_rate": 0.0,
+  "green_false_positive_rate": 0.0,
+  "points": [
+    {
+      "point_id": "p-001",
+      "expected_level": "GREEN",
+      "predicted_level": "GREEN",
+      "reason_tags": [],
+      "distances": {
+        "nearest_intersection_m": null,
+        "nearest_bus_stop_m": null,
+        "nearest_hydrant_m": null
+      },
+      "ref": "local-sample-1"
+    },
+    {
+      "point_id": "p-002",
+      "expected_level": "GREEN",
+      "predicted_level": "GREEN",
+      "reason_tags": [],
+      "distances": {
+        "nearest_intersection_m": null,
+        "nearest_bus_stop_m": null,
+        "nearest_hydrant_m": null
+      },
+      "ref": "local-sample-2"
+    }
+  ],
+  "note": "fallback_no_shapely"
+}
