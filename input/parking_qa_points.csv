@@ -1,0 +1,3 @@
+point_id,lat,lng,expected_level,notes,ref
+p-001,25.0368,121.5715,GREEN,Sample point near road,local-sample-1
+p-002,25.0388,121.5735,GREEN,Sample point near inactive yellow line,local-sample-2

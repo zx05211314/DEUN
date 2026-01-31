@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "node_id": "int-001",
+        "degree": 3,
+        "confidence_base": 0.9,
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.565, 25.034]
+      }
+    }
+  ]
+}

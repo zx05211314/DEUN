@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "district_name": "信義區",
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [121.555, 25.03],
+            [121.585, 25.03],
+            [121.585, 25.05],
+            [121.555, 25.05],
+            [121.555, 25.03]
+          ]
+        ]
+      }
+    }
+  ]
+}

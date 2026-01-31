@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "asset_id": "fa-001",
+        "asset_type": "HYDRANT",
+        "confidence_base": 0.95,
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.5695, 25.0365]
+      }
+    }
+  ]
+}

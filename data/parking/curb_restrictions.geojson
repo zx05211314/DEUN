@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "restriction_id": "c-001",
+        "restriction_type": "YELLOW",
+        "time_rule_type": "WINDOWS",
+        "time_windows": [{"start": "23:00", "end": "23:30", "days": "WEEKDAYS"}],
+        "note_raw": "Night-only loading",
+        "confidence_base": 0.9,
+        "source_version": "sample-2024-01-01"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.572, 25.038],
+          [121.574, 25.039]
+        ]
+      }
+    }
+  ]
+}

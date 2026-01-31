@@ -1,0 +1,3 @@
+point_id,expected_level,predicted_level,reason_tags,nearest_intersection_m,nearest_bus_stop_m,nearest_hydrant_m,ref
+p-001,GREEN,GREEN,,,,,local-sample-1
+p-002,GREEN,GREEN,,,,,local-sample-2
